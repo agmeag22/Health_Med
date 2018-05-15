@@ -1,6 +1,8 @@
 package com.secondsave.health_med;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     @Override
@@ -107,4 +111,43 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
+            FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+            switch (item.getItemId()) {
+                case R.id.navigation_reminders:
+                    fragment=new RemindersFragment();
+                    transaction.replace(R.id.content,fragment).commit();
+                    return true;
+                case R.id.navigation_dose:
+                    fragment=new DoseFragment();
+                    transaction.replace(R.id.content,fragment).commit();
+
+                    return true;
+                case R.id.navigation_pharmacy:
+                    fragment=new Pharmacy();
+                    transaction.replace(R.id.content,fragment).commit();
+
+                    return true;
+                case R.id.navigation_health:
+                    fragment=new HealthFragment();
+                    transaction.replace(R.id.content,fragment).commit();
+
+                    return true;
+                case R.id.navigation_profile:
+                    fragment=new ProfileFragment();
+                    transaction.replace(R.id.content,fragment).commit();
+
+                    return true;
+            }
+            return false;
+        }
+    };
+
 }
