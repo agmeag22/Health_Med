@@ -1,4 +1,4 @@
-package com.secondsave.health_med;
+package com.secondsave.health_med.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,18 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.secondsave.health_med.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ProfileFragment.OnFragmentInteractionListener} interface
+ * {@link Pharmacy.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class ProfileFragment extends Fragment {
+public class Pharmacy extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ProfileFragment() {
+    public Pharmacy() {
         // Required empty public constructor
     }
 
@@ -28,7 +30,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_pharmacy, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
