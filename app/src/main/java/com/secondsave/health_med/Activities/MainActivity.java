@@ -1,4 +1,4 @@
-package com.secondsave.health_med;
+package com.secondsave.health_med.Activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.secondsave.health_med.Fragments.DoseFragment;
+import com.secondsave.health_med.Fragments.HealthFragment;
+import com.secondsave.health_med.Fragments.Pharmacy;
+import com.secondsave.health_med.Fragments.ProfileFragment;
+import com.secondsave.health_med.Fragments.RemindersFragment;
+import com.secondsave.health_med.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
