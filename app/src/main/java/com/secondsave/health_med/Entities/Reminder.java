@@ -6,7 +6,6 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 
-// ERD = https://www.lucidchart.com/invitations/accept/65e4e6c9-217a-45a1-9843-bbb3354bbf20
 import java.sql.Date;
 
 @Entity(tableName = "reminder",foreignKeys = {
