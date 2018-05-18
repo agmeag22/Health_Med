@@ -21,7 +21,7 @@ public class HealthMedViewModel extends AndroidViewModel {
         mAllUsers = mRepository.getAllUsers();
     }
 
-    LiveData<List<User>> getAllUsers() {
+    public LiveData<List<User>> getAllUsers() {
         return mAllUsers;
     }
 
