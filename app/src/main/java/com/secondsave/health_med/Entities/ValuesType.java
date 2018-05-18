@@ -4,7 +4,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "values_type")
-class ValuesType {
+public class ValuesType {
     @PrimaryKey(autoGenerate = true)
     private int id_values_type;
     private String name;
