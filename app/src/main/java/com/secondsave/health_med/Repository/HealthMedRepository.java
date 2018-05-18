@@ -17,6 +17,7 @@ public class HealthMedRepository {
     public HealthMedRepository(Application application) {
         HealthMedDatabase db = HealthMedDatabase.getDatabase(application);
         mUserDao = db.userDao();
+        mUsers = mUserDao.getAllUsers();
     }
 
     public LiveData<List<User>> getAllUsers() {
