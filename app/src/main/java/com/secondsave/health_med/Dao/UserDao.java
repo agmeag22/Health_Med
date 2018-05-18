@@ -17,6 +17,15 @@ public interface UserDao {
     @Query("DELETE FROM user")
     void deleteAll();
 
+    @Query("DELETE FROM user WHERE id_user=:id")
+    void deleteById(int id);
+
     @Query("SELECT * FROM user ORDER BY id_user ASC")
     LiveData<List<User>> getAllUsers();
+
+    @Query("SELECT * FROM user WHERE id_user = :id")
+    User getUserById(int id);
+
+    @Query("SELECT COUNT(username) FROM user WHERE username=:username AND password = :password")
+    int isUserAndPasswordMatch(String username,String password);
 }
