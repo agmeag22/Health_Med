@@ -1,6 +1,7 @@
 package com.secondsave.health_med.Entities;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -8,72 +9,62 @@ import android.support.annotation.NonNull;
 // ERD = https://www.lucidchart.com/invitations/accept/65e4e6c9-217a-45a1-9843-bbb3354bbf20
 import java.sql.Date;
 
-@Entity(tableName = "reminder")
+@Entity(tableName = "reminder",foreignKeys = {
+        @ForeignKey(entity = Dose.class,parentColumns = "id_dose",childColumns = "id_dose")
+})
 public class Reminder {
 
     @PrimaryKey(autoGenerate = true)
     private int id_reminder;
-    private String name;
-    private int dose_size;
-    private int dose_type;
-    private int dose_lapse;
-    private Date last_dose_time;
-    private Date new_dose_time;
+    private int id_dose;
+    private Date start_date;
+    private Date next_date;
+    private boolean dismissed;
 
-    public Reminder(String name, int dose_size, int dose_type, int dose_lapse, Date last_dose_time, Date new_dose_time) {
-        this.name = name;
-        this.dose_size = dose_size;
-        this.dose_type = dose_type;
-        this.dose_lapse = dose_lapse;
-        this.last_dose_time = last_dose_time;
-        this.new_dose_time = new_dose_time;
+    public Reminder(int id_dose, Date start_date, Date next_date, boolean dismissed) {
+        this.id_dose = id_dose;
+        this.start_date = start_date;
+        this.next_date = next_date;
+        this.dismissed = dismissed;
     }
 
-    public String getName() {
-        return name;
+    public int getId_reminder() {
+        return id_reminder;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId_reminder(int id_reminder) {
+        this.id_reminder = id_reminder;
     }
 
-    public int getDose_size() {
-        return dose_size;
+    public int getId_dose() {
+        return id_dose;
     }
 
-    public void setDose_size(int dose_size) {
-        this.dose_size = dose_size;
+    public void setId_dose(int id_dose) {
+        this.id_dose = id_dose;
     }
 
-    public int getDose_type() {
-        return dose_type;
+    public Date getStart_date() {
+        return start_date;
     }
 
-    public void setDose_type(int dose_type) {
-        this.dose_type = dose_type;
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
     }
 
-    public int getDose_lapse() {
-        return dose_lapse;
+    public Date getNext_date() {
+        return next_date;
     }
 
-    public void setDose_lapse(int dose_lapse) {
-        this.dose_lapse = dose_lapse;
+    public void setNext_date(Date next_date) {
+        this.next_date = next_date;
     }
 
-    public Date getLast_dose_time() {
-        return last_dose_time;
+    public boolean isDismissed() {
+        return dismissed;
     }
 
-    public void setLast_dose_time(Date last_dose_time) {
-        this.last_dose_time = last_dose_time;
-    }
-
-    public Date getNew_dose_time() {
-        return new_dose_time;
-    }
-
-    public void setNew_dose_time(Date new_dose_time) {
-        this.new_dose_time = new_dose_time;
+    public void setDismissed(boolean dismissed) {
+        this.dismissed = dismissed;
     }
 }
