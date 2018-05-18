@@ -30,5 +30,4 @@ public interface PersonalInfoDao {
     @Query("SELECT * FROM personal_info WHERE id_user = :id")
     PersonalInfo getPersonalInfoByUserId(int id);
 
-
 }

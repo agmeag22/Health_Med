@@ -3,12 +3,15 @@ package com.secondsave.health_med.Database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import com.secondsave.health_med.Converters.DateTypeConverter;
 import com.secondsave.health_med.Dao.UserDao;
 import com.secondsave.health_med.Entities.*;
 
 @Database(entities = {User.class, Values.class, ValuesType.class, Reminder.class, PersonalInfo.class, Dose.class, DoseType.class}, version = 1)
+@TypeConverters({DateTypeConverter.class})
 public abstract class HealthMedDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
