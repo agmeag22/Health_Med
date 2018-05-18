@@ -23,7 +23,7 @@ public class HealthMedRepository {
         return mUsers;
     }
 
-    public void insert (User user) {
+    public void insert(User user) {
         new insertAsyncTask(mUserDao).execute(user);
     }
 
