@@ -19,7 +19,7 @@ import android.view.MenuItem;
 
 import com.secondsave.health_med.Fragments.DoseFragment;
 import com.secondsave.health_med.Fragments.HealthFragment;
-import com.secondsave.health_med.Fragments.Pharmacy;
+import com.secondsave.health_med.Fragments.PharmacyFragment;
 import com.secondsave.health_med.Fragments.ProfileFragment;
 import com.secondsave.health_med.Fragments.RemindersFragment;
 import com.secondsave.health_med.R;
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
             fragment=new DoseFragment();
             transaction.replace(R.id.content,fragment).commit();
         } else if (id == R.id.navigation_pharmacy) {
-            fragment=new Pharmacy();
+            fragment=new PharmacyFragment();
             transaction.replace(R.id.content,fragment).commit();
         } else if (id == R.id.navigation_health) {
             fragment=new HealthFragment();
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity
 
                     return true;
                 case R.id.navigation_pharmacy:
-                    fragment=new Pharmacy();
+                    fragment=new PharmacyFragment();
                     transaction.replace(R.id.content,fragment).commit();
 
                     return true;

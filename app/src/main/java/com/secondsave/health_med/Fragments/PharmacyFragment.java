@@ -14,14 +14,14 @@ import com.secondsave.health_med.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Pharmacy.OnFragmentInteractionListener} interface
+ * {@link PharmacyFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class Pharmacy extends Fragment {
+public class PharmacyFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public Pharmacy() {
+    public PharmacyFragment() {
         // Required empty public constructor
     }
 
