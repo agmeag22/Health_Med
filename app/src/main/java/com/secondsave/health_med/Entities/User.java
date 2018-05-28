@@ -7,11 +7,12 @@ import android.arch.persistence.room.PrimaryKey;
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id_user;
-    private String username,password;
+    private String username,password,token;
 
-    public User( String username, String password) {
+    public User(String username, String password, String token) {
         this.username = username;
         this.password = password;
+        this.token = token;
     }
 
     public int getId_user() {
@@ -36,5 +37,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 
 import com.secondsave.health_med.Converters.DateTypeConverter;
 import com.secondsave.health_med.Dao.UserDao;
+import com.secondsave.health_med.Dao.ValuesDao;
 import com.secondsave.health_med.Entities.*;
 
 @Database(entities = {User.class, Values.class, ValuesType.class, Reminder.class, PersonalInfo.class, Dose.class, DoseType.class}, version = 1)
@@ -18,6 +19,8 @@ import com.secondsave.health_med.Entities.*;
 public abstract class HealthMedDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
+    public abstract ValuesDao valuesDao();
+    public abstract PersonalInfo personalInfoDao();
 
     //TODO: HACER Y AGREGAR LOS DAO RESTANTES
     private static HealthMedDatabase INSTANCE;
@@ -57,9 +60,9 @@ public abstract class HealthMedDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
-            User user = new User("Allen","1234");
+            User user = new User("electroanime2009@gmail.com","1234","" );
             mDao.insert(user);
-            user = new User("Miguel","1234");
+            user = new User("agmeag@gmail.com","1234", "");
             mDao.insert(user);
             return null;
         }
