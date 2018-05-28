@@ -9,7 +9,7 @@
             android:id="@+id/navigation_logout"
             android:icon="@drawable/ic_login_black"
             android:title="@string/log_out" />
-
+fddsfsfdsfdf
         <item
             android:id="@+id/navigation_reminders"
             android:icon="@drawable/ic_home_black_24dp"
