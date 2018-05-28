@@ -28,5 +28,9 @@ public class HealthMedViewModel extends AndroidViewModel {
     public void insert(User user) {
         mRepository.insert(user);
     }
+
+    public boolean isUserAndPasswordMatch(String user, String password){
+        return mRepository.isUserAndPasswordMatch(user,password);
+    }
 }
 

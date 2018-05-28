@@ -24,6 +24,11 @@ public class HealthMedRepository {
         return mUsers;
     }
 
+    public boolean isUserAndPasswordMatch(String user, String password){
+        int result = mUserDao.isUserAndPasswordMatch(user,password);
+        return result>0;
+    }
+
     public void insert(User user) {
         new insertAsyncTask(mUserDao).execute(user);
     }

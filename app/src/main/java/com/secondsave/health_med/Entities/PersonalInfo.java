@@ -1,22 +1,23 @@
 package com.secondsave.health_med.Entities;
 
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
-
+@Dao
 @Entity(tableName = "personal_info",foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "id_user",
         childColumns = "id_user",
         onDelete = CASCADE))
 
-public class PersonalInfo {
+public abstract class PersonalInfo {
     @PrimaryKey(autoGenerate = true)
     private int id_personal_info;
     private int id_user;
     private String first_name;
     private String last_name;
-
+    public PersonalInfo(){}
     public PersonalInfo(int id_user, String first_name, String last_name) {
         this.id_user = id_user;
         this.first_name = first_name;

@@ -2,6 +2,8 @@ package com.secondsave.health_med.Activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -39,10 +41,12 @@ public class MainActivity extends AppCompatActivity
 
 
     private HealthMedViewModel mhealthmedViewModel;
+    SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sp = getSharedPreferences("loggedin", MODE_PRIVATE);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,7 +85,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
+        if(!sp.getBoolean("loggedin",false)) {
+             Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+        }
     }
 
     @Override
