@@ -23,6 +23,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.secondsave.health_med.Adapters.UserAdapter;
 import com.secondsave.health_med.Entities.User;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private HealthMedViewModel mhealthmedViewModel;
+
     SharedPreferences prefs;
 
     @Override
@@ -71,6 +73,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        TextView userName, email;
+        View navigationheader = navigationView.getHeaderView(0);
+        userName = navigationheader.findViewById(R.id.name_txt);
+        email = navigationheader.findViewById(R.id.email_txt);
 
         //PRUEBA DE BD
         RecyclerView recyclerView = findViewById(R.id.recycler);
@@ -87,10 +93,15 @@ public class MainActivity extends AppCompatActivity
         });
         String token = prefs.getString("token","");
         String user = prefs.getString("username","");
-        if(user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
-             Intent i = new Intent(this, LoginActivity.class);
+        String name = prefs.getString("name","");
+        userName.setText(name);
+        email.setText(user);
+        if(name.equals("") ||user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
+            Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
-        }
+    }
+
+
     }
 
     @Override
@@ -132,6 +143,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment fragment;
         FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        if (id == R.id.navigation_logout) {
+            prefs = this.getSharedPreferences("com.secondsave.health_med", MODE_PRIVATE);
+            prefs.edit().remove("token").apply();
+            prefs.edit().remove("username").apply();
+            prefs.edit().remove("name").apply();
+
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+        }
         if (id == R.id.navigation_reminders) {
             fragment=new RemindersFragment();
             transaction.replace(R.id.content,fragment).commit();

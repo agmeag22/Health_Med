@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
 
+import com.secondsave.health_med.Entities.PersonalInfo;
 import com.secondsave.health_med.Entities.User;
 import com.secondsave.health_med.Repository.HealthMedRepository;
 
@@ -39,6 +40,14 @@ public class HealthMedViewModel extends AndroidViewModel {
 
     public boolean isUserAndTokenMatch(String user, String token){
         return mRepository.isUserAndTokenMatch(user,token);
+    }
+
+    public User getUserByUsername(String username){
+        return mRepository.getUser(username);
+    }
+
+    public PersonalInfo getPersonalInfo(User user){
+        return mRepository.getUserPersonalInfo(user.getId_user());
     }
 }
 
