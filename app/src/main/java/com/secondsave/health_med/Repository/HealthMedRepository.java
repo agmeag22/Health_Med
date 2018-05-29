@@ -9,6 +9,7 @@ import com.secondsave.health_med.Database.HealthMedDatabase;
 import com.secondsave.health_med.Entities.User;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class HealthMedRepository {
     private UserDao mUserDao;
@@ -28,6 +29,50 @@ public class HealthMedRepository {
         int result = mUserDao.isUserAndPasswordMatch(user,password);
         return result>0;
     }
+
+    public boolean isUserAndTokenMatch(final String user, final String token){
+
+        AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
+         {
+            @Override
+            protected Boolean doInBackground(Void... voids) {
+                int result = mUserDao.isUserAndTokenMatch(user,token);
+                return result>0;
+            }
+        };
+
+        boolean b=false;
+        try {
+             b = task.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+    public void updateToken(String user, String token){
+        new updateTokenAsync(mUserDao, user, token).execute();
+    }
+
+    public static class updateTokenAsync extends AsyncTask<Void,Void,Boolean>{
+        private UserDao mUserDao;
+        private String user,token;
+
+        public updateTokenAsync(UserDao mUserDao, String user, String token) {
+            this.mUserDao=mUserDao;
+            this.user = user;
+            this.token = token;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... Void) {
+            mUserDao.updateUserToken(user,token);
+            return true;
+        }
+    }
+
 
     public void insert(User user) {
         new insertAsyncTask(mUserDao).execute(user);

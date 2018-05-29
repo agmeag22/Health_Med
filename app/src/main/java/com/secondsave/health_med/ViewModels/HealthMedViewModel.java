@@ -32,5 +32,13 @@ public class HealthMedViewModel extends AndroidViewModel {
     public boolean isUserAndPasswordMatch(String user, String password){
         return mRepository.isUserAndPasswordMatch(user,password);
     }
+
+    public void updateUserToken(String user, String token){
+        mRepository.updateToken(user,token);
+    }
+
+    public boolean isUserAndTokenMatch(String user, String token){
+        return mRepository.isUserAndTokenMatch(user,token);
+    }
 }
 

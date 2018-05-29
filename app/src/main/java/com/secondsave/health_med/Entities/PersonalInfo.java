@@ -11,13 +11,14 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         childColumns = "id_user",
         onDelete = CASCADE))
 
-public abstract class PersonalInfo {
+public  class PersonalInfo {
     @PrimaryKey(autoGenerate = true)
     private int id_personal_info;
     private int id_user;
     private String first_name;
     private String last_name;
     public PersonalInfo(){}
+
     public PersonalInfo(int id_user, String first_name, String last_name) {
         this.id_user = id_user;
         this.first_name = first_name;
