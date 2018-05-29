@@ -27,6 +27,12 @@
         <activity
             android:name=".Activities.LoginActivity"
             android:label="@string/title_logout"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA4-BaiTWE7qrJViFoLj2B_4LIqv7mj7us"/>
+
+
     </application>
 
 </manifest>
