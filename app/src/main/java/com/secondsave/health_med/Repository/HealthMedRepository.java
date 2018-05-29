@@ -4,8 +4,10 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import com.secondsave.health_med.Dao.PersonalInfoDao;
 import com.secondsave.health_med.Dao.UserDao;
 import com.secondsave.health_med.Database.HealthMedDatabase;
+import com.secondsave.health_med.Entities.PersonalInfo;
 import com.secondsave.health_med.Entities.User;
 
 import java.util.List;
@@ -13,18 +15,58 @@ import java.util.concurrent.ExecutionException;
 
 public class HealthMedRepository {
     private UserDao mUserDao;
+    private PersonalInfoDao personalInfoDao;
     private LiveData<List<User>> mUsers;
 
     public HealthMedRepository(Application application) {
         HealthMedDatabase db = HealthMedDatabase.getDatabase(application);
         mUserDao = db.userDao();
         mUsers = mUserDao.getAllUsers();
+        personalInfoDao = db.personalInfoDao();
     }
 
     public LiveData<List<User>> getAllUsers() {
         return mUsers;
     }
 
+    public User getUser(String username){
+        AsyncTask<String,Void,User> task = new AsyncTask<String, Void, User>() {
+            @Override
+            protected User doInBackground(String... strings) {
+                return mUserDao.getUserByUsername(strings[0]);
+            }
+        };
+
+        try {
+            User result = task.execute(username).get();
+            return result;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public PersonalInfo getUserPersonalInfo(int user_id){
+        AsyncTask<Integer,Void,PersonalInfo> task = new AsyncTask<Integer,Void,PersonalInfo>() {
+
+            @Override
+            protected PersonalInfo doInBackground(Integer... ints) {
+                return personalInfoDao.getPersonalInfoByUserId(ints[0]);
+            }
+        };
+        try {
+            PersonalInfo result  = task.execute(user_id).get();
+            return result;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public boolean isUserAndPasswordMatch(String user, String password){
         int result = mUserDao.isUserAndPasswordMatch(user,password);
         return result>0;

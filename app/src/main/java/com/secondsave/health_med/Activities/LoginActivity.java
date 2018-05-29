@@ -44,6 +44,8 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.secondsave.health_med.Entities.PersonalInfo;
+import com.secondsave.health_med.Entities.User;
 import com.secondsave.health_med.R;
 import com.secondsave.health_med.ViewModels.HealthMedViewModel;
 
@@ -344,6 +346,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 sp.edit().putString("token",token).apply();
                 mhealthmedViewModel.updateUserToken(mEmail,token);
+                User u = mhealthmedViewModel.getUserByUsername(mEmail);
+                PersonalInfo pi = mhealthmedViewModel.getPersonalInfo(u);
+                sp.edit().putString("name",pi.getFirst_name() + " " + pi.getLast_name()).apply();
                 sp.edit().putString("username",mEmail).apply();
                 finish();
             } else {
