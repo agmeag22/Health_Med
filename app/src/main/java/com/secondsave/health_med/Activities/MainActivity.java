@@ -41,12 +41,13 @@ public class MainActivity extends AppCompatActivity
 
 
     private HealthMedViewModel mhealthmedViewModel;
-    SharedPreferences sp;
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sp = getSharedPreferences("loggedin", MODE_PRIVATE);
+        prefs = this.getSharedPreferences(
+                "com.secondsave.health_med", MODE_PRIVATE);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -84,8 +85,9 @@ public class MainActivity extends AppCompatActivity
                 adapter.setmUsers(users);
             }
         });
-
-        if(!sp.getBoolean("loggedin",false)) {
+        String token = prefs.getString("token","");
+        String user = prefs.getString("username","");
+        if(user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
              Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
         }
