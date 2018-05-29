@@ -40,11 +40,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
     private HealthMedViewModel mhealthmedViewModel;
-
     SharedPreferences prefs;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +97,6 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
     }
-
-
     }
 
     @Override
@@ -148,7 +143,6 @@ public class MainActivity extends AppCompatActivity
             prefs.edit().remove("token").apply();
             prefs.edit().remove("username").apply();
             prefs.edit().remove("name").apply();
-
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
         }
