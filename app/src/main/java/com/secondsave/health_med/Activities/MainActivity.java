@@ -76,18 +76,20 @@ public class MainActivity extends AppCompatActivity
         email = navigationheader.findViewById(R.id.email_txt);
 
         //PRUEBA DE BD
-        RecyclerView recyclerView = findViewById(R.id.recycler);
-        final UserAdapter adapter = new UserAdapter();
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        RecyclerView recyclerView = findViewById(R.id.recycler);
+//        final UserAdapter adapter = new UserAdapter();
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mhealthmedViewModel = ViewModelProviders.of(this).get(HealthMedViewModel.class);
-        mhealthmedViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(@Nullable final List<User> users) {
-                // Update the cached copy of the words in the adapter.
-                adapter.setmUsers(users);
-            }
-        });
+//        mhealthmedViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
+//            @Override
+//            public void onChanged(@Nullable final List<User> users) {
+//                // Update the cached copy of the words in the adapter.
+//                adapter.setmUsers(users);
+//            }
+//        });
+
+
         String token = prefs.getString("token","");
         String user = prefs.getString("username","");
         String name = prefs.getString("name","");
