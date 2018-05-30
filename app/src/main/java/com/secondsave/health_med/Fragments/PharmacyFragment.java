@@ -10,10 +10,13 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
@@ -24,6 +27,7 @@ import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.secondsave.health_med.Adapters.PlacesAdapter;
 import com.secondsave.health_med.R;
 
 import java.util.ArrayList;
@@ -41,8 +45,11 @@ public class PharmacyFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     protected PlaceDetectionClient placeDetectionClient;
     protected GeoDataClient geoDataClient;
+    private View v;
     public static final String TAG = "CurrentLocNearByPlaces";
     private static final int LOC_REQ_CODE = 1;
+    private RecyclerView recyclerView;
+
     public PharmacyFragment() {
         // Required empty public constructor
     }
@@ -52,8 +59,11 @@ public class PharmacyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_pharmacy, container, false);
-        placeDetectionClient = Places.getPlaceDetectionClient(getContext(), null);
+         v = inflater.inflate(R.layout.fragment_pharmacy, container, false);
+
+        recyclerView = v.findViewById(R.id.recycler);
+        placeDetectionClient = Places.getPlaceDetectionClient(getActivity(),null);
+        getCurrentPlaceItems();
         return v;
     }
 
@@ -108,8 +118,7 @@ public class PharmacyFragment extends Fragment {
     @SuppressLint("MissingPermission")
     private void getCurrentPlaceData() {
 
-        Task<PlaceLikelihoodBufferResponse> placeResult =placeDetectionClient.
-                getCurrentPlace(null);
+        Task<PlaceLikelihoodBufferResponse> placeResult =placeDetectionClient.getCurrentPlace(null);
         placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
             @Override
             public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
@@ -121,10 +130,9 @@ public class PharmacyFragment extends Fragment {
                 }
                 likelyPlaces.release();
 
-//                PlacesRecyclerViewAdapter recyclerViewAdapter = new
-//                        PlacesRecyclerViewAdapter(placesList,
-//                        CurrentLocationNearByPlacesActivity.this);
-//                recyclerView.setAdapter(recyclerViewAdapter);
+                PlacesAdapter recyclerViewAdapter = new PlacesAdapter(placesList);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                recyclerView.setAdapter(recyclerViewAdapter);
             }
         });
     }

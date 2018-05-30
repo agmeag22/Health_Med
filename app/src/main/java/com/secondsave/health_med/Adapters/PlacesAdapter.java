@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.location.places.Place;
@@ -14,10 +15,16 @@ import java.util.List;
 public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder> {
     View v;
     private List<Place> places;
+
+
+    public PlacesAdapter(List<Place> places) {
+        this.places = places;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        v = parent.inflate(parent.getContext(),R.layout.element_user,null);
+        v = parent.inflate(parent.getContext(),R.layout.item_place_list,null);
         ViewHolder vh= new ViewHolder(v);
         return vh;
     }
@@ -25,8 +32,19 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(places !=null) {
-            holder.username.setText(places.get(position).getName());
-            holder.password.setText(places.get(position).getPhoneNumber());
+            holder.name.setText(places.get(position).getName());
+            holder.location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+            holder.phone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 
@@ -42,11 +60,13 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView username,password;
+        TextView name;
+        ImageView location,phone;
         public ViewHolder(View itemView) {
             super(itemView);
-            password = itemView.findViewById(R.id.passwort_txt);
-            username = itemView.findViewById(R.id.username_txt);
+            name = itemView.findViewById(R.id.place_name_txt);
+            location = itemView.findViewById(R.id.location_icon);
+            phone = itemView.findViewById(R.id.phone_icon);
         }
 
     }
