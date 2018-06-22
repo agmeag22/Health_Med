@@ -27,7 +27,7 @@ public interface PersonalInfoDao {
     @Query("SELECT * FROM personal_info ORDER BY id_user ASC")
     LiveData<List<PersonalInfo>> getAllPersonalInfo();
 
-    @Query("SELECT * FROM personal_info WHERE id_user = :id")
+    @Query("SELECT * FROM personal_info WHERE id_user=:id")
     PersonalInfo getPersonalInfoByUserId(int id);
 
 }
