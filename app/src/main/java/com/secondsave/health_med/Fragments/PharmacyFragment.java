@@ -3,9 +3,9 @@ package com.secondsave.health_med.Fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,6 +47,7 @@ public class PharmacyFragment extends Fragment {
     public static final String TAG = "CurrentLocNearByPlaces";
     private static final int LOC_REQ_CODE = 1;
     private RecyclerView recyclerView;
+    private View error_view;
     private TextView message;
     private MenuItem view_map;
     private ArrayList<Place> placesList;
@@ -62,7 +64,8 @@ public class PharmacyFragment extends Fragment {
         v = inflater.inflate(R.layout.fragment_pharmacy, container, false);
 
         recyclerView = v.findViewById(R.id.recycler);
-        message = v.findViewById(R.id.no_pharmacies);
+        error_view = v.findViewById(R.id.no_pharmacies);
+        message = v.findViewById(R.id.message);
         setHasOptionsMenu(true);
         placeDetectionClient = Places.getPlaceDetectionClient(getActivity());
         getCurrentPlaceItems();
@@ -136,36 +139,69 @@ public class PharmacyFragment extends Fragment {
                 placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
                     @Override
                     public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
-                            placesList = new ArrayList<>();
-                            PlacesAdapter recyclerViewAdapter = new PlacesAdapter(placesList);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            recyclerView.setAdapter(recyclerViewAdapter);
-                            for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                                Place place = placeLikelihood.getPlace();
-                                if (place.getPlaceTypes().contains(Place.TYPE_PHARMACY)) {
-                                    Log.i(TAG, String.format("Place '%s' has likelihood: %g",
-                                            place.getName(),
-                                            placeLikelihood.getLikelihood()));
-                                    placesList.add(placeLikelihood.getPlace().freeze());
-                                    recyclerViewAdapter.notifyItemInserted(placesList.size() - 1);
+                        if (isLocationEnabled(getContext())) {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
+                                placesList = new ArrayList<>();
+                                PlacesAdapter recyclerViewAdapter = new PlacesAdapter(placesList);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                recyclerView.setAdapter(recyclerViewAdapter);
+                                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                                    Place place = placeLikelihood.getPlace();
+                                    if (place.getPlaceTypes().contains(Place.TYPE_PHARMACY)) {
+                                        Log.i(TAG, String.format("Place '%s' has likelihood: %g",
+                                                place.getName(),
+                                                placeLikelihood.getLikelihood()));
+                                        placesList.add(placeLikelihood.getPlace().freeze());
+                                        recyclerViewAdapter.notifyItemInserted(placesList.size() - 1);
+                                    }
                                 }
-                            }
-                            if (placesList.size() == 0) {
-                                recyclerView.setVisibility(View.GONE);
-                                message.setVisibility(View.VISIBLE);
+                                if (placesList.size() == 0) {
+                                    recyclerView.setVisibility(View.GONE);
+                                    error_view.setVisibility(View.VISIBLE);
+                                } else {
+                                    recyclerView.setVisibility(View.VISIBLE);
+                                    error_view.setVisibility(View.GONE);
+                                }
+                                likelyPlaces.release();
                             } else {
-                                recyclerView.setVisibility(View.VISIBLE);
-                                message.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.GONE);
+                                error_view.setVisibility(View.VISIBLE);
+                                message.setText(R.string.enable_high_accuracy);
                             }
-                            likelyPlaces.release();
+                        }else {
+
                         }
                     }
                 });
 //        } catch (Settings.SettingNotFoundException e) {
 //            e.printStackTrace();
 //        }
+
+
+    }
+
+
+    public static boolean isLocationEnabled(Context context) {
+        int locationMode = 0;
+        String locationProviders;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            try {
+                locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
+
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            return locationMode != Settings.Secure.LOCATION_MODE_HIGH_ACCURACY;
+
+        }else{
+            locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+
 
     }
 
