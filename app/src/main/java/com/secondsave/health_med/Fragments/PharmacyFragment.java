@@ -3,9 +3,11 @@ package com.secondsave.health_med.Fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -32,9 +34,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.secondsave.health_med.Adapters.PlacesAdapter;
 import com.secondsave.health_med.R;
-
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class PharmacyFragment extends Fragment {
@@ -83,7 +83,6 @@ public class PharmacyFragment extends Fragment {
                     transaction.replace(R.id.container, fragment);
                     transaction.addToBackStack(null);
                     transaction.commit();
-
                 }
                 return false;
             }
@@ -131,35 +130,43 @@ public class PharmacyFragment extends Fragment {
 
     @SuppressLint("MissingPermission")
     private void getCurrentPlaceData() {
-        Task<PlaceLikelihoodBufferResponse> placeResult = placeDetectionClient.getCurrentPlace(null);
-        placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
-            @Override
-            public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
-                PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
-                placesList = new ArrayList<>();
-                PlacesAdapter recyclerViewAdapter = new PlacesAdapter(placesList);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(recyclerViewAdapter);
-                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                    Place place = placeLikelihood.getPlace();
-                    if(place.getPlaceTypes().contains(Place.TYPE_PHARMACY)) {
-                        Log.i(TAG, String.format("Place '%s' has likelihood: %g",
-                              place.getName(),
-                                placeLikelihood.getLikelihood()));
-                        placesList.add(placeLikelihood.getPlace().freeze());
-                        recyclerViewAdapter.notifyItemInserted(placesList.size() - 1);
+//        try {
+//            int locationMode = Settings.Secure.getInt(getActivity().getContentResolver(), Settings.Secure.LOCATION_MODE);
+                Task<PlaceLikelihoodBufferResponse> placeResult = placeDetectionClient.getCurrentPlace(null);
+                placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
+                    @Override
+                    public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
+                            placesList = new ArrayList<>();
+                            PlacesAdapter recyclerViewAdapter = new PlacesAdapter(placesList);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                            recyclerView.setAdapter(recyclerViewAdapter);
+                            for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                                Place place = placeLikelihood.getPlace();
+                                if (place.getPlaceTypes().contains(Place.TYPE_PHARMACY)) {
+                                    Log.i(TAG, String.format("Place '%s' has likelihood: %g",
+                                            place.getName(),
+                                            placeLikelihood.getLikelihood()));
+                                    placesList.add(placeLikelihood.getPlace().freeze());
+                                    recyclerViewAdapter.notifyItemInserted(placesList.size() - 1);
+                                }
+                            }
+                            if (placesList.size() == 0) {
+                                recyclerView.setVisibility(View.GONE);
+                                message.setVisibility(View.VISIBLE);
+                            } else {
+                                recyclerView.setVisibility(View.VISIBLE);
+                                message.setVisibility(View.GONE);
+                            }
+                            likelyPlaces.release();
+                        }
                     }
-                }
-                if(placesList.size()==0){
-                    recyclerView.setVisibility(View.GONE);
-                    message.setVisibility(View.VISIBLE);
-                }else{
-                    recyclerView.setVisibility(View.VISIBLE);
-                    message.setVisibility(View.GONE);
-                }
-                likelyPlaces.release();
-            }
-        });
+                });
+//        } catch (Settings.SettingNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
     }
 
     private boolean isLocationAccessPermitted() {
