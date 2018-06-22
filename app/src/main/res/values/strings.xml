@@ -41,5 +41,7 @@
     <string name="logout_menu_title">Logout</string>
     <string name="login">Login</string>
     <string name="no_pharmacies_near">No pharmacies near</string>
+    <string name="pharmacies_map">Pharmacies Map</string>
+    <string name="search">Search</string>
 
 </resources>

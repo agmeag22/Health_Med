@@ -15,6 +15,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -58,9 +60,16 @@ public class PharmacyFragment extends Fragment {
 
         recyclerView = v.findViewById(R.id.recycler);
         message = v.findViewById(R.id.no_pharmacies);
+        setHasOptionsMenu(true);
         placeDetectionClient = Places.getPlaceDetectionClient(getActivity());
         getCurrentPlaceItems();
         return v;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.pharmacy_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -123,11 +132,11 @@ public class PharmacyFragment extends Fragment {
                     }
                 }
                 if(placesList.size()==0){
-                    recyclerView.setVisibility(View.INVISIBLE);
+                    recyclerView.setVisibility(View.GONE);
                     message.setVisibility(View.VISIBLE);
                 }else{
                     recyclerView.setVisibility(View.VISIBLE);
-                    message.setVisibility(View.INVISIBLE);
+                    message.setVisibility(View.GONE);
                 }
                 MapFragment fragment = new MapFragment();
                 fragment.updateList(placesList);
