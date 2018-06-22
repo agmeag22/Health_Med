@@ -52,7 +52,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_pin_location"/>
+        android:src="@drawable/ic_directions"/>
 
     <ImageView
         android:id="@+id/phone_icon"
