@@ -157,12 +157,6 @@ public class PharmacyFragment extends Fragment {
                     recyclerView.setVisibility(View.VISIBLE);
                     message.setVisibility(View.GONE);
                 }
-//                MapFragment fragment = new MapFragment();
-//                fragment.updateList(placesList);
-//                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-//                transaction.replace(R.id.map_fragment,fragment);
-//                transaction.addToBackStack(null);
-//                transaction.commit();
                 likelyPlaces.release();
             }
         });
