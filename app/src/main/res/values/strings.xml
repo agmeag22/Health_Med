@@ -14,7 +14,6 @@
     <string name="pharmacy">Pharmacy</string>
     <string name="health">Health</string>
     <string name="profile">Profile</string>
-    <string name="title_logout">Sign in</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -28,6 +27,17 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="log_out">Log out</string>
+
+
+    <!--Strings for DrawerMenu-->
+    <string name="reminder_menu_title">Reminders</string>
+    <string name="statistics_menu_title">Statistics</string>
+    <string name="pharmacies_menu_title">Pharmacies</string>
+    <string name="health_menu_title">Health</string>
+    <string name="profile_menu_title">Profile</string>
+    <string name="settings_menu_title">Settings</string>
+    <string name="rateus_menu_title">Rate us</string>
+    <string name="logout_menu_title">Logout</string>
+    <string name="login">Login</string>
 
 </resources>
