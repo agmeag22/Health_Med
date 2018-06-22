@@ -68,7 +68,6 @@ public abstract class HealthMedDatabase extends RoomDatabase {
             PersonalInfo personalInfo = new PersonalInfo((int)id,"Allen","Perez");
             personalInfoDao.insert(personalInfo);
             user = new User("agmeag@gmail.com","1234", "");
-
             id = mDao.insert(user);
             new PersonalInfo((int)id,"Miguel","Aviles");
             personalInfoDao.insert(personalInfo);

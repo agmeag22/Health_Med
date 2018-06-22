@@ -29,5 +29,6 @@
         completions."
     </string>
     <string name="log_out">Log out</string>
+    <string name="no_pharmacies_near">No pharmacies near</string>
 
 </resources>

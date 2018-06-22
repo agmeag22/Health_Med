@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +17,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceDetectionClient;
-import com.google.android.gms.location.places.PlaceFilter;
 import com.google.android.gms.location.places.PlaceLikelihood;
 import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
 import com.google.android.gms.location.places.Places;
@@ -34,12 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link PharmacyFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
 public class PharmacyFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -49,6 +43,7 @@ public class PharmacyFragment extends Fragment {
     public static final String TAG = "CurrentLocNearByPlaces";
     private static final int LOC_REQ_CODE = 1;
     private RecyclerView recyclerView;
+    private TextView message;
 
     public PharmacyFragment() {
         // Required empty public constructor
@@ -59,10 +54,11 @@ public class PharmacyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-         v = inflater.inflate(R.layout.fragment_pharmacy, container, false);
+        v = inflater.inflate(R.layout.fragment_pharmacy, container, false);
 
         recyclerView = v.findViewById(R.id.recycler);
-        placeDetectionClient = Places.getPlaceDetectionClient(getActivity(),null);
+        message = v.findViewById(R.id.no_pharmacies);
+        placeDetectionClient = Places.getPlaceDetectionClient(getActivity());
         getCurrentPlaceItems();
         return v;
     }
@@ -91,16 +87,6 @@ public class PharmacyFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -117,22 +103,39 @@ public class PharmacyFragment extends Fragment {
 
     @SuppressLint("MissingPermission")
     private void getCurrentPlaceData() {
-
-        Task<PlaceLikelihoodBufferResponse> placeResult =placeDetectionClient.getCurrentPlace(null);
+        Task<PlaceLikelihoodBufferResponse> placeResult = placeDetectionClient.getCurrentPlace(null);
         placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
             @Override
             public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
-                Log.d(TAG, "current location places info");
-                List<Place> placesList = new ArrayList<Place>();
                 PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
-                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                    placesList.add(placeLikelihood.getPlace().freeze());
-                }
-                likelyPlaces.release();
-
+                List<Place> placesList = new ArrayList<>();
                 PlacesAdapter recyclerViewAdapter = new PlacesAdapter(placesList);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(recyclerViewAdapter);
+                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                    Place place = placeLikelihood.getPlace();
+                    if(place.getPlaceTypes().contains(Place.TYPE_PHARMACY)) {
+                        Log.i(TAG, String.format("Place '%s' has likelihood: %g",
+                              place.getName(),
+                                placeLikelihood.getLikelihood()));
+                        placesList.add(placeLikelihood.getPlace().freeze());
+                        recyclerViewAdapter.notifyItemInserted(placesList.size() - 1);
+                    }
+                }
+                if(placesList.size()==0){
+                    recyclerView.setVisibility(View.INVISIBLE);
+                    message.setVisibility(View.VISIBLE);
+                }else{
+                    recyclerView.setVisibility(View.VISIBLE);
+                    message.setVisibility(View.INVISIBLE);
+                }
+                MapFragment fragment = new MapFragment();
+                fragment.updateList(placesList);
+                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                transaction.replace(R.id.map_fragment,fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                likelyPlaces.release();
             }
         });
     }
