@@ -33,6 +33,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(places !=null) {
             holder.name.setText(places.get(position).getName());
+            holder.address.setText(places.get(position).getAddress());
             holder.location.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -60,10 +61,11 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
+        TextView name,address;
         ImageView location,phone;
         public ViewHolder(View itemView) {
             super(itemView);
+            address = itemView.findViewById(R.id.second_text_view);
             name = itemView.findViewById(R.id.place_name_txt);
             location = itemView.findViewById(R.id.location_icon);
             phone = itemView.findViewById(R.id.phone_icon);

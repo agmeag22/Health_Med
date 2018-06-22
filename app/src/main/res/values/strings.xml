@@ -14,6 +14,7 @@
     <string name="pharmacy">Pharmacy</string>
     <string name="health">Health</string>
     <string name="profile">Profile</string>
+    <string name="title_logout">Sign in</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -39,5 +40,6 @@
     <string name="rateus_menu_title">Rate us</string>
     <string name="logout_menu_title">Logout</string>
     <string name="login">Login</string>
+    <string name="no_pharmacies_near">No pharmacies near</string>
 
 </resources>
