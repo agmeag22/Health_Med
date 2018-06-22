@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class PharmacyFragment extends Fragment {
     private static final int LOC_REQ_CODE = 1;
     private RecyclerView recyclerView;
     private TextView message;
+    private MenuItem view_map;
+    private ArrayList<Place> placesList;
 
     public PharmacyFragment() {
         // Required empty public constructor
@@ -69,6 +72,22 @@ public class PharmacyFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.pharmacy_menu, menu);
+        view_map = menu.findItem(R.id.action_view_map);
+        view_map.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(placesList!=null) {
+                    MapFragment fragment = new MapFragment();
+                    fragment.updateList(placesList);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+                }
+                return false;
+            }
+        });
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -117,7 +136,7 @@ public class PharmacyFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
                 PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
-                List<Place> placesList = new ArrayList<>();
+                placesList = new ArrayList<>();
                 PlacesAdapter recyclerViewAdapter = new PlacesAdapter(placesList);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(recyclerViewAdapter);
@@ -138,12 +157,12 @@ public class PharmacyFragment extends Fragment {
                     recyclerView.setVisibility(View.VISIBLE);
                     message.setVisibility(View.GONE);
                 }
-                MapFragment fragment = new MapFragment();
-                fragment.updateList(placesList);
-                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                transaction.replace(R.id.map_fragment,fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+//                MapFragment fragment = new MapFragment();
+//                fragment.updateList(placesList);
+//                FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+//                transaction.replace(R.id.map_fragment,fragment);
+//                transaction.addToBackStack(null);
+//                transaction.commit();
                 likelyPlaces.release();
             }
         });
