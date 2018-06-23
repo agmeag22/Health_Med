@@ -20,8 +20,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.secondsave.health_med.Fragments.DoseFragment;
@@ -49,11 +52,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private LiveData<List<String>> listLiveData;
     private HealthMedViewModel mhealthmedViewModel;
     SharedPreferences prefs;
+    int access=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = this.getSharedPreferences(
                 "com.secondsave.health_med", MODE_PRIVATE);
+
         setContentView(R.layout.activity_main);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -97,10 +102,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String name = prefs.getString("name","");
         userName.setText(name);
         email.setText(user);
-//        if(name.equals("") ||user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
-//            Intent i = new Intent(this, LoginActivity.class);
-//            startActivity(i);
-//    }
+        if(name.equals("") ||user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
+
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+    }
 
     }
 
