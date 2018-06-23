@@ -11,5 +11,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@color/text_color_clear" />
 </LinearLayout>
