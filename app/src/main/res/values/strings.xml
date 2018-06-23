@@ -44,5 +44,7 @@
     <string name="pharmacies_map">Pharmacies Map</string>
     <string name="search">Search</string>
     <string name="enable_high_accuracy">Please enable High accuracy location</string>
+    <string name="enable_location">Please enable location</string>
+    <string name="no_gmaps">No tienes instalado google maps</string>
 
 </resources>
