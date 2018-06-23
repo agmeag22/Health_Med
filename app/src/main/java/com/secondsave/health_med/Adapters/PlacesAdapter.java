@@ -1,6 +1,13 @@
 package com.secondsave.health_med.Adapters;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +19,7 @@ import com.secondsave.health_med.R;
 
 import java.util.List;
 
-public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder> {
+public abstract class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder> {
     View v;
     private List<Place> places;
 
@@ -30,24 +37,34 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         if(places !=null) {
             holder.name.setText(places.get(position).getName());
             holder.address.setText(places.get(position).getAddress());
+
             holder.location.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    locationOnClick(places.get(position));
                 }
             });
+            if(places.get(position).getPhoneNumber()==null || places.get(position).getPhoneNumber().toString().equals("")){
+                holder.phone.setVisibility(View.GONE);
+            }else{
+                holder.phone.setVisibility(View.VISIBLE);
+            }
             holder.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                   phoneOnClick(places.get(position));
                 }
             });
         }
     }
+
+    protected abstract void locationOnClick(Place place);
+
+    public abstract void phoneOnClick(Place place);
 
     @Override
     public int getItemCount() {
@@ -70,6 +87,5 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
             location = itemView.findViewById(R.id.location_icon);
             phone = itemView.findViewById(R.id.phone_icon);
         }
-
     }
 }

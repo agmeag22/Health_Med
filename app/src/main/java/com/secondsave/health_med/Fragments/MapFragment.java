@@ -31,38 +31,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private List<Place> places;
     private List<Marker> markers;
 
-
-//    public static MapFragment NewInstance(List<Place> places){
-//        MapFragment fragment = new MapFragment();
-//        Bundle bundle = new Bundle();
-//        Gson gson = new Gson();
-//        String element = gson.toJson(
-//                places,
-//                new TypeToken<ArrayList<Place>>() {}.getType());
-//        bundle.putString("places",element);
-//        fragment.setArguments(bundle);
-//        return fragment;
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_map,
-                container, false);
-
-//        if(getArguments() != null){
-//            String json_places = getArguments().getString("places");
-//            Gson gson = new Gson();
-//            Type placesListType = new TypeToken<ArrayList<Place>>(){}.getType();
-//            places = gson.fromJson(json_places, placesListType);
-//        }
-
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.gmap);
         mapFragment.getMapAsync(this);
 
         return view;
     }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
