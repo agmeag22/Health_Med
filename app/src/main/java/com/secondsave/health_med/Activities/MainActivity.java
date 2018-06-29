@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<MenuModel> childModelsList;
     private LiveData<List<String>> listLiveData;
     private HealthMedViewModel mhealthmedViewModel;
+    Animation uptodown, downtoup;
     SharedPreferences prefs;
     int access=0;
     @Override
@@ -62,11 +63,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        FloatingActionButton menu_icon = (FloatingActionButton) findViewById(R.id.menu_opener);
+        final FloatingActionButton menu_icon = (FloatingActionButton) findViewById(R.id.menu_opener);
         menu_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawer.openDrawer(Gravity.START);
+                menu_icon.getTranslationX();
 
             }
         });
@@ -102,11 +104,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String name = prefs.getString("name","");
         userName.setText(name);
         email.setText(user);
-        if(name.equals("") ||user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
-
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-    }
+//        if(name.equals("") ||user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
+//
+//            Intent i = new Intent(this, LoginActivity.class);
+//            startActivity(i);
+//    }
 
     }
 
