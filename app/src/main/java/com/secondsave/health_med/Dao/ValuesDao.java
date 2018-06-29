@@ -15,22 +15,22 @@ public interface ValuesDao {
     @Insert
     void insert(Values values);
 
-    @Query("DELETE FROM `values`")
+    @Query("DELETE FROM values_d")
     void deleteAll();
 
-    @Query("DELETE FROM `values` WHERE id_values=:id")
+    @Query("DELETE FROM values_d WHERE id_values=:id")
     void deleteById(int id);
 
-    @Query("DELETE FROM `values` WHERE id_user=:id")
+    @Query("DELETE FROM values_d WHERE id_user=:id")
     void deleteAllValuesByUserId(int id);
 
-    @Query("SELECT * FROM `values` ORDER BY id_user ASC")
+    @Query("SELECT * FROM values_d ORDER BY id_user ASC")
     LiveData<List<Values>> getAllValues();
 
-    @Query("SELECT * FROM `values` WHERE id_user=:id ORDER BY id_values_type ASC")
+    @Query("SELECT * FROM values_d WHERE id_user=:id ORDER BY id_values_type ASC")
     LiveData<List<Values>> getAllValuesByUserId(int id);
 
-    @Query("SELECT * FROM `values` WHERE id_user=:id_user AND id_values_type=:id_values_type")
+    @Query("SELECT * FROM values_d WHERE id_user=:id_user AND id_values_type=:id_values_type")
     LiveData<List<Values>> getAllValuesByUserIdAndType(int id_user,String id_values_type);
 
 }
