@@ -9,9 +9,6 @@ import java.sql.Date;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "dose",foreignKeys = {
-        @ForeignKey(entity = DoseType.class,
-                parentColumns = "id_dose_type",
-                childColumns = "id_dose_type"),
         @ForeignKey(entity = User.class,
                 parentColumns = "id_user",
                 childColumns = "id_user",
