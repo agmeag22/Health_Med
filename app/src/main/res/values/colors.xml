@@ -9,5 +9,9 @@
     <color name="childselection_color">#8890A0</color>
     <color name="background">#8890A0</color>
 
+    <color name="black">#000</color>
+    <color name="lightorange">#fdf2df</color>
+    <color name="lightorangedark">#ebd6ab</color>
+
 
 </resources>

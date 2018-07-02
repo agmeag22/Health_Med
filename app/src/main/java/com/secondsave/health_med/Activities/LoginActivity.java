@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -351,6 +352,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 sp.edit().putString("name",pi.getFirst_name() + " " + pi.getLast_name()).apply();
                 sp.edit().putString("username",mEmail).apply();
                 finish();
+
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

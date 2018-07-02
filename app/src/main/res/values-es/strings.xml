@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Health_Med</string>
+    <!--Strings for DrawerMenu-->
+
+    <string name="reminder_menu_title">Recordatorios</string>
+    <string name="statistics_menu_title">Estadísticas</string>
+    <string name="pharmacies_menu_title">Farmacias</string>
+    <string name="health_menu_title">Salud</string>
+    <string name="profile_menu_title">Perfil</string>
+    <string name="settings_menu_title">Ajustes</string>
+    <string name="rateus_menu_title">Calificanos!</string>
+    <string name="logout_menu_title">Salir</string>
+    <string name="login">Inicio de sesión</string>
+    <string name="no_pharmacies_near">No hay farmacias cerca</string>
+    <string name="pharmacies_map">Mapa de farmacias</string>
+    <string name="search">Buscar</string>
+
+
+    <string name="navigation_drawer_open">Abrir menu</string>
+    <string name="navigation_drawer_close">Cerrar menu</string>
+    <string name="nav_header_desc">Encabezado menu</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="title_notifications">Notificaciones</string>
+    <string name="reminders">Recordatorios</string>
+    <string name="dose">Dosis</string>
+    <string name="pharmacy">Farmacia</string>
+    <string name="health">Salud</string>
+    <string name="profile">Perfil</string>
+    <string name="title_logout">Iniciar Sesión</string>
+
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Correo</string>
+    <string name="prompt_password">Contraseña (opcional)</string>
+    <string name="action_sign_in">Inicio de sesión o registrarse</string>
+    <string name="action_sign_in_short">Iniciar Sesión</string>
+    <string name="error_invalid_email">El correo es invalido</string>
+    <string name="error_invalid_password">La contraseña es muy corta</string>
+    <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_field_required">Este campo es obligatorio</string>
+    <string name="permission_rationale">Permiso de contactos requerido para proveer informacion del correo</string>
+
+
+    <!--Strings for Reminder Fragment-->
+    <string name="sunday_letter">D</string>
+    <string name="monday_letter">L</string>
+    <string name="tuesday_letter">M</string>
+    <string name="wednesday_letter">M</string>
+    <string name="thursday_letter">J</string>
+    <string name="friday_letter">V</string>
+    <string name="saturday_letter">S</string>
+    <string name="timepicker_done">Hecho</string>
+</resources>

@@ -5,9 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
@@ -15,20 +13,17 @@ import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.secondsave.health_med.Fragments.DoseFragment;
 import com.secondsave.health_med.Fragments.HealthFragment;
 import com.secondsave.health_med.Fragments.PharmacyFragment;
 import com.secondsave.health_med.Fragments.ProfileFragment;
-import com.secondsave.health_med.Fragments.RemindersFragment;
+import com.secondsave.health_med.Fragments.Reminders.RemindersFragment;
 import com.secondsave.health_med.Menu.MenuModel;
 import com.secondsave.health_med.R;
 import com.secondsave.health_med.ViewModels.HealthMedViewModel;
@@ -48,20 +43,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<MenuModel> childModelsList;
     private LiveData<List<String>> listLiveData;
     private HealthMedViewModel mhealthmedViewModel;
+    Animation uptodown, downtoup;
     SharedPreferences prefs;
+    int access=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = this.getSharedPreferences(
                 "com.secondsave.health_med", MODE_PRIVATE);
+
         setContentView(R.layout.activity_main);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        FloatingActionButton menu_icon = (FloatingActionButton) findViewById(R.id.menu_opener);
+        final FloatingActionButton menu_icon = (FloatingActionButton) findViewById(R.id.menu_opener);
         menu_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawer.openDrawer(Gravity.START);
+                menu_icon.getTranslationX();
 
             }
         });
@@ -98,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         userName.setText(name);
         email.setText(user);
 //        if(name.equals("") ||user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
+//
 //            Intent i = new Intent(this, LoginActivity.class);
 //            startActivity(i);
 //    }

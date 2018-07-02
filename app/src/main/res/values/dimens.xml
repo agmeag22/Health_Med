@@ -6,4 +6,6 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="corner_margin">8dp</dimen>
+    <dimen name="togglebutton_width">40dp</dimen>
+    <dimen name="togglebutton_heigth">40dp</dimen>
 </resources>
