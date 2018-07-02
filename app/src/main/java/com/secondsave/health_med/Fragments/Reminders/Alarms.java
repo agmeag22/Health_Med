@@ -1,4 +1,5 @@
 package com.secondsave.health_med.Fragments.Reminders;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +13,8 @@ import android.widget.Toast;
 public class Alarms extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context,"Wake up",Toast.LENGTH_LONG).show();
-        Vibrator vibrator= (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
+        Toast.makeText(context, "Wake up", Toast.LENGTH_LONG).show();
+        Vibrator vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
         vibrator.vibrate(100);
     }
 }
