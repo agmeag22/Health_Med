@@ -10,16 +10,12 @@ import java.sql.Date;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 import static android.arch.persistence.room.ForeignKey.NO_ACTION;
 
-@Entity(tableName = "values",
+@Entity(tableName = "values_d",
         foreignKeys = {
         @ForeignKey(entity = User.class,
         parentColumns = "id_user",
         childColumns = "id_user",
-        onDelete = CASCADE),
-        @ForeignKey(entity = ValuesType.class,
-        parentColumns = "id_values_type",
-        childColumns = "id_values_type"
-        )})
+        onDelete = CASCADE)})
 public class Values {
     @PrimaryKey(autoGenerate = true)
     private int id_values;

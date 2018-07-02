@@ -1,4 +1,4 @@
-package com.secondsave.health_med.Fragments;
+package com.secondsave.health_med.Fragments.Pharmacy;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,7 +37,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.gmap);
         mapFragment.getMapAsync(this);
-
         return view;
     }
 

@@ -1,4 +1,4 @@
-package com.secondsave.health_med.Fragments;
+package com.secondsave.health_med.Fragments.Pharmacy;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

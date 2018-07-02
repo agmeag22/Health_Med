@@ -15,7 +15,7 @@ import com.secondsave.health_med.Dao.UserDao;
 import com.secondsave.health_med.Dao.ValuesDao;
 import com.secondsave.health_med.Entities.*;
 
-@Database(entities = {User.class, Values.class, ValuesType.class, Reminder.class, PersonalInfo.class, Dose.class, DoseType.class}, version = 2)
+@Database(entities = {User.class, Values.class, Reminder.class, PersonalInfo.class, Dose.class, DoseType.class}, version = 2)
 @TypeConverters({DateTypeConverter.class})
 public abstract class HealthMedDatabase extends RoomDatabase {
 
