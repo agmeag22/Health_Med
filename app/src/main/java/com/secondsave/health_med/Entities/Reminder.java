@@ -15,14 +15,12 @@ public class Reminder {
     @PrimaryKey(autoGenerate = true)
     private int id_reminder;
     private int id_dose;
-    private Date start_date;
-    private Date next_date;
+    private Date date;
     private boolean dismissed;
 
-    public Reminder(int id_dose, Date start_date, Date next_date, boolean dismissed) {
+    public Reminder(int id_dose, Date date, boolean dismissed) {
         this.id_dose = id_dose;
-        this.start_date = start_date;
-        this.next_date = next_date;
+        this.date = date;
         this.dismissed = dismissed;
     }
 
@@ -42,27 +40,19 @@ public class Reminder {
         this.id_dose = id_dose;
     }
 
-    public Date getStart_date() {
-        return start_date;
-    }
-
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
-    }
-
-    public Date getNext_date() {
-        return next_date;
-    }
-
-    public void setNext_date(Date next_date) {
-        this.next_date = next_date;
-    }
-
     public boolean isDismissed() {
         return dismissed;
     }
 
     public void setDismissed(boolean dismissed) {
         this.dismissed = dismissed;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
