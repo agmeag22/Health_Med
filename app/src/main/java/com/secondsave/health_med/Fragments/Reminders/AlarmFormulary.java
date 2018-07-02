@@ -42,9 +42,9 @@ public class AlarmFormulary extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.alarmformulary, container, false);
-        medication_name = v.findViewById(R.id.medication_name_edit_text);
+        medication_name = v.findViewById(R.id.text_med_name);
         dose_from = v.findViewById(R.id.from_this_day);
-        dose_to = v.findViewById(R.id.to_this_day);
+        dose_to = v.findViewById(R.id.tot_this_day);
         dose_type = v.findViewById(R.id.dose_type_selection);
         dose_quantity = v.findViewById(R.id.dose_quantity);
         start = v.findViewById(R.id.start);
@@ -69,6 +69,18 @@ public class AlarmFormulary extends Fragment {
             }
         });
 
+        dose_to.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                DialogFragment datePickerPopUp2 = new TimePickerPopUp();
+                Bundle args = new Bundle();
+                args.putInt("clicked", 2);
+                datePickerPopUp2.setArguments(settingValues(args));
+                datePickerPopUp2.show(transaction, null);
+            }
+        });
 
         dose_from.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,18 +95,7 @@ public class AlarmFormulary extends Fragment {
             }
         });
 
-        dose_to.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                DialogFragment datePickerPopUp2 = new DatePickerPopUp();
-                Bundle args = new Bundle();
-                args.putInt("clicked", 2);
-                datePickerPopUp2.setArguments(settingValues(args));
-                datePickerPopUp2.show(transaction, null);
-            }
-        });
         time_between_dose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
