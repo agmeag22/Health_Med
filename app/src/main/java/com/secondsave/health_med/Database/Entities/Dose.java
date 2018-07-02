@@ -1,4 +1,4 @@
-package com.secondsave.health_med.Entities;
+package com.secondsave.health_med.Database.Entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
@@ -8,15 +8,14 @@ import java.sql.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "dose",foreignKeys = {
-        @ForeignKey(entity = User.class,
-                parentColumns = "id_user",
-                childColumns = "id_user",
-                onDelete = CASCADE)
-})
+@Entity(tableName = "dose")
 public class Dose {
     @PrimaryKey(autoGenerate = true)
     private int id_dose;
+    @ForeignKey(entity = User.class,
+            parentColumns = "id_user",
+            childColumns = "id_user",
+            onDelete = CASCADE)
     private int id_user;
     private int id_dose_type;
     private String name;

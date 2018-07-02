@@ -5,9 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
@@ -30,7 +28,7 @@ import com.secondsave.health_med.Fragments.ProfileFragment;
 import com.secondsave.health_med.Fragments.Reminders.RemindersFragment;
 import com.secondsave.health_med.Menu.MenuModel;
 import com.secondsave.health_med.R;
-import com.secondsave.health_med.ViewModels.HealthMedViewModel;
+import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

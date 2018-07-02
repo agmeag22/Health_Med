@@ -1,13 +1,13 @@
-package com.secondsave.health_med.ViewModels;
+package com.secondsave.health_med.Database.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
 
-import com.secondsave.health_med.Entities.PersonalInfo;
-import com.secondsave.health_med.Entities.User;
-import com.secondsave.health_med.Repository.HealthMedRepository;
+import com.secondsave.health_med.Database.Entities.PersonalInfo;
+import com.secondsave.health_med.Database.Entities.User;
+import com.secondsave.health_med.Database.Repository.HealthMedRepository;
 
 import java.util.List;
 

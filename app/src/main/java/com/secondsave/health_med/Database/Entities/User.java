@@ -1,4 +1,4 @@
-package com.secondsave.health_med.Entities;
+package com.secondsave.health_med.Database.Entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

@@ -1,12 +1,11 @@
-package com.secondsave.health_med.Dao;
+package com.secondsave.health_med.Database.Dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.secondsave.health_med.Entities.PersonalInfo;
-import com.secondsave.health_med.Entities.Values;
+import com.secondsave.health_med.Database.Entities.Values;
 
 import java.util.List;
 

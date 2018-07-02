@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -45,10 +44,10 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.secondsave.health_med.Entities.PersonalInfo;
-import com.secondsave.health_med.Entities.User;
+import com.secondsave.health_med.Database.Entities.PersonalInfo;
+import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.R;
-import com.secondsave.health_med.ViewModels.HealthMedViewModel;
+import com.secondsave.health_med.Database.Entities.User;
 
 import static android.Manifest.permission.READ_CONTACTS;
 

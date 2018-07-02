@@ -10,10 +10,13 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.secondsave.health_med.Converters.DateTypeConverter;
-import com.secondsave.health_med.Dao.PersonalInfoDao;
-import com.secondsave.health_med.Dao.UserDao;
-import com.secondsave.health_med.Dao.ValuesDao;
-import com.secondsave.health_med.Entities.*;
+import com.secondsave.health_med.Database.Dao.PersonalInfoDao;
+import com.secondsave.health_med.Database.Dao.UserDao;
+import com.secondsave.health_med.Database.Dao.ValuesDao;
+import com.secondsave.health_med.Database.Entities.*;
+
+import java.sql.Date;
+import java.util.Calendar;
 
 @Database(entities = {User.class, Values.class, Reminder.class, PersonalInfo.class, Dose.class}, version = 2)
 @TypeConverters({DateTypeConverter.class})
@@ -65,15 +68,15 @@ public abstract class HealthMedDatabase extends RoomDatabase {
             mDao.deleteAll();
             User user = new User("electroanime2009@gmail.com","1234","" );
             long id= mDao.insert(user);
-            PersonalInfo personalInfo = new PersonalInfo((int)id,"Allen","Perez");
+            PersonalInfo personalInfo = new PersonalInfo((int)id,"Allen","Perez", 1, new Date(Calendar.getInstance().getTimeInMillis()));
             personalInfoDao.insert(personalInfo);
             user = new User("meag", "1234", "");
             id = mDao.insert(user);
-            personalInfo = new PersonalInfo((int) id, "Miguel", "Aviles");
+            personalInfo = new PersonalInfo((int) id, "Miguel", "Aviles",1, new Date(Calendar.getInstance().getTimeInMillis()));
             personalInfoDao.insert(personalInfo);
             user = new User("agwolfox@gmail.com", "1234", "");
             id = mDao.insert(user);
-            personalInfo = new PersonalInfo((int) id, "Miguel", "Aviles");
+            personalInfo = new PersonalInfo((int) id, "Miguel", "Aviles",1, new Date(Calendar.getInstance().getTimeInMillis()));
             personalInfoDao.insert(personalInfo);
 
             return null;

@@ -59,5 +59,15 @@
     <string name="thursday_letter">T</string>
     <string name="friday_letter">F</string>
     <string name="saturday_letter">S</string>
+    <string name="sex">Select your gender</string>
+    <string name="birthday">Birthday</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="first_setup_header_message">In order to track your progress, we need to record your inital data</string>
+
+    <string-array name="metrics_type_array">
+        <item>CM|KG</item>
+        <item>IN|LB</item>
+    </string-array>
 
 </resources>

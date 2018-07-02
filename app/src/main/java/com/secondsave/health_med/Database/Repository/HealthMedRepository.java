@@ -1,14 +1,14 @@
-package com.secondsave.health_med.Repository;
+package com.secondsave.health_med.Database.Repository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
-import com.secondsave.health_med.Dao.PersonalInfoDao;
-import com.secondsave.health_med.Dao.UserDao;
+import com.secondsave.health_med.Database.Dao.PersonalInfoDao;
+import com.secondsave.health_med.Database.Dao.UserDao;
 import com.secondsave.health_med.Database.HealthMedDatabase;
-import com.secondsave.health_med.Entities.PersonalInfo;
-import com.secondsave.health_med.Entities.User;
+import com.secondsave.health_med.Database.Entities.PersonalInfo;
+import com.secondsave.health_med.Database.Entities.User;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

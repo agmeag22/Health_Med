@@ -1,4 +1,4 @@
-package com.secondsave.health_med.Entities;
+package com.secondsave.health_med.Database.Entities;
 
 
 import android.arch.persistence.room.Entity;
@@ -8,7 +8,6 @@ import android.arch.persistence.room.PrimaryKey;
 import java.sql.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
-import static android.arch.persistence.room.ForeignKey.NO_ACTION;
 
 @Entity(tableName = "values_d",
         foreignKeys = {
