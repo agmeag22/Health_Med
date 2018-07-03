@@ -6,27 +6,40 @@ import android.os.AsyncTask;
 
 import com.secondsave.health_med.Database.Dao.PersonalInfoDao;
 import com.secondsave.health_med.Database.Dao.UserDao;
+import com.secondsave.health_med.Database.Dao.ValuesDao;
+import com.secondsave.health_med.Database.Entities.Values;
 import com.secondsave.health_med.Database.HealthMedDatabase;
 import com.secondsave.health_med.Database.Entities.PersonalInfo;
 import com.secondsave.health_med.Database.Entities.User;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class HealthMedRepository {
     private UserDao mUserDao;
+    private ValuesDao valuesDao;
     private PersonalInfoDao personalInfoDao;
     private LiveData<List<User>> mUsers;
 
     public HealthMedRepository(Application application) {
         HealthMedDatabase db = HealthMedDatabase.getDatabase(application);
         mUserDao = db.userDao();
+        valuesDao = db.valuesDao();
         mUsers = mUserDao.getAllUsers();
         personalInfoDao = db.personalInfoDao();
     }
 
     public LiveData<List<User>> getAllUsers() {
         return mUsers;
+    }
+
+    public LiveData<List<Values>> getAllValuesByUserIdAndType(int user_id,int type) {
+        return valuesDao.getAllValuesByUserIdAndType(user_id,type);
+    }
+    public int countValuesByUserIdAndType(int user_id,int type) {
+        return valuesDao.countValuesByUserIdAndType(user_id,type);
     }
 
     public User getUser(String username){
@@ -48,6 +61,10 @@ public class HealthMedRepository {
         return null;
     }
 
+    public User getUserAsync(String username){
+        return mUserDao.getUserByUsername(username);
+
+    }
 
     public PersonalInfo getUserPersonalInfo(int user_id){
         AsyncTask<Integer,Void,PersonalInfo> task = new AsyncTask<Integer,Void,PersonalInfo>() {
@@ -66,6 +83,10 @@ public class HealthMedRepository {
             e.printStackTrace();
         }
         return null;
+    }
+    public PersonalInfo getUserPersonalInfoAsync(int user_id){
+
+                return personalInfoDao.getPersonalInfoByUserId(user_id);
     }
     public boolean isUserAndPasswordMatch(String user, String password){
         int result = mUserDao.isUserAndPasswordMatch(user,password);
@@ -134,4 +155,13 @@ public class HealthMedRepository {
             return null;
         }
     }
+
+    public void insertValues(Values values){
+        valuesDao.insert(values);
+    }
+
+    public void insertPersonaInfo(PersonalInfo personalInfo){
+        personalInfoDao.insert(personalInfo);
+    }
+
 }

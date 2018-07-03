@@ -64,6 +64,10 @@
     <string name="weight">Weight</string>
     <string name="height">Height</string>
     <string name="first_setup_header_message">In order to track your progress, we need to record your inital data</string>
+    <string name="error">ROOM ERROR</string>
+    <string name="sucess">Sucess</string>
+    <string name="save">SAVE</string>
+    <string name="empty_field">Empty field</string>
 
     <string-array name="metrics_type_array">
         <item>CM|KG</item>

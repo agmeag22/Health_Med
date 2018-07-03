@@ -30,6 +30,9 @@ public interface ValuesDao {
     LiveData<List<Values>> getAllValuesByUserId(int id);
 
     @Query("SELECT * FROM values_d WHERE id_user=:id_user AND id_values_type=:id_values_type")
-    LiveData<List<Values>> getAllValuesByUserIdAndType(int id_user,String id_values_type);
+    LiveData<List<Values>> getAllValuesByUserIdAndType(int id_user,int id_values_type);
+
+    @Query("SELECT count(id_values) FROM values_d WHERE id_user=:id_user AND id_values_type=:id_values_type")
+    int countValuesByUserIdAndType(int id_user,int id_values_type);
 
 }

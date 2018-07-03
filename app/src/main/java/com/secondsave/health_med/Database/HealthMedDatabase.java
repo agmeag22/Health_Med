@@ -10,7 +10,9 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.secondsave.health_med.Converters.DateTypeConverter;
+import com.secondsave.health_med.Database.Dao.DoseDao;
 import com.secondsave.health_med.Database.Dao.PersonalInfoDao;
+import com.secondsave.health_med.Database.Dao.RemindersDao;
 import com.secondsave.health_med.Database.Dao.UserDao;
 import com.secondsave.health_med.Database.Dao.ValuesDao;
 import com.secondsave.health_med.Database.Entities.*;
@@ -25,6 +27,9 @@ public abstract class HealthMedDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract ValuesDao valuesDao();
     public abstract PersonalInfoDao personalInfoDao();
+    public abstract DoseDao doseDao();
+    public abstract RemindersDao reminderDao();
+
 
     //TODO: HACER Y AGREGAR LOS DAO RESTANTES
     private static HealthMedDatabase INSTANCE;

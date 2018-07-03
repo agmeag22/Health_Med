@@ -7,6 +7,7 @@ import android.arch.lifecycle.LiveData;
 
 import com.secondsave.health_med.Database.Entities.PersonalInfo;
 import com.secondsave.health_med.Database.Entities.User;
+import com.secondsave.health_med.Database.Entities.Values;
 import com.secondsave.health_med.Database.Repository.HealthMedRepository;
 
 import java.util.List;
@@ -45,9 +46,30 @@ public class HealthMedViewModel extends AndroidViewModel {
     public User getUserByUsername(String username){
         return mRepository.getUser(username);
     }
+    public User getUserByUsernameAsync(String username){
+        return mRepository.getUserAsync(username);
+    }
 
     public PersonalInfo getPersonalInfo(User user){
         return mRepository.getUserPersonalInfo(user.getId_user());
+    }
+    public PersonalInfo getPersonalInfoAsync(User user){
+        return mRepository.getUserPersonalInfoAsync(user.getId_user());
+    }
+
+    public LiveData<List<Values>> getAllValuesByUserIdAndType(int user_id, int type) {
+        return mRepository.getAllValuesByUserIdAndType(user_id,type);
+    }
+    public int countValuesByUserIdAndType(int user_id, int type) {
+        return mRepository.countValuesByUserIdAndType(user_id,type);
+    }
+
+    public void insertPersonaInfo(PersonalInfo personalInfo){
+        mRepository.insertPersonaInfo(personalInfo);
+    }
+
+    public void insertValues(Values values){
+        mRepository.insertValues(values);
     }
 }
 

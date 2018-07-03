@@ -30,6 +30,7 @@
             android:text="@string/sex" />
 
         <RadioGroup
+            android:id="@+id/sex_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -37,12 +38,12 @@
             android:layout_marginBottom="16dp">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/male"
                 style="@style/radio_button_image"
                 android:background="@drawable/man" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/female"
                 style="@style/radio_button_image"
                 android:background="@drawable/woman" />
         </RadioGroup>
@@ -58,6 +59,9 @@
             android:layout_centerInParent="true"
             android:ellipsize="start"
             android:gravity="center_horizontal"
+            android:focusable="false"
+            android:clickable="true"
+
             android:drawableLeft="@drawable/ic_birthday" />
 
         <Spinner
@@ -109,6 +113,13 @@
             android:gravity="center"
             android:text="@string/app_name"
             android:layout_marginBottom="16dp" />
-
+        <Button
+            android:id="@+id/save_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/save"
+            android:textStyle="bold" />
     </LinearLayout>
 </ScrollView>

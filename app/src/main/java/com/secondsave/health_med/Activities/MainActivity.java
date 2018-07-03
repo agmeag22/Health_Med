@@ -1,10 +1,12 @@
 package com.secondsave.health_med.Activities;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,6 +23,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 
+import com.secondsave.health_med.Database.Entities.User;
 import com.secondsave.health_med.Fragments.Health.HealthFragment;
 import com.secondsave.health_med.Fragments.Pharmacy.PharmacyFragment;
 import com.secondsave.health_med.Fragments.ProfileFragment;
@@ -98,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String name = prefs.getString("name","");
         userName.setText(name);
         email.setText(user);
-//        if(name.equals("") ||user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
-//            Intent i = new Intent(this, LoginActivity.class);
-//            startActivity(i);
-//    }
+        if(name.equals("") ||user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user,token)) {
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+    }
 
     }
 
