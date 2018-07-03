@@ -26,11 +26,14 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.ByteArrayInputStream;
@@ -81,10 +84,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     HealthMedViewModel mhealthmedViewModel;
     private String token ;
 
+
+//    private static Button loginButton;
+//    private static TextView forgotPassword, signUp;
+//    private static CheckBox show_hide_password;
+//    private static LinearLayout loginLayout;
+//    private static Animation shakeAnimation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.login_layout);
         token = getCertificateSHA1Fingerprint();
         mhealthmedViewModel = ViewModelProviders.of(LoginActivity.this).get(HealthMedViewModel.class);
         // Set up the login form.
