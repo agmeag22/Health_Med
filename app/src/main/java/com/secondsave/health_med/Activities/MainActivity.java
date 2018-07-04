@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -51,25 +54,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         prefs = this.getSharedPreferences(
                 "com.secondsave.health_med", MODE_PRIVATE);
-
-        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        final FloatingActionButton menu_icon = (FloatingActionButton) findViewById(R.id.menu_opener);
-        menu_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawer.openDrawer(Gravity.START);
-                menu_icon.getTranslationX();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+//        final FloatingActionButton menu_icon = (FloatingActionButton) findViewById(R.id.menu_opener);
+//        menu_icon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                drawer.openDrawer(Gravity.START);
+//                menu_icon.getTranslationX();
+//
+//            }
+//        });
 
-            }
-        });
 
 
-
-
+        mhealthmedViewModel = ViewModelProviders.of(this).get(HealthMedViewModel.class);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         TextView userName, email;
         View navigationheader = navigationView.getHeaderView(0);
@@ -79,20 +87,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
         populateExpandableList();
-        //PRUEBA DE BD
-//        RecyclerView recyclerView = findViewById(R.id.recycler);
-//        final UserAdapter adapter = new UserAdapter();
-//        recyclerView.setAdapter(adapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mhealthmedViewModel = ViewModelProviders.of(this).get(HealthMedViewModel.class);
-//        mhealthmedViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
-//            @Override
-//            public void onChanged(@Nullable final List<User> users) {
-//                // Update the cached copy of the words in the adapter.
-//                adapter.setmUsers(users);
-//            }
-//        });
-
         String token = prefs.getString("token","");
         String user = prefs.getString("username","");
         String name = prefs.getString("name","");

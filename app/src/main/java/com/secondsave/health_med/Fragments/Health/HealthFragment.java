@@ -1,19 +1,33 @@
 package com.secondsave.health_med.Fragments.Health;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.ScatterChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.ScatterData;
+import com.github.mikephil.charting.data.ScatterDataSet;
+import com.secondsave.health_med.AxisFormater.DayValueFormatter;
 import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.Entities.User;
 import com.secondsave.health_med.Database.HealthMedDatabase;
@@ -34,6 +48,10 @@ public class HealthFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private View v;
+    private HealthMedViewModel mhealthmedViewModel;
+    private SharedPreferences prefs;
+    private String user;
+
 
     public HealthFragment() {
         // Required empty public constructor
@@ -44,16 +62,13 @@ public class HealthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_health, container, false);
-        // Inflate the layout for this fragment
-        ScatterChart chart = v.findViewById(R.id.chart);
+       //Set up variables
+        mhealthmedViewModel = ViewModelProviders.of(getActivity()).get(HealthMedViewModel.class);
+        prefs = getContext().getSharedPreferences(
+                "com.secondsave.health_med", getContext().MODE_PRIVATE);
+        user = prefs.getString("username","");
 
-//        List<Entry> entries = new ArrayList<Entry>();
-//        List<IMCEntry> list = new ArrayList<>();
-//        list.add(new IMCEntry(1, 1, ))
-//        int i = 0;
-//        for (IMCEntry data : list) {
-//            entries.add(new Entry(data.getWeight(), i++));
-//        }
+
         doInBackGround task = new doInBackGround();
         task.execute();
         return v;
@@ -102,10 +117,7 @@ public class HealthFragment extends Fragment {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            HealthMedViewModel mhealthmedViewModel = ViewModelProviders.of(getActivity()).get(HealthMedViewModel.class);
-            SharedPreferences prefs = getContext().getSharedPreferences(
-                    "com.secondsave.health_med", getContext().MODE_PRIVATE);
-            String user = prefs.getString("username","");
+
             User u = mhealthmedViewModel.getUserByUsernameAsync(user);
             if(u!=null) {
                 int IMC_entries = mhealthmedViewModel.countValuesByUsername(user);

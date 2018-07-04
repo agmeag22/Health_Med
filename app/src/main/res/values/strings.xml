@@ -95,5 +95,8 @@
     <string name="registered_emailid">Please enter your Registered Email Id below:</string>
     <string name="submit">SUBMIT</string>
     <string name="back">BACK</string>
+    <string name="initial_weight">Initial weight</string>
+    <string name="current_weight">Current weight</string>
+    <string name="goal">Goal</string>
 
 </resources>
