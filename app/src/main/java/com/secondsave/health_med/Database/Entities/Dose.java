@@ -13,10 +13,10 @@ public class Dose {
     @PrimaryKey(autoGenerate = true)
     private int id_dose;
     @ForeignKey(entity = User.class,
-            parentColumns = "id_user",
-            childColumns = "id_user",
+            parentColumns = "username",
+            childColumns = "username",
             onDelete = CASCADE)
-    private int id_user;
+    private String username;
     private int id_dose_type;
     private String name;
     private float size;
@@ -26,9 +26,9 @@ public class Dose {
     private float lapse;
     private boolean reminder_enabled;
 
-    public Dose(int id_dose, int id_user, int id_dose_type, String name, float size, Date start_date, Date end_date, float lapse, boolean reminder_enabled) {
+    public Dose(int id_dose, String username, int id_dose_type, String name, float size, Date start_date, Date end_date, float lapse, boolean reminder_enabled) {
         this.id_dose = id_dose;
-        this.id_user = id_user;
+        this.username = username;
         this.id_dose_type = id_dose_type;
         this.name = name;
         this.size = size;
@@ -78,14 +78,6 @@ public class Dose {
         this.lapse = lapse;
     }
 
-    public int getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
-    }
-
     public Date getNext_date() {
         return next_date;
     }
@@ -116,5 +108,13 @@ public class Dose {
 
     public void setReminder_enabled(boolean reminder_enabled) {
         this.reminder_enabled = reminder_enabled;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

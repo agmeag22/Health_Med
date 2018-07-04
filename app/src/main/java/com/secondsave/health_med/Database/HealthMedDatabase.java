@@ -20,7 +20,7 @@ import com.secondsave.health_med.Database.Entities.*;
 import java.sql.Date;
 import java.util.Calendar;
 
-@Database(entities = {User.class, Values.class, Reminder.class, PersonalInfo.class, Dose.class}, version = 2)
+@Database(entities = {User.class, IMCEntry.class, Reminder.class, PersonalInfo.class, Dose.class}, version = 2)
 @TypeConverters({DateTypeConverter.class})
 public abstract class HealthMedDatabase extends RoomDatabase {
 
@@ -72,16 +72,16 @@ public abstract class HealthMedDatabase extends RoomDatabase {
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
             User user = new User("electroanime2009@gmail.com","1234","" );
-            long id= mDao.insert(user);
-            PersonalInfo personalInfo = new PersonalInfo((int)id,"Allen","Perez", 1, new Date(Calendar.getInstance().getTimeInMillis()));
+            mDao.insert(user);
+            PersonalInfo personalInfo = new PersonalInfo("electroanime2009@gmail.com","Allen","Perez", 1, new Date(Calendar.getInstance().getTimeInMillis()));
             personalInfoDao.insert(personalInfo);
             user = new User("meag", "1234", "");
-            id = mDao.insert(user);
-            personalInfo = new PersonalInfo((int) id, "Miguel", "Aviles",1, new Date(Calendar.getInstance().getTimeInMillis()));
+            mDao.insert(user);
+            personalInfo = new PersonalInfo("meag", "Miguel", "Aviles",1, new Date(Calendar.getInstance().getTimeInMillis()));
             personalInfoDao.insert(personalInfo);
             user = new User("agwolfox@gmail.com", "1234", "");
-            id = mDao.insert(user);
-            personalInfo = new PersonalInfo((int) id, "Miguel", "Aviles",1, new Date(Calendar.getInstance().getTimeInMillis()));
+            mDao.insert(user);
+            personalInfo = new PersonalInfo("agwolfox@gmail.com", "Miguel", "Aviles",1, new Date(Calendar.getInstance().getTimeInMillis()));
             personalInfoDao.insert(personalInfo);
 
             return null;

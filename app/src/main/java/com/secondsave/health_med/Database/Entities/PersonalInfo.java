@@ -15,17 +15,17 @@ public  class PersonalInfo {
     @PrimaryKey(autoGenerate = true)
     private int id_personal_info;
     @ForeignKey(entity = User.class,
-            parentColumns = "id_user",
-            childColumns = "id_user",
+            parentColumns = "username",
+            childColumns = "username",
             onDelete = CASCADE)
-    private int id_user;
+    private String username;
     private String first_name;
     private String last_name;
     private int gender;
     private Date birth;
 
-    public PersonalInfo(int id_user, String first_name, String last_name, int gender, Date birth) {
-        this.id_user = id_user;
+    public PersonalInfo(String username, String first_name, String last_name, int gender, Date birth) {
+        this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
@@ -38,14 +38,6 @@ public  class PersonalInfo {
 
     public void setId_personal_info(int id_personal_info) {
         this.id_personal_info = id_personal_info;
-    }
-
-    public int getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
     }
 
     public String getFirst_name() {
@@ -78,6 +70,14 @@ public  class PersonalInfo {
 
     public void setBirth(Date birth) {
         this.birth = birth;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
 

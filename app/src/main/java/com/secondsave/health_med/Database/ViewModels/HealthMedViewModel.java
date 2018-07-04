@@ -5,9 +5,9 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
 
+import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.Entities.PersonalInfo;
 import com.secondsave.health_med.Database.Entities.User;
-import com.secondsave.health_med.Database.Entities.Values;
 import com.secondsave.health_med.Database.Repository.HealthMedRepository;
 
 import java.util.List;
@@ -51,25 +51,28 @@ public class HealthMedViewModel extends AndroidViewModel {
     }
 
     public PersonalInfo getPersonalInfo(User user){
-        return mRepository.getUserPersonalInfo(user.getId_user());
+        return mRepository.getUserPersonalInfo(user.getUsername());
     }
     public PersonalInfo getPersonalInfoAsync(User user){
-        return mRepository.getUserPersonalInfoAsync(user.getId_user());
+        return mRepository.getUserPersonalInfoAsync(user.getUsername());
     }
 
-    public LiveData<List<Values>> getAllValuesByUserIdAndType(int user_id, int type) {
-        return mRepository.getAllValuesByUserIdAndType(user_id,type);
+    public LiveData<List<IMCEntry>> getAllValuesByUsername(String username) {
+        return mRepository.getAllValuesByUsername(username);
     }
-    public int countValuesByUserIdAndType(int user_id, int type) {
-        return mRepository.countValuesByUserIdAndType(user_id,type);
+    public int countValuesByUsername(String username) {
+        return mRepository.countValuesByUsername(username);
     }
 
     public void insertPersonaInfo(PersonalInfo personalInfo){
         mRepository.insertPersonaInfo(personalInfo);
     }
+    public void updatePersonaInfo(PersonalInfo personalInfo){
+        mRepository.updatePersonaInfo(personalInfo);
+    }
 
-    public void insertValues(Values values){
-        mRepository.insertValues(values);
+    public void insertValues(IMCEntry IMCEntry){
+        mRepository.insertValues(IMCEntry);
     }
 }
 

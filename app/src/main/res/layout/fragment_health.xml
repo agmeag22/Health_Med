@@ -6,37 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.Health.HealthFragment">
 
-
-    <android.support.design.widget.TabLayout
+    <com.github.mikephil.charting.charts.ScatterChart
+        android:id="@+id/chart"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMaxWidth="0dp"
-        app:tabGravity="fill"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/colorPrimary"
-        android:background="@color/colorPrimaryDark"
-        app:tabTextColor="@color/colorAccent">
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="General" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Weight &amp; IMC"
-            android:textAlignment="center" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Glucose Levels" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pressure" />
-
-    </android.support.design.widget.TabLayout>
+        android:layout_height="match_parent" />
 </android.support.design.widget.CoordinatorLayout>

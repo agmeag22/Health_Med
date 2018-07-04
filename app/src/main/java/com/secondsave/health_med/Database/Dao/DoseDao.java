@@ -20,13 +20,13 @@ public interface DoseDao {
     @Query("DELETE FROM dose WHERE id_dose=:id")
     void deleteById(int id);
 
-    @Query("DELETE FROM dose WHERE id_user=:id")
-    void deleteByUserId(int id);
+    @Query("DELETE FROM dose WHERE username LIKE :username")
+    void deleteByUsername(String username);
 
-    @Query("SELECT * FROM dose ORDER BY id_user ASC")
+    @Query("SELECT * FROM dose ORDER BY username ASC")
     LiveData<List<Dose>> getAllDose();
 
-    @Query("SELECT * FROM dose WHERE id_user=:id")
-    LiveData<List<Dose>> getDoseByUserId(int id);
+    @Query("SELECT * FROM dose WHERE username LIKE :id")
+    LiveData<List<Dose>> getDoseByUserId(String id);
 
 }

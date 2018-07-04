@@ -2,25 +2,19 @@ package com.secondsave.health_med.Database.Entities;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 @Entity(tableName = "user")
 public class User {
-    @PrimaryKey(autoGenerate = true)
-    private int id_user;
-    private String username,password,token;
+    @PrimaryKey
+    @NonNull
+    private String username;
+    private String password,token;
 
     public User(String username, String password, String token) {
         this.username = username;
         this.password = password;
         this.token = token;
-    }
-
-    public int getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
     }
 
     public String getUsername() {

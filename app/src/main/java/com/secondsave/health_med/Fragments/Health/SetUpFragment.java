@@ -4,12 +4,12 @@ package com.secondsave.health_med.Fragments.Health;
 import android.app.DatePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
-import android.database.DatabaseUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.secondsave.health_med.Class.Gender;
-import com.secondsave.health_med.Class.ValueType;
+import com.secondsave.health_med.Class.IMC;
+import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.Entities.PersonalInfo;
 import com.secondsave.health_med.Database.Entities.User;
-import com.secondsave.health_med.Database.Entities.Values;
 import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.R;
 import com.stepstone.stepper.Step;
@@ -38,8 +38,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.xml.datatype.Duration;
+import java.util.List;
 
 
 public class SetUpFragment extends Fragment implements Step,View.OnClickListener {
@@ -180,21 +179,28 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
                     String bday = birthday.getText().toString();
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                     try {
-
                         Date parsed = format.parse(bday);
                         java.sql.Date sql = new java.sql.Date(parsed.getTime());
                         personalInfo.setBirth(sql);
-                        mhealthmedViewModel.insertPersonaInfo(personalInfo);
-                        int weight_count = mhealthmedViewModel.countValuesByUserIdAndType(u.getId_user(), ValueType.WEIGHT);
-                        int height_count = mhealthmedViewModel.countValuesByUserIdAndType(u.getId_user(), ValueType.HEIGHT);
-                        if(!(weight_count>0) && !(height_count>0)){
-
-                            Float h = Float.parseFloat(height.getText().toString());
-                            Float w = Float.parseFloat(weight.getText().toString());
-                            mhealthmedViewModel.insertValues(new Values(u.getId_user(),ValueType.HEIGHT,h,new java.sql.Date(Calendar.getInstance().getTimeInMillis())));
-                            mhealthmedViewModel.insertValues(new Values(u.getId_user(),ValueType.HEIGHT,w,new java.sql.Date(Calendar.getInstance().getTimeInMillis())));
-
+                        mhealthmedViewModel.updatePersonaInfo(personalInfo);
+                        Float w,h,imc;
+                        if(metrics_spinner.getSelectedItemPosition()==0){
+                            h = Float.parseFloat(height.getText().toString())/100;
+                            w = Float.parseFloat(weight.getText().toString());
+                            imc = IMC.Calculate(w,h);
+                        }else{
+                            h = Float.parseFloat(height.getText().toString());
+                            w = Float.parseFloat(weight.getText().toString());
+                            imc = IMC.Calculate(w,h)*703;
                         }
+
+                            long timestamp = Calendar.getInstance().getTimeInMillis();
+
+                            IMCEntry imcEntry= new IMCEntry(u.getUsername(), imc, h,w,new java.sql.Date(timestamp));
+                            mhealthmedViewModel.insertValues(imcEntry);
+                            Log.d("IMC", "doInBackground: "+ imc);
+//                            List<IMCEntry> l = mhealthmedViewModel.getAllValuesByUsername(u.getUsername()).getValue();
+
                         return R.string.sucess;
 
                     } catch (ParseException e) {
@@ -215,7 +221,10 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
 
         @Override
         protected void onPostExecute(Integer a) {
-            Snackbar.make(v,a,Snackbar.LENGTH_SHORT).show();
+            if(a==R.string.sucess){
+                getFragmentManager().popBackStack();
+            }
+                Snackbar.make(v, a, Snackbar.LENGTH_SHORT).show();
         }
     }
 }

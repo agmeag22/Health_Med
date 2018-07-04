@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     HealthMedViewModel mhealthmedViewModel;
     private String token ;
+    private User u;
 
 
 //    private static Button loginButton;
@@ -341,6 +342,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
                 boolean result = mhealthmedViewModel.isUserAndPasswordMatch(mEmail,mPassword) ;
+                if(result){
+                    u = mhealthmedViewModel.getUserByUsernameAsync(mEmail);
+                }
                  return result;
             // TODO: register the new account here.
        //     return true;
@@ -356,11 +360,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                 sp.edit().putString("token",token).apply();
                 mhealthmedViewModel.updateUserToken(mEmail,token);
-                User u = mhealthmedViewModel.getUserByUsername(mEmail);
-                PersonalInfo pi = mhealthmedViewModel.getPersonalInfo(u);
-                sp.edit().putString("name",pi.getFirst_name() + " " + pi.getLast_name()).apply();
-                sp.edit().putString("username",mEmail).apply();
-                finish();
+
+                if(u!=null) {
+                    PersonalInfo pi = mhealthmedViewModel.getPersonalInfo(u);
+                    sp.edit().putString("name", pi.getFirst_name() + " " + pi.getLast_name()).apply();
+                    sp.edit().putString("username", mEmail).apply();
+                    finish();
+                }
 
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
