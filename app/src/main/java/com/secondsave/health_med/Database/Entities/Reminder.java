@@ -3,9 +3,12 @@ package com.secondsave.health_med.Database.Entities;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
+import com.secondsave.health_med.Utils.DateConverter;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 @Entity(tableName = "reminder",foreignKeys = {
         @ForeignKey(entity = Dose.class,parentColumns = "id_dose",childColumns = "id_dose")
@@ -15,6 +18,7 @@ public class Reminder {
     @PrimaryKey(autoGenerate = true)
     private int id_reminder;
     private int id_dose;
+    @TypeConverters({DateConverter.class})
     private Date date;
     private boolean dismissed;
 

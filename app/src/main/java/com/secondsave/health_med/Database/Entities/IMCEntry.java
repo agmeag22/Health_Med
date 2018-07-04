@@ -4,8 +4,12 @@ package com.secondsave.health_med.Database.Entities;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
-import java.sql.Date;
+
+import com.secondsave.health_med.Utils.DateConverter;
+
+import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -17,6 +21,7 @@ public class IMCEntry {
     private float imc;
     private float height;
     private float weight;
+    @TypeConverters({DateConverter.class})
     private Date create_date;
 
     public IMCEntry(String username, float imc, float height, float weight, Date create_date) {

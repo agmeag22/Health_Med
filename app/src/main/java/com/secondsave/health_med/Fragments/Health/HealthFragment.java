@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
+import com.secondsave.health_med.Adapters.IMCAdapter;
 import com.secondsave.health_med.AxisFormater.DayValueFormatter;
 import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.Entities.User;
@@ -51,6 +54,8 @@ public class HealthFragment extends Fragment {
     private HealthMedViewModel mhealthmedViewModel;
     private SharedPreferences prefs;
     private String user;
+    private RecyclerView recycler;
+    private IMCAdapter adapter;
 
 
     public HealthFragment() {
@@ -67,7 +72,18 @@ public class HealthFragment extends Fragment {
         prefs = getContext().getSharedPreferences(
                 "com.secondsave.health_med", getContext().MODE_PRIVATE);
         user = prefs.getString("username","");
-
+        recycler = v.findViewById(R.id.recycler);
+        adapter = new IMCAdapter(null);
+        recycler.setAdapter(adapter);
+        recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        LiveData<List<IMCEntry>> list = mhealthmedViewModel.getAllValuesByUsername(user);
+        list.observe(this, new Observer<List<IMCEntry>>() {
+            @Override
+            public void onChanged(@Nullable List<IMCEntry> imcEntries) {
+                adapter.setList(imcEntries);
+                adapter.notifyDataSetChanged();
+            }
+        });
 
         doInBackGround task = new doInBackGround();
         task.execute();

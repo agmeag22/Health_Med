@@ -4,8 +4,12 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
-import java.sql.Date;
+import com.secondsave.health_med.Utils.DateConverter;
+
+
+import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 @Dao
@@ -22,6 +26,7 @@ public  class PersonalInfo {
     private String first_name;
     private String last_name;
     private int gender;
+    @TypeConverters({DateConverter.class})
     private Date birth;
 
     public PersonalInfo(String username, String first_name, String last_name, int gender, Date birth) {

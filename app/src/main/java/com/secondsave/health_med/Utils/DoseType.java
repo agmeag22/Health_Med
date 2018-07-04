@@ -1,4 +1,4 @@
-package com.secondsave.health_med.Class;
+package com.secondsave.health_med.Utils;
 
 public class DoseType {
     public static final int PILL= 1;

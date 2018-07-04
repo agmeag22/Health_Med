@@ -4,12 +4,10 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import com.secondsave.health_med.Converters.DateTypeConverter;
 import com.secondsave.health_med.Database.Dao.DoseDao;
 import com.secondsave.health_med.Database.Dao.PersonalInfoDao;
 import com.secondsave.health_med.Database.Dao.RemindersDao;
@@ -21,7 +19,6 @@ import java.sql.Date;
 import java.util.Calendar;
 
 @Database(entities = {User.class, IMCEntry.class, Reminder.class, PersonalInfo.class, Dose.class}, version = 2)
-@TypeConverters({DateTypeConverter.class})
 public abstract class HealthMedDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();

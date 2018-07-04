@@ -3,8 +3,12 @@ package com.secondsave.health_med.Database.Entities;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
-import java.sql.Date;
+import com.secondsave.health_med.Utils.DateConverter;
+
+
+import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
@@ -20,8 +24,11 @@ public class Dose {
     private int id_dose_type;
     private String name;
     private float size;
+    @TypeConverters({DateConverter.class})
     private Date start_date;
+    @TypeConverters({DateConverter.class})
     private Date end_date;
+    @TypeConverters({DateConverter.class})
     private Date next_date;
     private float lapse;
     private boolean reminder_enabled;

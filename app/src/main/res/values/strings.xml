@@ -98,5 +98,6 @@
     <string name="initial_weight">Initial weight</string>
     <string name="current_weight">Current weight</string>
     <string name="goal">Goal</string>
+    <string name="records">Records</string>
 
 </resources>

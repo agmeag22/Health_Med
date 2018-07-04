@@ -1,4 +1,4 @@
-package com.secondsave.health_med.Class;
+package com.secondsave.health_med.Utils;
 
 public class Gender {
     public static final int MALE= 1;

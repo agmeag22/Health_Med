@@ -1,6 +1,5 @@
-package com.secondsave.health_med.Class;
+package com.secondsave.health_med.Utils;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class IMC {

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="72dp"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:paddingEnd="?listPreferredItemPaddingRight"
+    android:paddingLeft="?listPreferredItemPaddingLeft"
+    android:paddingRight="?listPreferredItemPaddingRight"
+    android:paddingStart="?listPreferredItemPaddingLeft"
+    >
+
+    <LinearLayout
+        android:id="@+id/lines_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/phone_icon"
+        android:layout_toStartOf="@id/phone_icon"
+        android:orientation="horizontal"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/text1"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:singleLine="true"
+            android:text="@string/app_name" />
+
+        <TextView
+            android:id="@+id/text2"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/app_name" />
+        <TextView
+            android:id="@+id/text3"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/app_name" />
+        <TextView
+            android:id="@+id/text4"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:text="@string/app_name" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lines_container"
+        android:gravity="right"
+        android:singleLine="true"
+        android:text="@string/app_name"
+        android:paddingBottom="16dp"/>
+
+</RelativeLayout>

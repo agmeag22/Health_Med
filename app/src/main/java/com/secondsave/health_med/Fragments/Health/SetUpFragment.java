@@ -22,10 +22,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.secondsave.health_med.Class.Gender;
-import com.secondsave.health_med.Class.IMC;
+import com.secondsave.health_med.Utils.Gender;
+import com.secondsave.health_med.Utils.IMC;
 import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.Entities.PersonalInfo;
 import com.secondsave.health_med.Database.Entities.User;
@@ -38,7 +37,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 
 public class SetUpFragment extends Fragment implements Step,View.OnClickListener {
