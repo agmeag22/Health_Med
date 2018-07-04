@@ -54,6 +54,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/email"
+                    android:drawableTint="@color/background"
                     android:drawablePadding="30dp"
                     android:gravity="center_vertical"
                     android:hint="@string/email"
@@ -80,6 +81,7 @@
                     android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/password"
                     android:drawablePadding="30dp"
+                    android:drawableTint="@color/background"
                     android:gravity="center_vertical"
                     android:hint="@string/passowrd"
                     android:inputType="textPassword"
@@ -126,6 +128,7 @@
                     android:background="@color/colorPrimary"
                     android:padding="4dp"
                     android:text="@string/login"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15sp"
                     android:textStyle="bold" />
