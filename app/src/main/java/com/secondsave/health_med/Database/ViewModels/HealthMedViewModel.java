@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
 
+import com.secondsave.health_med.Database.Entities.Dose;
 import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.Entities.PersonalInfo;
 import com.secondsave.health_med.Database.Entities.User;
@@ -74,5 +75,14 @@ public class HealthMedViewModel extends AndroidViewModel {
     public void insertValues(IMCEntry IMCEntry){
         mRepository.insertValues(IMCEntry);
     }
+
+    public void insertDose(Dose dose) {
+        mRepository.insertDose(dose);
+    }
+
+    public void deleteDose(Dose dose) {
+        mRepository.deleteDose(dose);
+    }
+
 }
 

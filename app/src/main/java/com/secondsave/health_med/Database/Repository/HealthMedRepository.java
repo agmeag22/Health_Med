@@ -4,9 +4,11 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import com.secondsave.health_med.Database.Dao.DoseDao;
 import com.secondsave.health_med.Database.Dao.PersonalInfoDao;
 import com.secondsave.health_med.Database.Dao.UserDao;
 import com.secondsave.health_med.Database.Dao.ValuesDao;
+import com.secondsave.health_med.Database.Entities.Dose;
 import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.HealthMedDatabase;
 import com.secondsave.health_med.Database.Entities.PersonalInfo;
@@ -20,6 +22,7 @@ public class HealthMedRepository {
     private ValuesDao valuesDao;
     private PersonalInfoDao personalInfoDao;
     private LiveData<List<User>> mUsers;
+    private DoseDao mdose;
 
     public HealthMedRepository(Application application) {
         HealthMedDatabase db = HealthMedDatabase.getDatabase(application);
@@ -27,6 +30,7 @@ public class HealthMedRepository {
         valuesDao = db.valuesDao();
         mUsers = mUserDao.getAllUsers();
         personalInfoDao = db.personalInfoDao();
+        mdose = db.doseDao();
     }
 
     public LiveData<List<User>> getAllUsers() {
@@ -36,6 +40,13 @@ public class HealthMedRepository {
     public LiveData<List<IMCEntry>> getAllValuesByUsername(String username) {
         return valuesDao.getAllValuesByUsername(username);
     }
+
+    public LiveData<List<Dose>> getAllDose() {
+        return mdose.getAllDose();
+    }
+
+
+
     public int countValuesByUsername(String username) {
         return valuesDao.countValuesByUsername(username);
     }
@@ -156,6 +167,7 @@ public class HealthMedRepository {
         valuesDao.insert(IMCEntry);
     }
 
+
     public void insertPersonaInfo(PersonalInfo personalInfo){
         personalInfoDao.insert(personalInfo);
     }
@@ -164,4 +176,12 @@ public class HealthMedRepository {
         personalInfoDao.update(personalInfo);
     }
 
+
+    public void insertDose(Dose dose) {
+        mdose.insert(dose);
+    }
+
+    public void deleteDose(Dose dose) {
+        mdose.deleteById(dose.getId_dose());
+    }
 }
