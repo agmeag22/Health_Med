@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+
+        <!--<TextView-->
+            <!--android:layout_marginBottom="16dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textSize="16sp"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/first_setup_header_message" />-->
+
+
+
+        <Spinner
+            android:id="@+id/spinner_metrics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:ellipsize="start"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="16dp" />
+        <TextView
+            android:id="@+id/metic_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/metric_sys"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/date_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/date"
+            android:layout_centerInParent="true"
+            android:ellipsize="start"
+            android:gravity="center_horizontal"
+            android:focusable="false"
+            android:clickable="true"
+
+            android:drawableLeft="@drawable/ic_birthday" />
+
+
+
+        <EditText
+            android:id="@+id/weight_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:layout_centerInParent="true"
+            android:ellipsize="start"
+            android:gravity="center_horizontal"
+            android:drawableLeft="@drawable/ic_weight"
+            android:hint="@string/weight" />
+
+        <TextView
+            android:id="@+id/weight_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/height_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:layout_centerInParent="true"
+            android:ellipsize="start"
+            android:gravity="center_horizontal"
+            android:drawableLeft="@drawable/ic_height"
+            android:hint="@string/height" />
+
+        <TextView
+            android:id="@+id/height_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:layout_marginBottom="16dp" />
+    </LinearLayout>
+</ScrollView>

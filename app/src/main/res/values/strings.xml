@@ -101,5 +101,8 @@
     <string name="records">Records</string>
     <string name="set_goal">SET GOAL</string>
     <string name="cancel">CANCEL</string>
+    <string name="new_entry_msg">New record</string>
+    <string name="date">Date</string>
+    <string name="metric_sys">Metric system</string>
 
 </resources>

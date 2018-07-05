@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -50,8 +51,9 @@ public class HealthFragment extends Fragment {
     private IMCAdapter adapter;
     private TextView c_weight, i_weight, goal_weight;
     private TextView txtProgress;
+    FloatingActionButton fb;
     private ProgressBar progressBar;
-    private float goal;
+    private float goal,initial,current;
     private View goalView;
     private float lastweight;
 
@@ -77,11 +79,13 @@ public class HealthFragment extends Fragment {
         txtProgress = v.findViewById(R.id.txtProgress);
         progressBar = v.findViewById(R.id.progressBar);
         goal = prefs.getFloat("goal", 0);
+        initial = prefs.getFloat("initial", 0);
+        fb=v.findViewById(R.id.add_entry);
         goalView = v.findViewById(R.id.goal_progress);
         goalView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(goal==0){
+//                if(goal==0 || initial==0){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Set your goal Weight");
                     final EditText input = new EditText(getContext());
@@ -92,8 +96,11 @@ public class HealthFragment extends Fragment {
                             String text = input.getText().toString();
                             if(!text.equals(""))
                             prefs.edit().putFloat("goal",Float.parseFloat(text)).commit();
+                            prefs.edit().putFloat("initial",current).commit();
+                            initial=current;
+                            i_weight.setText(initial+" kg");
                             goal=Float.parseFloat(text);
-                            int value = (int) (Math.abs(goal - lastweight)/ goal );
+                            int value = Math.round(Math.abs(initial -  current)/ Math.abs(goal - initial))*100 ;
                             progressBar.setProgress(value);
                             txtProgress.setText(value + " %");
                             goal_weight.setText(goal+"");
@@ -106,33 +113,45 @@ public class HealthFragment extends Fragment {
                         }
                     });
                     builder.show();
-                }
+//                }
+            }
+        });
+
+        fb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NewEntryDialog dialog = new NewEntryDialog();
+                dialog.show(getChildFragmentManager(),"addIMC");
             }
         });
         adapter = new IMCAdapter(null);
         recycler.setAdapter(adapter);
-
+//        recycler.setNestedScrollingEnabled(false);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         LiveData<List<IMCEntry>> list = mhealthmedViewModel.getAllValuesByUsername(user);
         list.observe(this, new Observer<List<IMCEntry>>() {
             @Override
             public void onChanged(@Nullable List<IMCEntry> imcEntries) {
-                if (goal != 0) {
-                    lastweight = imcEntries.get(0).getWeight();
-                    int value = (int) (Math.abs(goal - lastweight)/ goal  );
-                    progressBar.setProgress(value);
-                    txtProgress.setText(value + " %");
-                    goal_weight.setText(goal+"");
-                }
+
                 if(imcEntries.size()>0) {
                     if (imcEntries.size() > 1) {
                         c_weight.setText(imcEntries.get(imcEntries.size() - 1).getWeight() + " kg");
+                        current=imcEntries.get(imcEntries.size() - 1).getWeight();
                     } else {
-                        c_weight.setText(imcEntries.get(0).getWeight() + " kg");
+                        c_weight.setText(imcEntries.get(imcEntries.size() - 1).getWeight() + " kg");
+                        current=imcEntries.get(imcEntries.size() - 1).getWeight();
                     }
-                    i_weight.setText(imcEntries.get(0).getWeight() + " kg");
+                    i_weight.setText("-");
+
                 }
-//                goal_weight
+                if (goal !=0 &&  initial!=0) {
+                    lastweight = imcEntries.get(imcEntries.size() - 1).getWeight();
+                    int value = Math.round(Math.abs(((initial -  current))/ Math.abs((goal - initial)))*100) ;
+                    progressBar.setProgress(value);
+                    txtProgress.setText(value + " %");
+                    goal_weight.setText(goal+"");
+                    i_weight.setText(initial+ " kg");
+                }
                 adapter.setList(imcEntries);
                 adapter.notifyDataSetChanged();
             }

@@ -26,11 +26,16 @@ public interface ValuesDao {
     @Query("SELECT * FROM imc_entry ORDER BY username ASC")
     LiveData<List<IMCEntry>> getAllValues();
 
-    @Query("SELECT * FROM imc_entry WHERE username LIKE :username ORDER BY create_date DESC ")
+    @Query("SELECT * FROM imc_entry WHERE username LIKE :username ORDER BY create_date ASC ")
     LiveData<List<IMCEntry>> getAllValuesByUsername(String username);
 
 
     @Query("SELECT COUNT(*)  FROM imc_entry WHERE username LIKE :username")
     int countValuesByUsername(String username);
+//
+//    @Query("UPDATE imc_entry set initial=1 (SELECT id_values FROM imc_entry ORDER BY create_date DESC LIMIT 1)")
+//    int countValuesByUsername(String username);
+
+
 
 }

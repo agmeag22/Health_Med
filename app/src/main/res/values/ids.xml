@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="error" type="id">Error</item>
+    <item name="sucess" type="id">Sucess</item>
+</resources>

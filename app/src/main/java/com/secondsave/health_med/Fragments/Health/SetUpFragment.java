@@ -98,7 +98,7 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
                 datepicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        birthday.setText(dayOfMonth+"/"+month+"/"+year);
+                        birthday.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                     }
                 }, year, month, day);
                 datepicker.show();
