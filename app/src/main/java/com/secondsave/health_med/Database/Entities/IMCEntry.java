@@ -2,7 +2,6 @@ package com.secondsave.health_med.Database.Entities;
 
 
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 
@@ -11,23 +10,21 @@ import com.secondsave.health_med.Utils.DateConverter;
 
 import java.util.Date;
 
-import static android.arch.persistence.room.ForeignKey.CASCADE;
-
 @Entity(tableName = "imc_entry")
 public class IMCEntry {
     @PrimaryKey(autoGenerate = true)
     private int id_values;
     private String username;
     private float imc;
-    private float height;
+    private float fat;
     private float weight;
     @TypeConverters({DateConverter.class})
     private Date create_date;
 
-    public IMCEntry(String username, float imc, float height, float weight, Date create_date) {
+    public IMCEntry(String username, float imc, float fat, float weight, Date create_date) {
         this.username = username;
         this.imc = imc;
-        this.height = height;
+        this.fat = fat;
         this.weight = weight;
         this.create_date = create_date;
     }
@@ -64,20 +61,19 @@ public class IMCEntry {
         this.imc = IMC;
     }
 
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public float getFat() {
+        return fat;
+    }
+
+    public void setFat(float fat) {
+        this.fat = fat;
     }
 }

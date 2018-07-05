@@ -23,13 +23,13 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.secondsave.health_med.Utils.Gender;
-import com.secondsave.health_med.Utils.IMC;
 import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.Entities.PersonalInfo;
 import com.secondsave.health_med.Database.Entities.User;
 import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.R;
+import com.secondsave.health_med.Utils.Gender;
+import com.secondsave.health_med.Utils.IMC;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
@@ -39,13 +39,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class SetUpFragment extends Fragment implements Step,View.OnClickListener {
+public class SetUpFragment extends Fragment implements Step, View.OnClickListener {
     Spinner metrics_spinner;
-    TextView weight_type,height_type;
-    EditText birthday,height,weight;
+    TextView weight_type, height_type;
+    EditText birthday, height, weight;
     RadioGroup sex;
-    RadioButton female,male;
-    int sex_value=0;
+    RadioButton female, male;
+    int sex_value = 0;
     Button save;
     private DatePickerDialog datepicker;
     private View v;
@@ -56,8 +56,8 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
 
         //initialize your UI
         birthday = v.findViewById(R.id.birthday_input);
-        weight=v.findViewById(R.id.weight_input);
-        height= v.findViewById(R.id.height_input);
+        weight = v.findViewById(R.id.weight_input);
+        height = v.findViewById(R.id.height_input);
         height_type = v.findViewById(R.id.height_type);
         weight_type = v.findViewById(R.id.weight_type);
         metrics_spinner = (Spinner) v.findViewById(R.id.spinner_metrics);
@@ -72,11 +72,11 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
         metrics_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position==0){
+                if (position == 0) {
 
                     height_type.setText("CM");
                     weight_type.setText("KG");
-                }else if(position==1){
+                } else if (position == 1) {
                     height_type.setText("IN");
                     weight_type.setText("LB");
                 }
@@ -98,7 +98,7 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
                 datepicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        birthday.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                        birthday.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                     }
                 }, year, month, day);
                 datepicker.show();
@@ -109,10 +109,13 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
             @Override
             public void onClick(View v) {
 
-                if(birthday.getText().toString().equals(""))birthday.setError(getString(R.string.empty_field));
-                if(height.getText().toString().equals(""))height.setError(getString(R.string.empty_field));
-                if(weight.getText().toString().equals(""))weight.setError(getString(R.string.empty_field));
-                if(!birthday.getText().toString().equals("") && !height.getText().toString().equals("") && !weight.getText().toString().equals("") && sex_value>0) {
+                if (birthday.getText().toString().equals(""))
+                    birthday.setError(getString(R.string.empty_field));
+                if (height.getText().toString().equals(""))
+                    height.setError(getString(R.string.empty_field));
+                if (weight.getText().toString().equals(""))
+                    weight.setError(getString(R.string.empty_field));
+                if (!birthday.getText().toString().equals("") && !height.getText().toString().equals("") && !weight.getText().toString().equals("") && sex_value > 0) {
                     saveUserInfoTask task = new saveUserInfoTask();
                     task.execute();
                 }
@@ -123,18 +126,18 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
         sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    if(checkedId==R.id.male){
+                if (checkedId == R.id.male) {
 //                        Toast.makeText(getContext(), "SELECCIONO HOMBRE", Toast.LENGTH_SHORT).show();
-                        male.setBackgroundResource(R.drawable.man_selected);
-                        female.setBackgroundResource(R.drawable.woman);
-                        sex_value = Gender.MALE;
+                    male.setBackgroundResource(R.drawable.man_selected);
+                    female.setBackgroundResource(R.drawable.woman);
+                    sex_value = Gender.MALE;
 
-                    }else if(checkedId==R.id.female){
+                } else if (checkedId == R.id.female) {
 //                        Toast.makeText(getContext(), "SELECCIONO MUJER", Toast.LENGTH_SHORT).show();
-                        male.setBackgroundResource(R.drawable.man);
-                        female.setBackgroundResource(R.drawable.woman_selected);
-                        sex_value = Gender.FEMALE;
-                    }
+                    male.setBackgroundResource(R.drawable.man);
+                    female.setBackgroundResource(R.drawable.woman_selected);
+                    sex_value = Gender.FEMALE;
+                }
             }
         });
         return v;
@@ -167,36 +170,41 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
         protected Integer doInBackground(Void... voids) {
             SharedPreferences prefs = getContext().getSharedPreferences(
                     "com.secondsave.health_med", getContext().MODE_PRIVATE);
-            String user = prefs.getString("username","");
+            String user = prefs.getString("username", "");
             HealthMedViewModel mhealthmedViewModel = ViewModelProviders.of(getActivity()).get(HealthMedViewModel.class);
             User u = mhealthmedViewModel.getUserByUsernameAsync(user);
-            if(u!=null){
-                PersonalInfo personalInfo = mhealthmedViewModel.getPersonalInfoAsync(u);
-                if(personalInfo!=null){
-                    personalInfo.setGender(sex_value);
+            if (u != null) {
+                PersonalInfo info = mhealthmedViewModel.getPersonalInfoAsync(u);
+                if (info != null) {
+                    info.setGender(sex_value);
                     String bday = birthday.getText().toString();
                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                     try {
                         Date parsed = format.parse(bday);
                         java.sql.Date sql = new java.sql.Date(parsed.getTime());
-                        personalInfo.setBirth(sql);
-                        mhealthmedViewModel.updatePersonaInfo(personalInfo);
-                        Float w,h,imc;
-                        if(metrics_spinner.getSelectedItemPosition()==0){
-                            h = Float.parseFloat(height.getText().toString())/100;
+                        info.setBirth(sql);
+
+                        Float w, h, imc;
+                        if (metrics_spinner.getSelectedItemPosition() == 0) {
+                            h = Float.parseFloat(height.getText().toString()) / 100;
                             w = Float.parseFloat(weight.getText().toString());
-                            imc = IMC.Calculate(w,h);
-                        }else{
+                            imc = IMC.Calculate(w, h);
+                        } else {
                             h = Float.parseFloat(height.getText().toString());
                             w = Float.parseFloat(weight.getText().toString());
-                            imc = IMC.Calculate(w,h)*703;
+                            imc = IMC.Calculate(w, h) * 703;
                         }
-
-                            long timestamp = Calendar.getInstance().getTimeInMillis();
-
-                            IMCEntry imcEntry= new IMCEntry(u.getUsername(), imc, h,w,new java.sql.Date(timestamp));
-                            mhealthmedViewModel.insertValues(imcEntry);
-                            Log.d("IMC", "doInBackground: "+ imc);
+                        long timestamp = Calendar.getInstance().getTimeInMillis();
+                        info.setHeight(h);
+                        mhealthmedViewModel.updatePersonaInfo(info);
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(info.getBirth());
+                        int age = NewEntryDialog.getAge(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+                        int gender = info.getGender()== Gender.MALE?1:0;
+                        int fat =(int) Math.round((1.39 * imc) + (0.16 * age) - (10.34 * gender) - 9);
+                        IMCEntry imcEntry = new IMCEntry(u.getUsername(), imc, fat, w, new Date(timestamp));
+                        mhealthmedViewModel.insertValues(imcEntry);
+                        Log.d("IMC", "doInBackground: " + imc);
 //                            List<IMCEntry> l = mhealthmedViewModel.getAllValuesByUsername(u.getUsername()).getValue();
 
                         return R.string.sucess;
@@ -219,10 +227,10 @@ public class SetUpFragment extends Fragment implements Step,View.OnClickListener
 
         @Override
         protected void onPostExecute(Integer a) {
-            if(a==R.string.sucess){
+            if (a == R.string.sucess) {
                 getFragmentManager().popBackStack();
             }
-                Snackbar.make(v, a, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(v, a, Snackbar.LENGTH_SHORT).show();
         }
     }
 }

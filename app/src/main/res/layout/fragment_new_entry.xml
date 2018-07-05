@@ -68,29 +68,8 @@
             android:gravity="center_horizontal"
             android:drawableLeft="@drawable/ic_weight"
             android:hint="@string/weight" />
-
         <TextView
             android:id="@+id/weight_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:layout_marginBottom="16dp" />
-
-        <EditText
-            android:id="@+id/height_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number"
-            android:layout_centerInParent="true"
-            android:ellipsize="start"
-            android:gravity="center_horizontal"
-            android:drawableLeft="@drawable/ic_height"
-            android:hint="@string/height" />
-
-        <TextView
-            android:id="@+id/height_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

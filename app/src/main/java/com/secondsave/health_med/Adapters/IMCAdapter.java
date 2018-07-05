@@ -39,7 +39,7 @@ public class IMCAdapter extends RecyclerView.Adapter<IMCAdapter.ViewHolder> {
         if(imcEntries !=null) {
             IMCEntry imc = imcEntries.get(position);
             holder.weight.setText(imc.getWeight()+" kg");
-            holder.height.setText(imc.getHeight()+" cm");
+            holder.height.setText(imc.getFat()+"%");
             holder.imc.setText(imc.getImc()+"");
             DateFormat df = new SimpleDateFormat(Constants.DOB_FORMAT);
             String dt = df.format(imc.getCreate_date());

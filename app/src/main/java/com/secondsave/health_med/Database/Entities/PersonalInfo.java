@@ -26,14 +26,16 @@ public  class PersonalInfo {
     private String first_name;
     private String last_name;
     private int gender;
+    private float height;
     @TypeConverters({DateConverter.class})
     private Date birth;
 
-    public PersonalInfo(String username, String first_name, String last_name, int gender, Date birth) {
+    public PersonalInfo(String username, String first_name, String last_name, int gender, float height, Date birth) {
         this.username = username;
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
+        this.height = height;
         this.birth = birth;
     }
 
@@ -83,6 +85,14 @@ public  class PersonalInfo {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
     }
 }
 
