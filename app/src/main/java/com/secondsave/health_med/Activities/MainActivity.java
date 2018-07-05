@@ -51,13 +51,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Animation uptodown, downtoup;
     SharedPreferences prefs;
     int access=0;
-    @Override
+    private Toolbar toolbar;
+
+             @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         prefs = this.getSharedPreferences(
                 "com.secondsave.health_med", MODE_PRIVATE);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
         final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -179,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         if (headerList.get(groupPosition).menuName.equals(profile_menu_title)) {
                             fragment = new ProfileFragment();
                             transaction.replace(R.id.container, fragment).commit();
-
                         }
                         if (headerList.get(groupPosition).menuName.equals(reminders_menu_title)) {
                             fragment = new RemindersFragment();
@@ -207,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Intent i = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(i);
                         }
+                        toolbar.setTitle(headerList.get(groupPosition).menuName);
                         onBackPressed();
                     }
                 }
