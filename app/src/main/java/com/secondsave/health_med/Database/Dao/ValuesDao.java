@@ -26,7 +26,7 @@ public interface ValuesDao {
     @Query("SELECT * FROM imc_entry ORDER BY username ASC")
     LiveData<List<IMCEntry>> getAllValues();
 
-    @Query("SELECT * FROM imc_entry WHERE username LIKE :username ")
+    @Query("SELECT * FROM imc_entry WHERE username LIKE :username ORDER BY create_date DESC ")
     LiveData<List<IMCEntry>> getAllValuesByUsername(String username);
 
 

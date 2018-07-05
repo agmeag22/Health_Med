@@ -99,5 +99,7 @@
     <string name="current_weight">Current weight</string>
     <string name="goal">Goal</string>
     <string name="records">Records</string>
+    <string name="set_goal">SET GOAL</string>
+    <string name="cancel">CANCEL</string>
 
 </resources>
