@@ -102,14 +102,14 @@ public class NewEntryDialog extends DialogFragment {
 //                    height_type.setText("CM");
                     weight_type.setText("KG");
                 } else if (position == 1) {
-                    height_type.setText("IN");
+//                    height_type.setText("IN");
                     weight_type.setText("LB");
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                height_type.setText("IN");
+//                height_type.setText("IN");
                 weight_type.setText("LB");
             }
         });
