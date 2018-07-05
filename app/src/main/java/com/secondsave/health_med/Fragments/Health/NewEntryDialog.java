@@ -149,7 +149,9 @@ public class NewEntryDialog extends DialogFragment {
                 } else {
 //                    h = Float.parseFloat(height.getText().toString());
                     w = Float.parseFloat(weight.getText().toString());
-                    imc = IMC.Calculate(w, h) * 703;
+                    w = (float)(w * 0.453592);
+                    imc = IMC.Calculate(w, h);
+
                 }
 
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -159,7 +161,7 @@ public class NewEntryDialog extends DialogFragment {
 
                     Date parsed = format.parse(string);
                     Calendar c = Calendar.getInstance();
-                    c.setTime(parsed);
+                    c.setTime(info.getBirth());
                     int age = getAge(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
                     int gender = info.getGender()== Gender.MALE?1:0;
                     int fat =(int) Math.round((1.39 * imc) + (0.16 * age) - (10.34 * gender) - 9);

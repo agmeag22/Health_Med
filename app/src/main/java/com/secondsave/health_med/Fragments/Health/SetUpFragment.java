@@ -190,9 +190,9 @@ public class SetUpFragment extends Fragment implements Step, View.OnClickListene
                             w = Float.parseFloat(weight.getText().toString());
                             imc = IMC.Calculate(w, h);
                         } else {
-                            h = Float.parseFloat(height.getText().toString());
-                            w = Float.parseFloat(weight.getText().toString());
-                            imc = IMC.Calculate(w, h) * 703;
+                            h = (float)((Float.parseFloat(height.getText().toString())*2.54)/100);
+                            w = (float)(Float.parseFloat(weight.getText().toString())* 0.453592);
+                            imc = IMC.Calculate(w, h);
                         }
                         long timestamp = Calendar.getInstance().getTimeInMillis();
                         info.setHeight(h);
