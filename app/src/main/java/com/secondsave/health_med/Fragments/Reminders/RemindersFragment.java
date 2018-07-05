@@ -48,7 +48,7 @@ public class RemindersFragment extends Fragment {
     private SharedPreferences prefs;
     private String user;
     private RecyclerView recycler;
-    
+
     public RemindersFragment() {
         // Required empty public constructor
     }
