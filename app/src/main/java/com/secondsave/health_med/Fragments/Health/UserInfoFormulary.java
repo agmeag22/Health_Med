@@ -84,11 +84,11 @@ public class UserInfoFormulary extends Fragment {
             public void onClick(View v) {
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                DialogFragment datePickerPopUp1 = new DatePickerPopUp();
+             //   DialogFragment datePickerPopUp1 = new DatePickerPopUp();
                 Bundle args = new Bundle();
                 args.putInt("clicked", 1);
-                datePickerPopUp1.setArguments(settingValues(args));
-                datePickerPopUp1.show(transaction, null);
+               // datePickerPopUp1.setArguments(settingValues(args));
+                //datePickerPopUp1.show(transaction, null);
             }
         });
 

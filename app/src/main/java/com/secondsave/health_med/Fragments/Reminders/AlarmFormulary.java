@@ -110,7 +110,7 @@ public class AlarmFormulary extends Fragment {
                 datepicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        dose_to.setText(dayOfMonth + "/" + month + "/" + year);
+                        dose_to.setText(dayOfMonth + "/" + (month +1) + "/" + year);
                     }
                 }, year, month, day);
                 datepicker.show();
@@ -127,7 +127,7 @@ public class AlarmFormulary extends Fragment {
                 datepicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        dose_from.setText(dayOfMonth + "/" + month + "/" + year);
+                        dose_from.setText(dayOfMonth + "/" + (month +1) + "/" + year);
                     }
                 }, year, month, day);
                 datepicker.show();
