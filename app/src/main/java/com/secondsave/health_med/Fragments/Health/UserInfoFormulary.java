@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.secondsave.health_med.Fragments.Reminders.DatePickerPopUp;
 import com.secondsave.health_med.Fragments.Reminders.TimePickerPopUp;
 import com.secondsave.health_med.R;
 

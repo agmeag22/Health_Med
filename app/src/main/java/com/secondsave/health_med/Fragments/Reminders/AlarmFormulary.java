@@ -1,6 +1,8 @@
 package com.secondsave.health_med.Fragments.Reminders;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -16,9 +18,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -29,6 +33,7 @@ import com.secondsave.health_med.R;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -47,6 +52,8 @@ public class AlarmFormulary extends Fragment {
     HealthMedViewModel healthMedViewModel;
     private SharedPreferences prefs;
     private String user;
+    private DatePickerDialog datepicker;
+    private TimePickerDialog timepicker;
     //Day buttons
 
     public AlarmFormulary() {
@@ -96,25 +103,34 @@ public class AlarmFormulary extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                DialogFragment datePickerPopUp2 = new TimePickerPopUp();
-                Bundle args = new Bundle();
-                args.putInt("clicked", 2);
-                datePickerPopUp2.setArguments(settingValues(args));
-                datePickerPopUp2.show(transaction, null);
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                datepicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        dose_to.setText(dayOfMonth + "/" + month + "/" + year);
+                    }
+                }, year, month, day);
+                datepicker.show();
             }
         });
 
         dose_from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                DialogFragment datePickerPopUp1 = new DatePickerPopUp();
-                Bundle args = new Bundle();
-                args.putInt("clicked", 1);
-                datePickerPopUp1.setArguments(settingValues(args));
-                datePickerPopUp1.show(transaction, null);
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                datepicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        dose_from.setText(dayOfMonth + "/" + month + "/" + year);
+                    }
+                }, year, month, day);
+                datepicker.show();
             }
         });
 
@@ -123,12 +139,16 @@ public class AlarmFormulary extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                DialogFragment timePickerPopUp = new TimePickerPopUp();
-                Bundle args = new Bundle();
-                args.putInt("clicked", 3);
-                timePickerPopUp.setArguments(settingValues(args));
-                timePickerPopUp.show(transaction, null);
+                final Calendar c = Calendar.getInstance();
+                int mHour = c.get(Calendar.HOUR_OF_DAY);
+                int mMinute = c.get(Calendar.MINUTE);
+                timepicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        time_between_dose.setText(hourOfDay+":"+minute);
+                    }
+                }, mHour, mMinute, false);
+                timepicker.show();
             }
         });
         start.setOnClickListener(new View.OnClickListener() {
