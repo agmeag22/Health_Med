@@ -214,7 +214,7 @@ public class AlarmFormulary extends Fragment {
             try {
                 int dt = Integer.parseInt(dosetype);
                 float size = Float.parseFloat(dosequantity);
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
                 Date from = df.parse(dosefrom);
                 Date to = df.parse(doseto);
                 Float lapse = Float.parseFloat(timedose);
