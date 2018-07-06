@@ -1,20 +1,16 @@
 package com.secondsave.health_med.Fragments.Reminders;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,20 +21,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.secondsave.health_med.Activities.MainActivity;
-import com.secondsave.health_med.Adapters.IMCAdapter;
 import com.secondsave.health_med.Adapters.ReminderAdapter;
 import com.secondsave.health_med.Database.Entities.Dose;
-import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
-import com.secondsave.health_med.Fragments.Reminders.Alarms;
 import com.secondsave.health_med.R;
 
 import java.util.List;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class RemindersFragment extends Fragment {
     EditText etVal;
@@ -46,11 +35,11 @@ public class RemindersFragment extends Fragment {
     TextView hola;
     FloatingActionButton addBtn;
     RelativeLayout relativeLayout;
+    ReminderAdapter adapter;
     private HealthMedViewModel mhealthmedViewModel;
     private SharedPreferences prefs;
     private String user;
     private RecyclerView recycler;
-    ReminderAdapter adapter;
 
 
     public RemindersFragment() {
@@ -62,7 +51,7 @@ public class RemindersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_reminders, container, false);
+        View v = inflater.inflate(R.layout.fragment_reminders, container, false);
         //etVal =v.findViewById(R.id.text);
         // btnSet =v.findViewById(R.id.button);
         relativeLayout = v.findViewById(R.id.fragment_reminders);
@@ -70,7 +59,31 @@ public class RemindersFragment extends Fragment {
 
         mhealthmedViewModel = ViewModelProviders.of(getActivity()).get(HealthMedViewModel.class);
         recycler = v.findViewById(R.id.recyclerReminders);
-        adapter = new ReminderAdapter(null, getContext());
+        adapter = new ReminderAdapter(null, getContext()) {
+            @Override
+            public void setAlarmStatus(boolean i, Dose dose) {
+                dose.setReminder_enabled(i);
+                doInBackGround updateDoseTask = new doInBackGround(dose);
+                updateDoseTask.execute();
+            }
+
+            @Override
+            public void onClickItemMethod(Dose dose) {
+                addBtn.setVisibility(View.GONE);
+                Bundle args = new Bundle();
+                args.putString("med_name", dose.getName());
+                args.putSerializable("dose_from", dose.getStart_date());
+                args.putSerializable("dose_to", dose.getEnd_date());
+                args.putFloat("dose_quantity", dose.getSize());
+                args.putFloat("time_dose", dose.getLapse());
+                AlarmFormulary fragment = new AlarmFormulary();
+                fragment.setArguments(args);
+
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.addToBackStack("alarmformulary").replace(R.id.fragment_reminders, fragment).commit();
+                //fragment.setValues(dose);
+            }
+        };
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         LiveData<List<Dose>> list = mhealthmedViewModel.getAllDose();
@@ -97,20 +110,31 @@ public class RemindersFragment extends Fragment {
                 addBtn.setVisibility(View.VISIBLE);
             }
         });
-
-//        btnSet.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int time = Integer.parseInt(etVal.getText().toString());
-//                Intent intent=new Intent(getContext(), Alarms.class);
-//                PendingIntent p1=PendingIntent.getBroadcast(getContext(),0, intent,0);
-//                AlarmManager a=(AlarmManager) getContext().getSystemService(ALARM_SERVICE);
-//                a.set(AlarmManager.RTC,System.currentTimeMillis() + time*1000,p1);
-//                Toast.makeText(getContext(),"Alarm set in "+time+"seconds",Toast.LENGTH_LONG).show();
-//            }
-//            });
         return v;
     }
 
+    public class doInBackGround extends AsyncTask<Void, Void, Integer> {
+        private Dose dose;
+
+        public doInBackGround(Dose dose) {
+            this.dose = dose;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            try {
+                mhealthmedViewModel.updateDose(dose);
+                return R.string.sucess;
+            } catch (Exception e) {
+                Log.e("ERROR", "doInBackground: " + e.getMessage());
+                return R.string.error;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            Snackbar.make(getView(), integer, Snackbar.LENGTH_SHORT).show();
+        }
+    }
 
 }

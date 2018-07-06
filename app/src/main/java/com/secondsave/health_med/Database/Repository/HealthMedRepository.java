@@ -184,6 +184,10 @@ public class HealthMedRepository {
         mdose.insert(dose);
     }
 
+    public void updateDose(Dose dose) {
+        mdose.update(dose);
+    }
+
     public void deleteDose(Dose dose) {
         mdose.deleteById(dose.getId_dose());
     }

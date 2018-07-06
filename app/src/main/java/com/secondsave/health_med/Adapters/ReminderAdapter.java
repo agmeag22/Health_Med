@@ -17,7 +17,7 @@ import com.secondsave.health_med.R;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
+public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
     View v;
     private List<Dose> doseList;
     String[] mArray;
@@ -48,8 +48,8 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             if (doseList.get(position).getSize() > 0) {
                 holder.dose_size.setText(doseList.get(position).getSize()+"");
             }
-            if (doseList.get(position).getId_dose_type() > 0) {
-                holder.dose_size.setText(mArray[doseList.get(position).getId_dose_type()]);
+            if (doseList.get(position).getId_dose_type() >= 0) {
+                holder.dose_type.setText(mArray[doseList.get(position).getId_dose_type()]);
             }
             if (doseList.get(position).getLapse() > 0) {
                 holder.dose_lapse.setText( doseList.get(position).getLapse()+"");
@@ -63,18 +63,40 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
                 holder.dose_end_date.setText(df.format(doseList.get(position).getEnd_date()));
             }
+
+
+        if(doseList.get(position).isReminder_enabled()){
+            holder.aSwitch.setChecked(true);
+        }
+        else{
+            holder.aSwitch.setChecked(false);
         }
         holder.aSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!holder.aSwitch.isChecked()) {
-                    holder.aSwitch.setChecked(true);
-                } else {
+                if (holder.aSwitch.isChecked()) {
                     holder.aSwitch.setChecked(false);
+                    setAlarmStatus(false,doseList.get(position));
+                } else {
+                    holder.aSwitch.setChecked(true);
+                    setAlarmStatus(true,doseList.get(position));
                 }
             }
         });
+
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickItemMethod(doseList.get(position));
+            }
+        });
+
+        }
     }
+
+    public abstract void setAlarmStatus(boolean i,Dose dose);
+
+    public abstract void onClickItemMethod(Dose dose);
 
 
     @Override
@@ -91,9 +113,11 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView med_name, dose_size, dose_type, dose_lapse, dose_start_date, dose_end_date;
         Switch aSwitch;
+        View view;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            view = itemView;
             med_name = itemView.findViewById(R.id.text_med_name);
             dose_size = itemView.findViewById(R.id.text_dose_size);
             dose_type = itemView.findViewById(R.id.text_dose_type);

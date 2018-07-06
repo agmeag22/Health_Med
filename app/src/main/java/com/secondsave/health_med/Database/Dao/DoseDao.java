@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.secondsave.health_med.Database.Entities.Dose;
 
@@ -13,6 +14,9 @@ import java.util.List;
 public interface DoseDao {
     @Insert
     void insert(Dose Dose);
+
+    @Update
+    void update(Dose dose);
 
     @Query("DELETE FROM dose")
     void deleteAll();

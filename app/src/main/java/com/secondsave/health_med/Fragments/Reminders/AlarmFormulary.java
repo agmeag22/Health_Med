@@ -28,10 +28,12 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.secondsave.health_med.Database.Entities.Dose;
+import com.secondsave.health_med.Database.Entities.Reminder;
 import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.R;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,9 +54,6 @@ public class AlarmFormulary extends Fragment {
     int dosetype;
     String dosequantity = null;
     String timedose;
-    Date dosefromdate = null, dosetodate = null;
-    int dosetypeint = 0;
-    float dosequantityfloat = 0, timedosefloat = 0;
     HealthMedViewModel healthMedViewModel;
     private SharedPreferences prefs;
     private String user;
@@ -86,8 +85,6 @@ public class AlarmFormulary extends Fragment {
                 R.array.medication_measurement, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dose_type.setAdapter(adapter);
-
-
         Bundle bundle = new Bundle();
         bundle = getArguments();
         if (bundle != null) {
@@ -110,6 +107,15 @@ public class AlarmFormulary extends Fragment {
             public void onClick(View v) {
 
                 final Calendar c = Calendar.getInstance();
+                if(!dose_to.getText().toString().equals("")) {
+                    try {
+                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        Date to = df.parse(dose_to.getText().toString());
+                        c.setTime(to);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
@@ -126,7 +132,17 @@ public class AlarmFormulary extends Fragment {
         dose_from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar c = Calendar.getInstance();
+                Calendar c = Calendar.getInstance();
+                if(!dose_from.getText().toString().equals("")) {
+                    try {
+                        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        Date from = df.parse(dose_from.getText().toString());
+                        c.setTime(from);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
@@ -146,6 +162,15 @@ public class AlarmFormulary extends Fragment {
             public void onClick(View v) {
 
                 final Calendar c = Calendar.getInstance();
+                if(! time_between_dose.getText().toString().equals("")) {
+                    try {
+                        SimpleDateFormat df = new SimpleDateFormat("hh:mm");
+                        Date from = df.parse( time_between_dose.getText().toString());
+                        c.setTime(from);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
                 int mHour = c.get(Calendar.HOUR_OF_DAY);
                 int mMinute = c.get(Calendar.MINUTE);
                 timepicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
@@ -153,15 +178,31 @@ public class AlarmFormulary extends Fragment {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         time_between_dose.setText(hourOfDay+":"+minute);
                     }
-                }, mHour, mMinute, false);
+                }, mHour, mMinute, true);
                 timepicker.show();
             }
         });
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            doInBackGround task = new doInBackGround();
-            task.execute();
+                settingDose();
+                if(medname==null || medname.equals(""))medication_name.setError(getString(R.string.empty_error));
+                if(dosefrom==null || dosefrom.equals(""))dose_from.setError(getString(R.string.empty_error));
+                if(doseto==null || doseto.equals(""))dose_to.setError(getString(R.string.empty_error));
+                if(doseto==null || doseto.equals(""))dose_to.setError(getString(R.string.empty_error));
+                if(dosequantity==null || dosequantity.equals(""))dose_quantity.setError(getString(R.string.empty_error));
+                if(timedose==null || timedose.equals(""))time_between_dose.setError(getString(R.string.empty_error));
+                if(     !(medname==null || medname.equals("")) &&
+                        !(dosefrom==null || dosefrom.equals("")) &&
+                        !(doseto==null || doseto.equals("")) &&
+                        !(doseto==null || doseto.equals("")) &&
+                        !(dosequantity==null || dosequantity.equals(""))&&
+                        !(timedose==null || timedose.equals(""))&&
+                        !((medname==null || medname.equals("")))
+                        ) {
+                    doInBackGround task = new doInBackGround();
+                    task.execute();
+                }
 
             }
         });
@@ -196,20 +237,31 @@ public class AlarmFormulary extends Fragment {
     }
 
     public void gettingValues(Bundle bundle) {
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         if (bundle.getString("med_name") != null) {
             medication_name.setText(bundle.getString("med_name"));
         }
-        if (bundle.getString("dose_from") != null) {
-            dose_from.setText(bundle.getString("dose_from"));
+        if (bundle.getSerializable("dose_from") != null) {
+
+            dose_from.setText(df.format((Date)bundle.getSerializable("dose_from")));
         }
-        if (bundle.getString("dose_to") != null) {
-            dose_to.setText(bundle.getString("dose_to"));
+        if (bundle.getSerializable("dose_to") != null) {
+            dose_to.setText(df.format((Date)bundle.getSerializable("dose_to")));
         }
-        if (bundle.getString("dose_quantity") != null) {
-            dose_quantity.setText(bundle.getString("dose_quantity"));
+        if (bundle.getFloat("dose_quantity",0) > 0) {
+            dose_quantity.setText(bundle.getFloat("dose_quantity")+"");
         }
-        if (bundle.getString("time_dose") != null) {
-            time_between_dose.setText(bundle.getString("time_dose"));
+        if (bundle.getFloat("time_dose") > 0) {
+            float time=bundle.getFloat("time_dose");
+            int hours = (int)time;
+            int mins =  (int)((time - hours) * 60);
+            String smins=mins+"",shours=hours+"";
+            if(mins<10)
+                smins="0" + mins;
+            if(hours<10){
+                shours="0"+hours;
+            }
+            time_between_dose.setText(shours+":"+smins);
         }
     }
 
@@ -236,7 +288,7 @@ public class AlarmFormulary extends Fragment {
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            settingDose();
+
             try {
 
                 float size = Float.parseFloat(dosequantity);
@@ -259,5 +311,26 @@ public class AlarmFormulary extends Fragment {
             Snackbar.make(getView(),integer,Snackbar.LENGTH_SHORT).show();
             getActivity().onBackPressed();
         }
+    }
+
+    public void setValues(Dose d){
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        if (d.getName() != null) {
+            medication_name.setText(d.getName());
+        }
+        if (d.getStart_date() != null) {
+
+            dose_from.setText(df.format(d.getStart_date()));
+        }
+        if (d.getEnd_date() != null) {
+            dose_to.setText(df.format(d.getEnd_date()));
+        }
+        if (d.getSize()>0) {
+            dose_quantity.setText(d.getSize()+"");
+        }
+        if (d.getLapse()>0) {
+            time_between_dose.setText(d.getLapse()+"");
+        }
+        dose_type.setSelection(d.getId_dose_type());
     }
 }

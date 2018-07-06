@@ -85,6 +85,10 @@ public class HealthMedViewModel extends AndroidViewModel {
         mRepository.insertDose(dose);
     }
 
+    public void updateDose(Dose dose) {
+        mRepository.updateDose(dose);
+    }
+
     public void deleteDose(Dose dose) {
         mRepository.deleteDose(dose);
     }
