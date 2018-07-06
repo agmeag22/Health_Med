@@ -19,4 +19,14 @@
         <item name="android:imeOptions">flagNoExtractUi</item>
         <item name="android:textAlignment">center</item>
     </style>
+
+    <style name="title_text_adapter_reminder">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:paddingEnd">15dp</item>
+        <item name="android:paddingTop">5dp</item>
+    </style>
 </resources>

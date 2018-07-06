@@ -32,7 +32,9 @@
         <EditText
             android:id="@+id/from_this_day"
             style="@style/text_edit_new_reminder"
-            android:editable="false" />
+            android:focusable="false"
+            android:clickable="true"
+             />
 
         <TextView
             style="@style/text_title_new_reminder"
@@ -42,7 +44,8 @@
         <EditText
             android:id="@+id/tot_this_day"
             style="@style/text_edit_new_reminder"
-            android:editable="false" />
+            android:focusable="false"
+            android:clickable="true" />
 
         <TextView
             style="@style/text_title_new_reminder"
@@ -51,7 +54,8 @@
         <EditText
             android:id="@+id/timepicker_edit_text"
             style="@style/text_edit_new_reminder"
-            android:editable="false" />
+            android:focusable="false"
+            android:clickable="true" />
 
         <TextView
             style="@style/text_title_new_reminder"
