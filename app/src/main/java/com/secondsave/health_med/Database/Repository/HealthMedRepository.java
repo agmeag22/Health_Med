@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 
 import com.secondsave.health_med.Database.Dao.DoseDao;
 import com.secondsave.health_med.Database.Dao.PersonalInfoDao;
+import com.secondsave.health_med.Database.Dao.RemindersDao;
 import com.secondsave.health_med.Database.Dao.UserDao;
 import com.secondsave.health_med.Database.Dao.ValuesDao;
 import com.secondsave.health_med.Database.Entities.Dose;
@@ -21,6 +22,7 @@ public class HealthMedRepository {
     private UserDao mUserDao;
     private ValuesDao valuesDao;
     private PersonalInfoDao personalInfoDao;
+    private RemindersDao remindersDao;
     private LiveData<List<User>> mUsers;
     private DoseDao mdose;
 
@@ -30,6 +32,7 @@ public class HealthMedRepository {
         valuesDao = db.valuesDao();
         mUsers = mUserDao.getAllUsers();
         personalInfoDao = db.personalInfoDao();
+        remindersDao = db.reminderDao();
         mdose = db.doseDao();
     }
 

@@ -3,8 +3,10 @@ package com.secondsave.health_med.Fragments.Reminders;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -24,6 +26,8 @@ import com.secondsave.health_med.Database.Entities.Dose;
 import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -130,10 +134,8 @@ public class AlarmFormulary extends Fragment {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                settingDose();
-                dosetype = dosetype;
-                Dose dose = new Dose(user, dosetype, medname, dosequantity, dosefrom, doseto, timedose, true);
-                getActivity().onBackPressed();
+            doInBackGround task = new doInBackGround();
+            task.execute();
 
             }
         });
@@ -201,6 +203,33 @@ public class AlarmFormulary extends Fragment {
         }
         if (time_between_dose.getText() != null && !time_between_dose.getText().equals("")) {
             timedose = time_between_dose.getText().toString();
+        }
+    }
+
+    public class doInBackGround extends AsyncTask<Void,Void,Integer>{
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            settingDose();
+            try {
+                int dt = Integer.parseInt(dosetype);
+                float size = Float.parseFloat(dosequantity);
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                Date from = df.parse(dosefrom);
+                Date to = df.parse(doseto);
+                Float lapse = Float.parseFloat(timedose);
+                Dose dose = new Dose(user, dt, medname, size,from,to,lapse, true);
+                healthMedViewModel.insertDose(dose);
+                return R.string.sucess;
+            }catch (Exception e){
+                return R.string.error;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            Snackbar.make(getView(),integer,Snackbar.LENGTH_SHORT).show();
+            getActivity().onBackPressed();
         }
     }
 }

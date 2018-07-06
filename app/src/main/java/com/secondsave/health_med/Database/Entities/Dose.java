@@ -8,12 +8,13 @@ import android.arch.persistence.room.TypeConverters;
 import com.secondsave.health_med.Utils.DateConverter;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "dose")
-public class Dose {
+public class Dose implements Serializable{
     @PrimaryKey(autoGenerate = true)
     private int id_dose;
     @ForeignKey(entity = User.class,
