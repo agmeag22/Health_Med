@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import com.secondsave.health_med.Activities.MainActivity;
 import com.secondsave.health_med.Adapters.IMCAdapter;
+import com.secondsave.health_med.Adapters.ReminderAdapter;
+import com.secondsave.health_med.Database.Entities.Dose;
 import com.secondsave.health_med.Database.Entities.IMCEntry;
 import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.Fragments.Reminders.Alarms;
@@ -48,6 +50,8 @@ public class RemindersFragment extends Fragment {
     private SharedPreferences prefs;
     private String user;
     private RecyclerView recycler;
+    ReminderAdapter adapter;
+
 
     public RemindersFragment() {
         // Required empty public constructor
@@ -66,14 +70,14 @@ public class RemindersFragment extends Fragment {
 
         mhealthmedViewModel = ViewModelProviders.of(getActivity()).get(HealthMedViewModel.class);
         recycler = v.findViewById(R.id.recyclerReminders);
-        adapter = new IMCAdapter(null);
+        adapter = new ReminderAdapter(null, getContext());
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        LiveData<List<IMCEntry>> list = mhealthmedViewModel.getAllValuesByUsername(user);
-        list.observe(this, new Observer<List<IMCEntry>>() {
+        LiveData<List<Dose>> list = mhealthmedViewModel.getAllDose();
+        list.observe(this, new Observer<List<Dose>>() {
             @Override
-            public void onChanged(@Nullable List<IMCEntry> imcEntries) {
-                adapter.setList(imcEntries);
+            public void onChanged(@Nullable List<Dose> doseList) {
+                adapter.setList(doseList);
                 adapter.notifyDataSetChanged();
             }
         });

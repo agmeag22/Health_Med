@@ -1,6 +1,8 @@
 package com.secondsave.health_med.Fragments.Reminders;
 
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
@@ -18,7 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.secondsave.health_med.Database.Entities.Dose;
+import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.R;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 
 public class AlarmFormulary extends Fragment {
@@ -30,7 +37,12 @@ public class AlarmFormulary extends Fragment {
     EditText dose_quantity;
     Button start;
     String medname = null, dosefrom = null, doseto = null, dosetype = null, dosequantity = null, timedose;
-
+    Date dosefromdate = null, dosetodate = null;
+    int dosetypeint = 0;
+    float dosequantityfloat = 0, timedosefloat = 0;
+    HealthMedViewModel healthMedViewModel;
+    private SharedPreferences prefs;
+    private String user;
     //Day buttons
 
     public AlarmFormulary() {
@@ -42,6 +54,10 @@ public class AlarmFormulary extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.alarmformulary, container, false);
+        healthMedViewModel = ViewModelProviders.of(getActivity()).get(HealthMedViewModel.class);
+        prefs = getContext().getSharedPreferences(
+                "com.secondsave.health_med", getContext().MODE_PRIVATE);
+        user = prefs.getString("username", "");
         medication_name = v.findViewById(R.id.text_med_name);
         dose_from = v.findViewById(R.id.from_this_day);
         dose_to = v.findViewById(R.id.tot_this_day);
@@ -49,8 +65,11 @@ public class AlarmFormulary extends Fragment {
         dose_quantity = v.findViewById(R.id.dose_quantity);
         start = v.findViewById(R.id.start);
         time_between_dose = v.findViewById(R.id.timepicker_edit_text);
-        String[] letra = {"Pill", "Tablespoon", "Cup", "ml"};
-        dose_type.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, letra));
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.medication_measurement, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        dose_type.setAdapter(adapter);
+
 
         Bundle bundle = new Bundle();
         bundle = getArguments();
@@ -108,6 +127,16 @@ public class AlarmFormulary extends Fragment {
                 timePickerPopUp.show(transaction, null);
             }
         });
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                settingDose();
+                dosetype = dosetype;
+                Dose dose = new Dose(user, dosetype, medname, dosequantity, dosefrom, doseto, timedose, true);
+                getActivity().onBackPressed();
+
+            }
+        });
         return v;
     }
 
@@ -153,6 +182,25 @@ public class AlarmFormulary extends Fragment {
         }
         if (bundle.getString("time_dose") != null) {
             time_between_dose.setText(bundle.getString("time_dose"));
+        }
+    }
+
+    public void settingDose() {
+
+        if (medication_name.getText() != null && !medication_name.getText().equals("")) {
+            medname = medication_name.getText().toString();
+        }
+        if (dose_from.getText() != null && !dose_from.getText().equals("")) {
+            dosefrom = dose_from.getText().toString();
+        }
+        if (dose_to.getText() != null && !dose_to.getText().equals("")) {
+            doseto = dose_to.getText().toString();
+        }
+        if (dose_quantity.getText() != null && !dose_quantity.getText().equals("")) {
+            dosequantity = dose_quantity.getText().toString();
+        }
+        if (time_between_dose.getText() != null && !time_between_dose.getText().equals("")) {
+            timedose = time_between_dose.getText().toString();
         }
     }
 }

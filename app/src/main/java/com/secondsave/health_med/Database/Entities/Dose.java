@@ -33,8 +33,7 @@ public class Dose {
     private float lapse;
     private boolean reminder_enabled;
 
-    public Dose(int id_dose, String username, int id_dose_type, String name, float size, Date start_date, Date end_date, float lapse, boolean reminder_enabled) {
-        this.id_dose = id_dose;
+    public Dose(String username, int id_dose_type, String name, float size, Date start_date, Date end_date, float lapse, boolean reminder_enabled) {
         this.username = username;
         this.id_dose_type = id_dose_type;
         this.name = name;

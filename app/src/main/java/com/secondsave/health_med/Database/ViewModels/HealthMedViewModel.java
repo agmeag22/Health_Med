@@ -28,6 +28,7 @@ public class HealthMedViewModel extends AndroidViewModel {
         return mAllUsers;
     }
 
+
     public void insert(User user) {
         mRepository.insert(user);
     }
@@ -76,6 +77,10 @@ public class HealthMedViewModel extends AndroidViewModel {
         mRepository.insertValues(IMCEntry);
     }
 
+
+    public LiveData<List<Dose>> getAllDose() {
+        return mRepository.getAllDose();
+    }
     public void insertDose(Dose dose) {
         mRepository.insertDose(dose);
     }

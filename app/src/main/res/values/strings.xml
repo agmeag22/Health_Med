@@ -69,6 +69,17 @@
     <string name="save">SAVE</string>
     <string name="empty_field">Empty field</string>
 
+
+    <string-array name="medication_measurement">
+        <item>Pill</item>
+        <item>Tablespoon</item>
+        <item>Cup</item>
+        <item>mL</item>
+
+    </string-array>
+
+    <!--strings for IMC-->
+
     <string-array name="metrics_type_array">
         <item>CM|KG</item>
         <item>IN|LB</item>
