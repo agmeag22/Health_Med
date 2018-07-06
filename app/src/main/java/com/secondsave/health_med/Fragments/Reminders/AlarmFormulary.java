@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,12 @@ public class AlarmFormulary extends Fragment {
     Spinner dose_type;
     EditText dose_quantity;
     Button start;
-    String medname = null, dosefrom = null, doseto = null, dosetype = null, dosequantity = null, timedose;
+    String medname = null;
+    String dosefrom = null;
+    String doseto = null;
+    int dosetype;
+    String dosequantity = null;
+    String timedose;
     Date dosefromdate = null, dosetodate = null;
     int dosetypeint = 0;
     float dosequantityfloat = 0, timedosefloat = 0;
@@ -91,7 +97,7 @@ public class AlarmFormulary extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-                dosetype = (String) adapterView.getItemAtPosition(pos);
+                dosetype = adapterView.getSelectedItemPosition();
             }
 
             @Override
@@ -232,16 +238,18 @@ public class AlarmFormulary extends Fragment {
         protected Integer doInBackground(Void... voids) {
             settingDose();
             try {
-                int dt = Integer.parseInt(dosetype);
+
                 float size = Float.parseFloat(dosequantity);
-                SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+                SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 Date from = df.parse(dosefrom);
                 Date to = df.parse(doseto);
-                Float lapse = Float.parseFloat(timedose);
-                Dose dose = new Dose(user, dt, medname, size,from,to,lapse, true);
+                String td[] = timedose.split(":");
+                Float lapse = Float.parseFloat(td[0])+(Float.parseFloat(td[0])/60);
+                Dose dose = new Dose(user, dosetype, medname, size,from,to,lapse, true);
                 healthMedViewModel.insertDose(dose);
                 return R.string.sucess;
             }catch (Exception e){
+                Log.e("ERROR EN GUARDAR DOSE", "doInBackground: "+e.getMessage().toString() );
                 return R.string.error;
             }
         }

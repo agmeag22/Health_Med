@@ -14,6 +14,7 @@ import com.google.android.gms.location.places.Place;
 import com.secondsave.health_med.Database.Entities.Dose;
 import com.secondsave.health_med.R;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHolder> {
@@ -40,23 +41,27 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         mArray = context.getResources().getStringArray(R.array.medication_measurement);
         if (doseList != null) {
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             if (doseList.get(position).getName() != null) {
                 holder.med_name.setText(doseList.get(position).getName());
             }
             if (doseList.get(position).getSize() > 0) {
-                holder.dose_size.setText((int) doseList.get(position).getSize());
+                holder.dose_size.setText(doseList.get(position).getSize()+"");
             }
             if (doseList.get(position).getId_dose_type() > 0) {
                 holder.dose_size.setText(mArray[doseList.get(position).getId_dose_type()]);
             }
             if (doseList.get(position).getLapse() > 0) {
-                holder.dose_lapse.setText((int) doseList.get(position).getLapse());
+                holder.dose_lapse.setText( doseList.get(position).getLapse()+"");
             }
             if (doseList.get(position).getStart_date() != null) {
-                holder.dose_start_date.setText((CharSequence) doseList.get(position).getStart_date());
+
+
+                holder.dose_start_date.setText(df.format(doseList.get(position).getStart_date()));
             }
             if (doseList.get(position).getEnd_date() != null) {
-                holder.dose_end_date.setText((CharSequence) doseList.get(position).getEnd_date());
+
+                holder.dose_end_date.setText(df.format(doseList.get(position).getEnd_date()));
             }
         }
         holder.aSwitch.setOnClickListener(new View.OnClickListener() {
