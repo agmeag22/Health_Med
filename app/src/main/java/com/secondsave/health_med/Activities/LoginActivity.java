@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -365,6 +366,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     PersonalInfo pi = mhealthmedViewModel.getPersonalInfo(u);
                     sp.edit().putString("name", pi.getFirst_name() + " " + pi.getLast_name()).apply();
                     sp.edit().putString("username", mEmail).apply();
+                    Intent i = new Intent(getApplication(),MainActivity.class);
+                    startActivity(i);
                     finish();
                 }
 

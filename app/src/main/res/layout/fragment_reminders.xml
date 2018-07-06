@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.Reminders.RemindersFragment"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/background"
     android:orientation="vertical"
     android:id="@+id/fragment_reminders">
 

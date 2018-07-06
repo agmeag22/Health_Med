@@ -67,15 +67,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-//        final FloatingActionButton menu_icon = (FloatingActionButton) findViewById(R.id.menu_opener);
-//        menu_icon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                drawer.openDrawer(Gravity.START);
-//                menu_icon.getTranslationX();
-//
-//            }
-//        });
 
 
 
@@ -85,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View navigationheader = navigationView.getHeaderView(0);
         userName = navigationheader.findViewById(R.id.name_txt);
         email = navigationheader.findViewById(R.id.email_txt);
-
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
         populateExpandableList();
@@ -97,12 +87,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (name.equals("") || user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user, token)) {
             Intent i = new Intent(this, LoginActivity.class);
             startActivity(i);
+            finish();
         }
 
     }
 
+             @Override
+             protected void onRestoreInstanceState(Bundle savedInstanceState) {
+                 super.onRestoreInstanceState(savedInstanceState);
+             }
 
-    @Override
+             @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
