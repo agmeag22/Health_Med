@@ -17,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -201,8 +202,10 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
                         !(timedose==null || timedose.equals(""))&&
                         !((medname==null || medname.equals("")))
                         ) {
+                    
                     doInBackGround task = new doInBackGround();
                     task.execute();
+
                 }
 
             }

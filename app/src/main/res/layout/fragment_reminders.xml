@@ -10,16 +10,13 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/addbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="34dp"
-        android:layout_marginEnd="34dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="34dp"
-        android:src="@drawable/add_button"
-        android:padding="15dp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp"
+        android:padding="15dp"
+        android:src="@drawable/add_button" />
 
 
     <android.support.v7.widget.RecyclerView

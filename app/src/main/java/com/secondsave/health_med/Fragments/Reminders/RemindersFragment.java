@@ -100,7 +100,7 @@ public class RemindersFragment extends Fragment {
                 addBtn.setVisibility(View.GONE);
                 Fragment fragment = new AlarmFormulary();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.addToBackStack("alarmformulary").replace(R.id.fragment_reminders, fragment).commit();
+                transaction.replace(R.id.fragment_reminders, fragment).commit();
 
             }
         });
@@ -110,6 +110,7 @@ public class RemindersFragment extends Fragment {
                 addBtn.setVisibility(View.VISIBLE);
             }
         });
+
         return v;
     }
 
@@ -136,5 +137,6 @@ public class RemindersFragment extends Fragment {
             Snackbar.make(getView(), integer, Snackbar.LENGTH_SHORT).show();
         }
     }
+
 
 }
