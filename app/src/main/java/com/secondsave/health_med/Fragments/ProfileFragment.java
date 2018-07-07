@@ -1,74 +1,114 @@
 package com.secondsave.health_med.Fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.CardView;
+import android.transition.TransitionManager;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.secondsave.health_med.R;
 
+import java.nio.FloatBuffer;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProfileFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
 public class ProfileFragment extends Fragment {
-
-    private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
         // Required empty public constructor
     }
 
+    private boolean isOpen = false;
+    private ConstraintSet layout1, layout2;
+    private ConstraintLayout constraintLayout;
+    private de.hdodenhof.circleimageview.CircleImageView imageView;
+    private CardView cardView;
+    private FloatingActionButton edit;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
-    }
+        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        Window w = getActivity().getWindow();
+        edit = v.findViewById(R.id.floating_edit);
+        edit.setVisibility(View.GONE);
+        layout1 = new ConstraintSet();
+        layout2 = new ConstraintSet();
+        imageView = v.findViewById(R.id.profile_image);
+        constraintLayout = v.findViewById(R.id.profilefragment);
+        layout2.clone(getContext(), R.layout.fragment_profile_expanded);
+        layout1.clone(constraintLayout);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        cardView = v.findViewById(R.id.cardView2);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isOpen) {
+                    edit.setVisibility(View.VISIBLE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        TransitionManager.beginDelayedTransition(constraintLayout);
+                    }
+                    layout2.applyTo(constraintLayout);
+                    isOpen = !isOpen;
+
+                } else {
+                    edit.setVisibility(View.GONE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        TransitionManager.beginDelayedTransition(constraintLayout);
+                    }
+                    layout1.applyTo(constraintLayout);
+                    isOpen = !isOpen;
+                }
+            }
+        });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardView.setVisibility(View.GONE);
+                edit.setVisibility(View.GONE);
+                Fragment fragment = new ProfileEdit();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.addToBackStack(null).replace(R.id.profilefragment, fragment).commit();
+
+            }
+        });
+
+        return v;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().onBackPressed();
+                    cardView.setVisibility(View.VISIBLE);
+                    edit.setVisibility(View.VISIBLE);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

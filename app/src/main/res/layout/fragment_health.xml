@@ -197,8 +197,8 @@
         android:id="@+id/add_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchor="@+id/scrollView2"
         android:layout_margin="16dp"
         android:src="@drawable/add_button"
-        app:layout_anchorGravity="right|bottom" />
+        app:layout_anchor="@+id/scrollView2"
+        app:layout_anchorGravity="bottom|center" />
 </android.support.design.widget.CoordinatorLayout>

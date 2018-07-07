@@ -36,7 +36,6 @@
                     style="@style/small_text_adapter_reminder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="Size" />
 
                 <TextView
@@ -44,8 +43,6 @@
                     style="@style/small_text_adapter_reminder3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
                     android:gravity="right"
                     android:text="DoseType" />
 
@@ -124,7 +121,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/layoutswitch">
             <Switch
                 android:id="@+id/switchR"
                 android:layout_width="wrap_content"
