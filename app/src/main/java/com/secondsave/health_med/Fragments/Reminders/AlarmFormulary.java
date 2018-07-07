@@ -1,9 +1,13 @@
 package com.secondsave.health_med.Fragments.Reminders;
 
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -296,9 +300,15 @@ public class AlarmFormulary extends Fragment {
                 Date from = df.parse(dosefrom);
                 Date to = df.parse(doseto);
                 String td[] = timedose.split(":");
-                Float lapse = Float.parseFloat(td[0])+(Float.parseFloat(td[0])/60);
+                Float lapse = Float.parseFloat(td[0])+(Float.parseFloat(td[1])/60);
                 Dose dose = new Dose(user, dosetype, medname, size,from,to,lapse, true);
                 healthMedViewModel.insertDose(dose);
+                Calendar now = Calendar.getInstance();
+                if(now.getTimeInMillis()>=from.getTime()) {
+                    setAlarm(now.getTime(), lapse,getContext());
+                }else {
+                    setAlarm(from, lapse,getContext());
+                }
                 return R.string.sucess;
             }catch (Exception e){
                 Log.e("ERROR EN GUARDAR DOSE", "doInBackground: "+e.getMessage().toString() );
@@ -308,10 +318,29 @@ public class AlarmFormulary extends Fragment {
 
         @Override
         protected void onPostExecute(Integer integer) {
+//            if(integer==R.id.sucess){
+//
+//            }
             Snackbar.make(getView(),integer,Snackbar.LENGTH_SHORT).show();
             getActivity().onBackPressed();
         }
     }
+
+    public static void setAlarm(Date date,float n_hours, Context context){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hours = (int)n_hours;
+        int mins =  (int)((n_hours - hours) * 60);
+        cal.add(Calendar.HOUR_OF_DAY, hours);
+        cal.add(Calendar.MINUTE, mins);
+        Log.d("ALARM", "setAlarm: "+cal.getTime().toString());
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context,Alarms.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,1,intent,0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                1000 * 60 * 20, pendingIntent);
+    }
+
 
     public void setValues(Dose d){
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
