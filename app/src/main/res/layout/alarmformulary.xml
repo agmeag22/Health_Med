@@ -5,84 +5,153 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/alarmformulary"
-    android:layout_margin="30dp"
-    android:background="@color/text_color_clear"
-
-    >
+    android:background="@color/colorPrimaryDark">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
-        <TextView
-            style="@style/text_title_new_reminder"
-            android:text="Medication name:" />
-
-        <EditText
-            android:id="@+id/text_med_name"
-            style="@style/text_edit_new_reminder"
-            android:inputType="text" />
-
-        <TextView
-            style="@style/text_title_new_reminder"
-            android:text="From:" />
-
-        <EditText
-            android:id="@+id/from_this_day"
-            style="@style/text_edit_new_reminder"
-            android:focusable="false"
-            android:clickable="true"
-             />
-
-        <TextView
-            style="@style/text_title_new_reminder"
-            android:text="To:" />
-
-
-        <EditText
-            android:id="@+id/tot_this_day"
-            style="@style/text_edit_new_reminder"
-            android:focusable="false"
-            android:clickable="true" />
-
-        <TextView
-            style="@style/text_title_new_reminder"
-            android:text="Time between each dose:" />
-
-        <EditText
-            android:id="@+id/timepicker_edit_text"
-            style="@style/text_edit_new_reminder"
-            android:focusable="false"
-            android:clickable="true" />
-
-        <TextView
-            style="@style/text_title_new_reminder"
-            android:text="Dose type:" />
-
-        <Spinner
-            android:id="@+id/dose_type_selection"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:alpha="1" />
+            app:cardCornerRadius="15dp"
+            android:layout_margin="8dp">
 
-        <TextView
-            style="@style/text_title_new_reminder"
-            android:text="Dose quantity:" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/dose_quantity"
-            style="@style/text_edit_new_reminder"
-            android:inputType="numberDecimal" />
+                <TextView
+                    style="@style/text_title_new_reminder"
+                    android:text="Medication name:" />
+
+                <EditText
+                    android:id="@+id/text_med_name"
+                    style="@style/text_edit_new_reminder"
+                    android:inputType="text" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_margin="8dp"
+            app:cardCornerRadius="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_title_new_reminder"
+                        android:text="From:" />
+
+                    <EditText
+                        android:id="@+id/from_this_day"
+                        style="@style/text_edit_new_reminder"
+                        android:focusable="false"
+                        android:clickable="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_title_new_reminder"
+                        android:text="To:" />
+
+
+                    <EditText
+                        android:id="@+id/tot_this_day"
+                        style="@style/text_edit_new_reminder"
+                        android:focusable="false"
+                        android:clickable="true" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="15dp"
+            android:layout_margin="8dp">
+
+            <TextView
+                style="@style/text_title_new_reminder"
+                android:text="Time between each dose:" />
+
+            <EditText
+                android:id="@+id/timepicker_edit_text"
+                style="@style/text_edit_new_reminder"
+                android:layout_marginTop="15dp"
+                android:focusable="false"
+                android:clickable="true" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="15dp"
+            android:layout_margin="8dp">
+
+            <TextView
+                style="@style/text_title_new_reminder"
+                android:text="Dose type:" />
+
+            <Spinner
+                android:id="@+id/dose_type_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
+                android:alpha="1" />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="15dp"
+            android:layout_margin="8dp">
+
+            <TextView
+                style="@style/text_title_new_reminder"
+                android:text="Dose quantity:" />
+
+            <EditText
+                android:id="@+id/dose_quantity"
+                style="@style/text_edit_new_reminder"
+                android:layout_marginTop="15dp"
+                android:inputType="numberDecimal" />
+        </android.support.v7.widget.CardView>
 
         <Button
             android:id="@+id/start"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/background"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:layout_gravity="center_horizontal"
             android:layout_margin="15dp"
@@ -90,4 +159,6 @@
             android:text="START" />
 
     </LinearLayout>
+
+
 </ScrollView>

@@ -126,5 +126,6 @@
     <string name="nochanges_text_snackbar">No changes</string>
     <string name="undo_text_snackbar">UNDO</string>
     <string name="home_menu_title">Home</string>
+    <string name="empty_error">Empty</string>
 
 </resources>
