@@ -1,47 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/alarmformulary"
     android:background="@color/colorPrimaryDark">
+    <!---->
 
-    <LinearLayout
+    <?xml version="1.0" encoding="utf-8"?>
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        tools:context=".Fragments.ProfileEdit"
+        android:background="@color/colorPrimaryDark">
 
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+
+            android:layout_height="57dp"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_yourself_text_profile"
+                android:textAlignment="center"
+                android:textColor="@android:color/transparent"
+                android:textSize="30sp" />
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@id/profile_image"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/circlebackgroundprofile"
+            android:padding="15dp"
+            android:src="@drawable/ic_reminders"
+            app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+            app:layout_constraintVertical_bias="0.73" />
         <android.support.v7.widget.CardView
+            android:id="@+id/cardView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            android:layout_margin="8dp">
+            android:layout_marginTop="10dp"
+            style="@style/cardview_margins"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:gravity="center_horizontal">
 
                 <TextView
-                    style="@style/text_title_new_reminder"
-                    android:text="Medication name:" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:text="Name:" />
 
                 <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/text_med_name"
-                    style="@style/text_edit_new_reminder"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:hint="Medication name"
+                    android:textSize="15sp"/>
+
+
+
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-
         <android.support.v7.widget.CardView
             android:id="@+id/cardView2"
-            android:layout_height="100dp"
+            style="@style/cardview_margins"
             android:layout_width="match_parent"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="10dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView1">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,8 +120,8 @@
                     <EditText
                         android:id="@+id/from_this_day"
                         style="@style/text_edit_new_reminder"
-                        android:focusable="false"
-                        android:clickable="true" />
+                        android:clickable="true"
+                        android:focusable="false" />
 
                 </LinearLayout>
 
@@ -83,8 +140,8 @@
                     <EditText
                         android:id="@+id/tot_this_day"
                         style="@style/text_edit_new_reminder"
-                        android:focusable="false"
-                        android:clickable="true" />
+                        android:clickable="true"
+                        android:focusable="false" />
 
                 </LinearLayout>
 
@@ -92,73 +149,145 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-
         <android.support.v7.widget.CardView
+            android:id="@+id/cardView3"
+            style="@style/cardview_margins"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            android:layout_margin="8dp">
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-            <TextView
-                style="@style/text_title_new_reminder"
-                android:text="Time between each dose:" />
-
-            <EditText
-                android:id="@+id/timepicker_edit_text"
-                style="@style/text_edit_new_reminder"
-                android:layout_marginTop="15dp"
-                android:focusable="false"
-                android:clickable="true" />
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            android:layout_margin="8dp">
-
-            <TextView
-                style="@style/text_title_new_reminder"
-                android:text="Dose type:" />
-
-            <Spinner
-                android:id="@+id/dose_type_selection"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="20dp"
-                android:alpha="1" />
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time between each dose:"
+                    android:textSize="15sp"/>
+
+                <EditText
+                    android:id="@+id/timepicker_edit_text"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false" />
+
+
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardView4"
+            style="@style/cardview_margins"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="15dp"
-            android:layout_margin="8dp">
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-            <TextView
-                style="@style/text_title_new_reminder"
-                android:text="Dose quantity:" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/dose_quantity"
-                style="@style/text_edit_new_reminder"
-                android:layout_marginTop="15dp"
-                android:inputType="numberDecimal" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:textSize="15sp"
+                    android:text="Dose quantity:"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:id="@+id/dose_quantity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="50dp"
+                    android:layout_weight="2"
+                    android:inputType="numberDecimal" />
+
+
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <Button
-            android:id="@+id/start"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
-            android:textColor="@color/colorAccent"
-            android:text="START" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView5"
+            style="@style/cardview_margins"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView4">
 
-    </LinearLayout>
+            <RadioGroup
+                android:id="@+id/sex_radio_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/pill"
+                    style="@style/radio_button_image"
+                    android:background="@drawable/ic_pill"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <RadioButton
+                    android:id="@+id/tablespoon"
+                    style="@style/radio_button_image"
+                    android:background="@drawable/ic_tablespoon"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <RadioButton
+                    android:id="@+id/measuringcup"
+                    style="@style/radio_button_image"
+                    android:background="@drawable/ic_measuringcup"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <RadioButton
+                    android:id="@+id/mliliters"
+                    style="@style/radio_button_image"
+                    android:background="@drawable/ic_ml"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </RadioGroup>
+        </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/circlebackgroundreminders"
+            android:padding="15dp"
+            android:src="@drawable/ms_ic_check"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView5" />
+    </android.support.constraint.ConstraintLayout>
+
+
+
+
 
 
 </ScrollView>
