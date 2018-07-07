@@ -9,6 +9,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +26,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -44,18 +47,17 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class AlarmFormulary extends Fragment {
+public class AlarmFormulary extends Fragment implements View.OnClickListener {
     EditText medication_name;
     EditText dose_from;
     EditText dose_to;
     EditText time_between_dose;
-    Spinner dose_type;
     EditText dose_quantity;
-    Button start;
+    ImageView start;
     String medname = null;
     String dosefrom = null;
     String doseto = null;
-    int dosetype;
+    int dosetype=0;
     String dosequantity = null;
     String timedose;
     HealthMedViewModel healthMedViewModel;
@@ -63,6 +65,7 @@ public class AlarmFormulary extends Fragment {
     private String user;
     private DatePickerDialog datepicker;
     private TimePickerDialog timepicker;
+    ImageView pill,tablespoon,ml,cup;
     //Day buttons
 
     public AlarmFormulary() {
@@ -81,30 +84,19 @@ public class AlarmFormulary extends Fragment {
         medication_name = v.findViewById(R.id.text_med_name);
         dose_from = v.findViewById(R.id.from_this_day);
         dose_to = v.findViewById(R.id.tot_this_day);
-        dose_type = v.findViewById(R.id.dose_type_selection);
         dose_quantity = v.findViewById(R.id.dose_quantity);
         start = v.findViewById(R.id.start);
         time_between_dose = v.findViewById(R.id.timepicker_edit_text);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.medication_measurement, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        dose_type.setAdapter(adapter);
+        pill=v.findViewById(R.id.pill);
+        tablespoon=v.findViewById(R.id.tablespoon);
+        cup=v.findViewById(R.id.measurincup);
+        ml=v.findViewById(R.id.mliliters);
         Bundle bundle = new Bundle();
         bundle = getArguments();
         if (bundle != null) {
             gettingValues(bundle);
         }
-        dose_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-                dosetype = adapterView.getSelectedItemPosition();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
         dose_to.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +178,11 @@ public class AlarmFormulary extends Fragment {
                 timepicker.show();
             }
         });
+
+        pill.setOnClickListener(this);
+        cup.setOnClickListener(this);
+        tablespoon.setOnClickListener(this);
+        ml.setOnClickListener(this);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,6 +207,7 @@ public class AlarmFormulary extends Fragment {
 
             }
         });
+
         return v;
     }
 
@@ -285,6 +283,39 @@ public class AlarmFormulary extends Fragment {
         }
         if (time_between_dose.getText() != null && !time_between_dose.getText().equals("")) {
             timedose = time_between_dose.getText().toString();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==pill){
+            dosetype=0;
+            pill.setImageDrawable(getResources().getDrawable(R.drawable.ic_pill_selected));
+            tablespoon.setImageDrawable(getResources().getDrawable(R.drawable.ic_tablespoon));
+            cup.setImageDrawable(getResources().getDrawable(R.drawable.ic_measuringcup));
+            ml.setImageDrawable(getResources().getDrawable(R.drawable.ic_ml));
+
+        }
+        if(v==tablespoon){
+            dosetype=1;
+            tablespoon.setImageDrawable(getResources().getDrawable(R.drawable.ic_tablespoon_selected));
+            pill.setImageDrawable(getResources().getDrawable(R.drawable.ic_pill));
+            cup.setImageDrawable(getResources().getDrawable(R.drawable.ic_measuringcup));
+            ml.setImageDrawable(getResources().getDrawable(R.drawable.ic_ml));
+        }
+        if(v==cup){
+            dosetype=2;
+            cup.setImageDrawable(getResources().getDrawable(R.drawable.ic_measuringcup_selected));
+            tablespoon.setImageDrawable(getResources().getDrawable(R.drawable.ic_tablespoon));
+            pill.setImageDrawable(getResources().getDrawable(R.drawable.ic_pill));
+            ml.setImageDrawable(getResources().getDrawable(R.drawable.ic_ml));
+        }
+        if(v==ml){
+            dosetype=3;
+            ml.setImageDrawable(getResources().getDrawable(R.drawable.ic_ml_selected));
+            tablespoon.setImageDrawable(getResources().getDrawable(R.drawable.ic_tablespoon));
+            cup.setImageDrawable(getResources().getDrawable(R.drawable.ic_measuringcup));
+            pill.setImageDrawable(getResources().getDrawable(R.drawable.ic_pill));
         }
     }
 
