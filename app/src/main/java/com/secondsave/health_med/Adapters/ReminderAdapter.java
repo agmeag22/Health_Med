@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -64,10 +65,10 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                 holder.dose_end_date.setText(df.format(doseList.get(position).getEnd_date()));
             }
         }
-        holder.aSwitch.setOnClickListener(new View.OnClickListener() {
+        holder.switchlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!holder.aSwitch.isChecked()) {
+                if (holder.aSwitch.isChecked()) {
                     holder.aSwitch.setChecked(true);
                 } else {
                     holder.aSwitch.setChecked(false);
@@ -91,6 +92,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView med_name, dose_size, dose_type, dose_lapse, dose_start_date, dose_end_date;
         Switch aSwitch;
+        LinearLayout switchlayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -101,6 +103,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             dose_start_date = itemView.findViewById(R.id.text_start_date);
             dose_end_date = itemView.findViewById(R.id.text_end_date);
             aSwitch = itemView.findViewById(R.id.switchR);
+            switchlayout = itemView.findViewById(R.id.layoutswitch);
         }
     }
 }

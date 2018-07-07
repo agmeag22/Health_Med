@@ -115,5 +115,6 @@
     <string name="new_entry_msg">New record</string>
     <string name="date">Date</string>
     <string name="metric_sys">Metric system</string>
+    <string name="edit_yourself_text_profile">Edit Yourself</string>
 
 </resources>
