@@ -8,16 +8,20 @@ import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.transition.TransitionManager;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.secondsave.health_med.R;
 
@@ -41,7 +45,6 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
         Window w = getActivity().getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         edit = v.findViewById(R.id.floating_edit);
         edit.setVisibility(View.GONE);
         layout1 = new ConstraintSet();
@@ -57,14 +60,6 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 if (!isOpen) {
                     edit.setVisibility(View.VISIBLE);
-                    edit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Fragment fragment = new ProfileEdit();
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            transaction.addToBackStack(null).replace(R.id.profilefragment, fragment).commit();
-                        }
-                    });
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         TransitionManager.beginDelayedTransition(constraintLayout);
                     }
@@ -81,7 +76,39 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardView.setVisibility(View.GONE);
+                edit.setVisibility(View.GONE);
+                Fragment fragment = new ProfileEdit();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.addToBackStack(null).replace(R.id.profilefragment, fragment).commit();
+
+            }
+        });
+
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getView().setFocusableInTouchMode(true);
+        getView().requestFocus();
+        getView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+                    getActivity().onBackPressed();
+                    cardView.setVisibility(View.VISIBLE);
+                    edit.setVisibility(View.VISIBLE);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
 }

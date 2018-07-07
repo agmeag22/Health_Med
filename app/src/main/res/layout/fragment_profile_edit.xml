@@ -71,15 +71,17 @@
                 android:text="Name: " />
 
             <EditText
+                android:id="@+id/first_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="First Name"
+                android:hint="@string/first_name"
                 android:textSize="15sp" />
 
             <EditText
+                android:id="@+id/last_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="last Name"
+                android:hint="@string/last_name_text"
                 android:textSize="15sp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
@@ -127,6 +129,7 @@
                     android:orientation="horizontal">
 
                     <EditText
+                        android:id="@+id/height_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="163"
@@ -160,19 +163,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Birth"
+                    android:text="@string/birthday_text"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <EditText
+                    android:id="@+id/birthday_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Tap here"
+                    android:hint="@string/tap_here_text"
                     android:paddingTop="10dp"
                     android:textColor="@color/colorPrimary"
                     android:textColorHint="@color/text_color_clear"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:inputType="none" />
 
             </LinearLayout>
 

@@ -22,4 +22,12 @@
     <color name="startblue">#09c6df</color>
     <color name="endred">#a70b0e</color>
 
+
+    <!--Colors for circles background-->
+    <color name="reminders">#d3388938</color>
+    <color name="pharmacies">#be182fa6</color>
+    <color name="health">#d5a61824</color>
+    <color name="profile">#182838</color>
+    <color name="settings">#404040</color>
+
 </resources>

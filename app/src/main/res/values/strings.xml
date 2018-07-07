@@ -69,6 +69,9 @@
     <string name="save">SAVE</string>
     <string name="empty_field">Empty field</string>
 
+    <!--Strings for Exit-->
+    <string name="question">Leaving early?</string>
+    <string name="exit_question">Are you sure?</string>
 
     <string-array name="medication_measurement">
         <item>Pill</item>
@@ -116,5 +119,12 @@
     <string name="date">Date</string>
     <string name="metric_sys">Metric system</string>
     <string name="edit_yourself_text_profile">Edit Yourself</string>
+    <string name="birthday_text">Birthday</string>
+    <string name="tap_here_text">Tap here</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name_text">last Name</string>
+    <string name="nochanges_text_snackbar">No changes</string>
+    <string name="undo_text_snackbar">UNDO</string>
+    <string name="home_menu_title">Home</string>
 
 </resources>

@@ -2,14 +2,18 @@ package com.secondsave.health_med.Activities;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
@@ -25,6 +29,7 @@ import android.widget.TextView;
 
 
 import com.secondsave.health_med.Fragments.Health.HealthFragment;
+import com.secondsave.health_med.Fragments.HomeMenu;
 import com.secondsave.health_med.Fragments.Pharmacy.PharmacyFragment;
 import com.secondsave.health_med.Fragments.ProfileFragment;
 
@@ -44,7 +49,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ExpandableListView expandableListView;
     private List<MenuModel> headerList = new ArrayList<>();
     private HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
-    private String reminders_menu_title, statitics_menu_title, pharmacies_menu_title, health_menu_title, profile_menu_title, settings_menu_title, rateus_menu_title, logout_menu_title;
+             private String reminders_menu_title, statitics_menu_title, pharmacies_menu_title,
+                     health_menu_title, profile_menu_title, settings_menu_title,
+                     rateus_menu_title, logout_menu_title, home_menu_title;
     private List<MenuModel> childModelsList;
     private LiveData<List<String>> listLiveData;
     private HealthMedViewModel mhealthmedViewModel;
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences prefs;
     int access=0;
     private Toolbar toolbar;
+
 
              @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +98,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
 
+                 Fragment fragment = new HomeMenu();
+                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                 transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
+
     }
 
              @Override
@@ -103,7 +115,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+            if (backStackEntryCount == 1) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.question);
+                builder.setMessage(R.string.exit_question);
+                builder.setNegativeButton(android.R.string.no, null);
+
+                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        getSupportFragmentManager().popBackStack();
+                        MainActivity.super.onBackPressed();
+                        finish();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GRAY));
+
+            } else {
+                getSupportFragmentManager().popBackStackImmediate();
+            }
         }
     }
 
@@ -114,12 +146,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void prepareMenuData() {
 
         get_menu_titles();
-        MenuModel menuModel = new MenuModel(profile_menu_title, false, true); //Menu of Java Tutorials
+        MenuModel menuModel = new MenuModel(home_menu_title, false, true); //Menu of Java Tutorials
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
 
+        menuModel = new MenuModel(profile_menu_title, false, true); //Menu of Java Tutorials
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
         menuModel = new MenuModel(reminders_menu_title, false, true); //Menu of Java Tutorials
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
@@ -173,23 +210,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
+                        if (headerList.get(groupPosition).menuName.equals(home_menu_title)) {
+                            fragment = new HomeMenu();
+                            transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
+                        }
                         if (headerList.get(groupPosition).menuName.equals(profile_menu_title)) {
                             fragment = new ProfileFragment();
-                            transaction.replace(R.id.container, fragment).commit();
+                            transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(reminders_menu_title)) {
                             fragment = new RemindersFragment();
-                            transaction.replace(R.id.container, fragment).commit();
+                            transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(statitics_menu_title)) {
                         }
                         if (headerList.get(groupPosition).menuName.equals(pharmacies_menu_title)) {
                             fragment = new PharmacyFragment();
-                            transaction.replace(R.id.container, fragment).commit();
+                            transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(health_menu_title)) {
                             fragment = new HealthFragment();
-                            transaction.replace(R.id.container, fragment).commit();
+                            transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(settings_menu_title)) {
                         }
@@ -228,6 +269,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         settings_menu_title = getString(R.string.settings_menu_title);
         rateus_menu_title = getString(R.string.rateus_menu_title);
         logout_menu_title = getString(R.string.logout_menu_title);
+        home_menu_title = getString(R.string.home_menu_title);
     }
 
              @SuppressWarnings("StatementWithEmptyBody")
