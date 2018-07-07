@@ -342,24 +342,5 @@ public class AlarmFormulary extends Fragment {
     }
 
 
-    public void setValues(Dose d){
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        if (d.getName() != null) {
-            medication_name.setText(d.getName());
-        }
-        if (d.getStart_date() != null) {
 
-            dose_from.setText(df.format(d.getStart_date()));
-        }
-        if (d.getEnd_date() != null) {
-            dose_to.setText(df.format(d.getEnd_date()));
-        }
-        if (d.getSize()>0) {
-            dose_quantity.setText(d.getSize()+"");
-        }
-        if (d.getLapse()>0) {
-            time_between_dose.setText(d.getLapse()+"");
-        }
-        dose_type.setSelection(d.getId_dose_type());
-    }
 }
