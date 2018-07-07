@@ -177,7 +177,7 @@ public class PharmacyFragment extends Fragment {
                                 recyclerView.setAdapter(recyclerViewAdapter);
                                 for (PlaceLikelihood placeLikelihood : likelyPlaces) {
                                     Place place = placeLikelihood.getPlace();
-                                    if (!place.getPlaceTypes().contains(Place.TYPE_PHARMACY)) {
+                                    if (place.getPlaceTypes().contains(Place.TYPE_PHARMACY)) {
                                         Log.i(TAG, String.format("Place '%s' has likelihood: %g",
                                                 place.getName(),
                                                 placeLikelihood.getLikelihood()));

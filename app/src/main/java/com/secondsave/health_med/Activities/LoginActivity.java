@@ -24,6 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,6 +37,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -48,6 +50,11 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.secondsave.health_med.Database.Entities.PersonalInfo;
 import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.R;
@@ -75,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -85,17 +92,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     HealthMedViewModel mhealthmedViewModel;
     private String token ;
     private User u;
+    private FirebaseAuth mAuth;
+    private String TAG="FIREBASE";
 
-
-//    private static Button loginButton;
-//    private static TextView forgotPassword, signUp;
-//    private static CheckBox show_hide_password;
-//    private static LinearLayout loginLayout;
-//    private static Animation shakeAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.login_layout);
         token = getCertificateSHA1Fingerprint();
         mhealthmedViewModel = ViewModelProviders.of(LoginActivity.this).get(HealthMedViewModel.class);
@@ -125,6 +130,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
     }
 
     private void populateAutoComplete() {
@@ -177,17 +190,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+//        if (mAuthTask != null) {
+//            return;
+//        }
 
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String email = mEmailView.getText().toString();
+        final String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -218,8 +231,45 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d(TAG, "signInWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                SharedPreferences sp = getSharedPreferences("com.secondsave.health_med", MODE_PRIVATE);
+
+                                sp.edit().putString("token",token).apply();
+                                mhealthmedViewModel.updateUserToken(email,token);
+
+                                if(u!=null) {
+                                    PersonalInfo pi = mhealthmedViewModel.getPersonalInfo(u);
+                                    sp.edit().putString("name", pi.getFirst_name() + " " + pi.getLast_name()).apply();
+                                    sp.edit().putString("username", email).apply();
+                                    Intent i = new Intent(getApplication(),MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                                showProgress(false);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                                mPasswordView.requestFocus();
+                                showProgress(false);
+
+
+                            }
+
+                            // ...
+                        }
+                    });
+//            mAuthTask = new UserLoginTask(email, password);
+//            mAuthTask.execute((Void) null);
         }
     }
 
@@ -328,61 +378,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
 
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-                boolean result = mhealthmedViewModel.isUserAndPasswordMatch(mEmail,mPassword) ;
-                if(result){
-                    u = mhealthmedViewModel.getUserByUsernameAsync(mEmail);
-                }
-                 return result;
-            // TODO: register the new account here.
-       //     return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                SharedPreferences sp = getSharedPreferences("com.secondsave.health_med", MODE_PRIVATE);
-
-                sp.edit().putString("token",token).apply();
-                mhealthmedViewModel.updateUserToken(mEmail,token);
-
-                if(u!=null) {
-                    PersonalInfo pi = mhealthmedViewModel.getPersonalInfo(u);
-                    sp.edit().putString("name", pi.getFirst_name() + " " + pi.getLast_name()).apply();
-                    sp.edit().putString("username", mEmail).apply();
-                    Intent i = new Intent(getApplication(),MainActivity.class);
-                    startActivity(i);
-                    finish();
-                }
-
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
 
     private String getCertificateSHA1Fingerprint() {
         PackageManager pm = getApplicationContext().getPackageManager();
