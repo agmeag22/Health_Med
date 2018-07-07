@@ -5,12 +5,15 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardUseCompatPadding="true"
+    app:cardCornerRadius="15dp"
     android:elevation="11dp">
 
     <LinearLayout
+        android:id="@+id/layoutcard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -21,7 +24,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/title_text_adapter_reminder"
-                android:text="Medication Name" />
+                android:text="Medication Name"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@color/text_color_clear"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,7 +42,9 @@
                     style="@style/small_text_adapter_reminder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Size" />
+                    android:text="Size"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_color_clear"/>
 
                 <TextView
                     android:id="@+id/text_dose_type"
@@ -44,7 +52,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:text="DoseType" />
+                    android:text="DoseType"
+                    android:textSize="13sp"
+                    android:textColor="@color/text_color_clear"/>
 
                 <LinearLayout
                     android:layout_width="1dp"
@@ -59,7 +69,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="Dose Time" />
+                    android:text="Dose Time"
+                    android:textSize="10sp"
+                    android:textColor="@color/text_color_clear"/>
 
 
             </LinearLayout>
@@ -86,7 +98,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="Start" />
+                    android:text="Start"
+                    android:textColor="@color/text_color_clear"
+                    android:textSize="10sp"/>
 
                 <LinearLayout
                     android:layout_width="1dp"
@@ -101,7 +115,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="End" />
+                    android:text="End"
+                    android:textColor="@color/text_color_clear"
+                    android:textSize="10sp"/>
                 <!--<LinearLayout-->
                 <!--android:layout_width="1dp"-->
                 <!--android:layout_height="12dp"-->

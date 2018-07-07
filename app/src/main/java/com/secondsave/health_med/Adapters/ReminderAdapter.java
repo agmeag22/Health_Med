@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -63,6 +64,20 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
 
                 holder.dose_end_date.setText(df.format(doseList.get(position).getEnd_date()));
             }
+            if(doseList.get(position).getId_dose_type()>-1){
+                if(doseList.get(position).getId_dose_type()==0){
+                    holder.layoucard.setBackgroundColor(context.getResources().getColor(R.color.health));
+                }
+                if(doseList.get(position).getId_dose_type()==1){
+                    holder.layoucard.setBackgroundColor(context.getResources().getColor(R.color.settings));
+                }
+                if(doseList.get(position).getId_dose_type()==2){
+                    holder.layoucard.setBackgroundColor(context.getResources().getColor(R.color.background));
+                }
+                if(doseList.get(position).getId_dose_type()==3){
+                    holder.layoucard.setBackgroundColor(context.getResources().getColor(R.color.pharmacies));
+                }
+            }
 
 
         if(doseList.get(position).isReminder_enabled()){
@@ -71,7 +86,7 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
         else{
             holder.aSwitch.setChecked(false);
         }
-        holder.aSwitch.setOnClickListener(new View.OnClickListener() {
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (holder.aSwitch.isChecked()) {
@@ -114,7 +129,7 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
         TextView med_name, dose_size, dose_type, dose_lapse, dose_start_date, dose_end_date;
         Switch aSwitch;
         View view;
-
+        LinearLayout linearLayout,layoucard;
         public ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
@@ -125,6 +140,8 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
             dose_start_date = itemView.findViewById(R.id.text_start_date);
             dose_end_date = itemView.findViewById(R.id.text_end_date);
             aSwitch = itemView.findViewById(R.id.switchR);
+            linearLayout=itemView.findViewById(R.id.layoutswitch);
+            layoucard=itemView.findViewById(R.id.layoutcard);
         }
     }
 }

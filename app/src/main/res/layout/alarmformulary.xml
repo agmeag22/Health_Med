@@ -46,7 +46,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/circlebackgroundprofile"
-            android:padding="15dp"
+            android:padding="20dp"
             android:src="@drawable/ic_reminders"
             app:layout_constraintBottom_toBottomOf="@+id/relativeLayout"
             app:layout_constraintEnd_toEndOf="parent"
