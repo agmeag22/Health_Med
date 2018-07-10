@@ -68,13 +68,9 @@ public abstract class HealthMedDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
-            User user = new User("electroanime2009@gmail.com","1234","" );
+            User user = new User("HealthMED","1234","" );
             mDao.insert(user);
-            PersonalInfo personalInfo = new PersonalInfo("electroanime2009@gmail.com","Allen","Perez", 1, 0, new Date(Calendar.getInstance().getTimeInMillis()));
-            personalInfoDao.insert(personalInfo);
-            user = new User("meag", "1234", "");
-            mDao.insert(user);
-            personalInfo = new PersonalInfo("meag", "Miguel", "Aviles",1, 0, new Date(Calendar.getInstance().getTimeInMillis()));
+            PersonalInfo personalInfo = new PersonalInfo("HealthMED","","", 1, 0, new Date(Calendar.getInstance().getTimeInMillis()));
             personalInfoDao.insert(personalInfo);
             return null;
         }

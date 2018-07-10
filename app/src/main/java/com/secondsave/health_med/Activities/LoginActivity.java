@@ -365,7 +365,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if(u!=null) {
                     PersonalInfo pi = mhealthmedViewModel.getPersonalInfo(u);
                     sp.edit().putString("name", pi.getFirst_name() + " " + pi.getLast_name()).apply();
-                    sp.edit().putString("username", mEmail).apply();
+                    sp.edit().putString("username", "HealthMED").apply();
                     Intent i = new Intent(getApplication(),MainActivity.class);
                     startActivity(i);
                     finish();

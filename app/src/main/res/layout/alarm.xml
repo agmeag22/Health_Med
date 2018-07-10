@@ -6,12 +6,21 @@
     android:gravity="center" >
 
     <TextView
+        android:id="@+id/hello_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alarm_msj"
+        style="@style/Base.DialogWindowTitle.AppCompat"
+        android:gravity="center"/>
+    <TextView
         android:id="@+id/alarm_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Alarma"
         style="@style/Base.DialogWindowTitle.AppCompat"
         android:gravity="center"/>
+
+
     <Button
         android:id="@+id/stopAlarm"
         android:layout_width="wrap_content"

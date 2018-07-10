@@ -6,14 +6,13 @@ import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.secondsave.health_med.R;
@@ -21,20 +20,19 @@ import com.secondsave.health_med.R;
 import java.io.IOException;
 
 public class AlarmReceiverActivity extends AppCompatActivity {
-        private MediaPlayer mMediaPlayer;
-    private int id;
+    private MediaPlayer mMediaPlayer;
+    private String msg;
 
     @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setContentView(R.layout.alarm);
             Bundle bundle = getIntent().getExtras();
-            id = bundle.getInt("id",-1);
+            msg = bundle.getString("msg","");
             TextView texto = findViewById(R.id.alarm_text);
-            texto.setText("EL ID DE LA ALARMA ES:"+id);
+            texto.setText(msg);
             Button stopAlarm = (Button) findViewById(R.id.stopAlarm);
             stopAlarm.setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View arg0, MotionEvent arg1) {
@@ -45,6 +43,15 @@ public class AlarmReceiverActivity extends AppCompatActivity {
             });
 
             playSound(this, getAlarmUri());
+
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mMediaPlayer.stop();
+                finish();
+            }
+        }, 1000*60*1);
         }
 
         private void playSound(Context context, Uri alert) {

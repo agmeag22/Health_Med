@@ -87,18 +87,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
         populateExpandableList();
+        prefs.edit().putString("username", "HealthMED").apply();
+        //prefs.edit().putString("name", "HealthMED").apply();
         String token = prefs.getString("token","");
         String user = prefs.getString("username","");
         String name = prefs.getString("name","");
         userName.setText(name);
         email.setText(user);
-        if (name.equals("") || user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user, token)) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            finish();
-        }
+//        if (name.equals("") || user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user, token)) {
+//            Intent i = new Intent(this, LoginActivity.class);
+//            startActivity(i);
+//            finish();
+//        }
 
                  Fragment fragment = new HomeMenu();
+                 getSupportActionBar().setTitle("HOME");
                  FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                  transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
 
@@ -244,7 +247,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             Intent i = new Intent(MainActivity.this, LoginActivity.class);
                             startActivity(i);
                         }
-                        toolbar.setTitle(headerList.get(groupPosition).menuName);
+                        getSupportActionBar().setTitle(headerList.get(groupPosition).menuName);
+                        //toolbar.
                         onBackPressed();
                     }
                 }
