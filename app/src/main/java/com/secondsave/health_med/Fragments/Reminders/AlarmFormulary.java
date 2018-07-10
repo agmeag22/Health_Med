@@ -1,6 +1,7 @@
 package com.secondsave.health_med.Fragments.Reminders;
 
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -339,9 +340,9 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
                 healthMedViewModel.insertDose(dose);
                 Calendar now = Calendar.getInstance();
                 if(now.getTimeInMillis()>=from.getTime()) {
-                    setAlarm(now.getTime(), lapse,getContext());
+                    setAlarm(now.getTime(), lapse,dose,getContext());
                 }else {
-                    setAlarm(from, lapse,getContext());
+                    setAlarm(from, lapse,dose,getContext());
                 }
                 return R.string.sucess;
             }catch (Exception e){
@@ -360,7 +361,7 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
         }
     }
 
-    public static void setAlarm(Date date,float n_hours, Context context){
+    public static void setAlarm(Date date,float n_hours,Dose dose, Context context){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int hours = (int)n_hours;
@@ -368,13 +369,13 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
         cal.add(Calendar.HOUR_OF_DAY, hours);
         cal.add(Calendar.MINUTE, mins);
         Log.d("ALARM", "setAlarm: "+cal.getTime().toString());
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context,Alarms.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,1,intent,0);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
-                1000 * 60 * 20, pendingIntent);
+        Intent intent = new Intent(context, AlarmReceiverActivity.class);
+        intent.putExtra("id", dose.getId_dose());
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,
+                1234, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager am =
+                (AlarmManager)context.getSystemService(Activity.ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                1000 * 60 * (mins + hours*60), pendingIntent);
     }
-
-
-
 }
