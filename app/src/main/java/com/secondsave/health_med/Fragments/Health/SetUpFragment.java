@@ -30,8 +30,6 @@ import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.R;
 import com.secondsave.health_med.Utils.Gender;
 import com.secondsave.health_med.Utils.IMC;
-import com.stepstone.stepper.Step;
-import com.stepstone.stepper.VerificationError;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,7 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class SetUpFragment extends Fragment implements Step, View.OnClickListener {
+public class SetUpFragment extends Fragment implements View.OnClickListener {
     Spinner metrics_spinner;
     TextView weight_type, height_type;
     EditText birthday, height, weight;
@@ -143,21 +141,7 @@ public class SetUpFragment extends Fragment implements Step, View.OnClickListene
         return v;
     }
 
-    @Override
-    public VerificationError verifyStep() {
-        //return null if the user can go to the next step, create a new VerificationError instance otherwise
-        return null;
-    }
 
-    @Override
-    public void onSelected() {
-        //update UI when selected
-    }
-
-    @Override
-    public void onError(@NonNull VerificationError error) {
-        //handle error inside of the fragment, e.g. show error on EditText
-    }
 
     @Override
     public void onClick(View v) {

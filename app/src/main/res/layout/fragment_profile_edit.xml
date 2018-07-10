@@ -234,7 +234,7 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="15dp"
-        android:src="@drawable/ms_ic_check"
+        android:src="@drawable/ic_up_down"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

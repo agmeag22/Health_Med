@@ -366,9 +366,12 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
         cal.setTime(date);
         int hours = (int)n_hours;
         int mins =  (int)((n_hours - hours) * 60);
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy -- hh:mm");
+
+        Log.d("ALARM", "setAlarm: "+df.format(cal.getTime()));
         cal.add(Calendar.HOUR_OF_DAY, hours);
         cal.add(Calendar.MINUTE, mins);
-        Log.d("ALARM", "setAlarm: "+cal.getTime().toString());
+        Log.d("ALARM", "setAlarm: "+df.format(cal.getTime()));
         Intent intent = new Intent(context, AlarmReceiverActivity.class);
         intent.putExtra("id", dose.getId_dose());
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
