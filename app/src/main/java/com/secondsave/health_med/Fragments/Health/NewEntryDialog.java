@@ -35,7 +35,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-
+/**
+ * This class specifies new data to be added by the user in form of a dialog.
+ * */
 public class NewEntryDialog extends DialogFragment {
 
 
@@ -83,7 +85,9 @@ public class NewEntryDialog extends DialogFragment {
         return builder.create();
 
     }
-
+    /**
+     * this method initializes the views  and, specifies a click done.
+     * */
     public void searchViews(View v) {
         date = v.findViewById(R.id.date_input);
         weight = v.findViewById(R.id.weight_input);
@@ -106,7 +110,9 @@ public class NewEntryDialog extends DialogFragment {
                     weight_type.setText("LB");
                 }
             }
-
+/**
+ * This method specifies that if an option is not selected the value is going to be set.
+ * */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 //                height_type.setText("IN");
@@ -131,7 +137,9 @@ public class NewEntryDialog extends DialogFragment {
         });
 
     }
-
+/**
+ * This class specifies a Task executed on background
+ * */
     public class doInBackGround extends AsyncTask<Void, Void, Integer> {
 
         @Override

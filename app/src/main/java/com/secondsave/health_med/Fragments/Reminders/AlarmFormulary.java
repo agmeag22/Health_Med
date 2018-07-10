@@ -48,12 +48,29 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-
+/**
+ * This class represents a formulary which is going to specify an alarm fixed in the time selected.
+ * */
 public class AlarmFormulary extends Fragment implements View.OnClickListener {
+   /**
+    * for the medication name
+    * */
     EditText medication_name;
+    /**
+     * for the medication first date
+     * */
     EditText dose_from;
+    /**
+     * for the medication end date
+     * */
     EditText dose_to;
+    /**
+     * for the medication time lapse between each dose
+     * */
     EditText time_between_dose;
+    /**
+     * for the amount of medication tha is going to be taken on each reminder.
+     * */
     EditText dose_quantity;
     ImageView start;
     String medname = null;
@@ -65,15 +82,28 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
     HealthMedViewModel healthMedViewModel;
     private SharedPreferences prefs;
     private String user;
+    /**
+     * Specifies a DatePicker
+     * */
     private DatePickerDialog datepicker;
+    /**
+     * Specifies a TimePicker
+     * */
     private TimePickerDialog timepicker;
     ImageView pill, tablespoon, ml, cup;
     //Day buttons
 
+    /**
+     * Empty constructor
+     * */
     public AlarmFormulary() {
         // Required empty public constructor
     }
 
+/**
+ * This method creates the view, and opens DatePicker or TimePicker if text boxes are selected.
+ * For each text box edited a value is assigned to a bundle which is going to be passed to a Fragment
+ * */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -247,6 +277,9 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
 
         return args;
     }
+    /**
+     * This method gets values from de DialogFragment oppened when clicked and obtains previous saved data
+     * */
 
     public void gettingValues(Bundle bundle) {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -276,7 +309,9 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
             time_between_dose.setText(shours + ":" + smins);
         }
     }
-
+    /**
+     *This methos fills up every value of all strings such as medication name, dose from a specific date etc...
+     * */
     public void settingDose() {
 
         if (medication_name.getText() != null && !medication_name.getText().equals("")) {
@@ -295,7 +330,9 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
             timedose = time_between_dose.getText().toString();
         }
     }
-
+    /**
+     * This mehtod changes the color of an option selected
+     * */
     @Override
     public void onClick(View v) {
         if (v == pill) {
@@ -328,7 +365,9 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
             pill.setImageDrawable(getResources().getDrawable(R.drawable.ic_pill));
         }
     }
-
+    /**
+     *this method allows the data to be saved on the database, and automatically starts an alarm when the formulary is complete and saved.
+     * */
     public class doInBackGround extends AsyncTask<Void, Void, Integer> {
 
         @Override
@@ -366,7 +405,9 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
             getActivity().onBackPressed();
         }
     }
-
+    /**
+     * this method sets the alarm
+     * */
     public static void setAlarm(Date date, float n_hours, Dose dose, Context context) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
