@@ -1,0 +1,14 @@
+com.secondsave.health_med
+com.secondsave.health_med.Activities
+com.secondsave.health_med.Adapters
+com.secondsave.health_med.Database
+com.secondsave.health_med.Database.Dao
+com.secondsave.health_med.Database.Entities
+com.secondsave.health_med.Database.Repository
+com.secondsave.health_med.Database.ViewModels
+com.secondsave.health_med.Fragments
+com.secondsave.health_med.Fragments.Health
+com.secondsave.health_med.Fragments.Pharmacy
+com.secondsave.health_med.Fragments.Reminders
+com.secondsave.health_med.Menu
+com.secondsave.health_med.Utils

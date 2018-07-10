@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.secondsave.health_med.R;
 
 /**
- * Created by shiva on 8/4/17.
+ *
  */
 
 public class Alarms extends BroadcastReceiver {
