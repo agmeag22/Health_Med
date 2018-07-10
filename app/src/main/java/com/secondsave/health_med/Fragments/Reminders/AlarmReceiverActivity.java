@@ -51,7 +51,7 @@ public class AlarmReceiverActivity extends AppCompatActivity {
                 mMediaPlayer.stop();
                 finish();
             }
-        }, 1000*60*1);
+        }, 1000*60*5); //5 minutos para que se quite la alarma si no se presiona aceptar.
         }
 
         private void playSound(Context context, Uri alert) {
