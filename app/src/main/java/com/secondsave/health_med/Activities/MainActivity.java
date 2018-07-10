@@ -118,11 +118,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String name = prefs.getString("name","");
         userName.setText(name);
         email.setText(user);
-        if (name.equals("") || user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user, token)) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            finish();
-        }
+//        if (name.equals("") || user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user, token)) {
+//            Intent i = new Intent(this, LoginActivity.class);
+//            startActivity(i);
+//            finish();
+//        }
 
                  Fragment fragment = new HomeMenu();
                  getSupportActionBar().setTitle("HOME");
