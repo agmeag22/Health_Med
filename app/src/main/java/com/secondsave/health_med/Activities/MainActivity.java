@@ -42,31 +42,58 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
-         {
-
+/**
+ * An activity  where Health,Pharmacy,Reminders, Home, and Profile fragments are executed.
+ *
+ */
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+/**
+ * This adapter makes menu options scalable and allow them to have suboptions.
+ * */
     private ExpandableListAdapter expandableListAdapter;
+    /**
+     * ExpandableListView is the list used inside ExpandableListAdapter
+     * */
     private ExpandableListView expandableListView;
+    /**
+     * Contains main menu options
+     * */
     private List<MenuModel> headerList = new ArrayList<>();
+    /**
+     * Used for secondary menu options (child)
+     * */
     private HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
-             private String reminders_menu_title, statitics_menu_title, pharmacies_menu_title,
-                     health_menu_title, profile_menu_title, settings_menu_title,
-                     rateus_menu_title, logout_menu_title, home_menu_title;
-    private List<MenuModel> childModelsList;
-    private LiveData<List<String>> listLiveData;
+    /**
+     * String for menu title
+     * */
+    private String reminders_menu_title, statitics_menu_title, pharmacies_menu_title,
+            health_menu_title, profile_menu_title, settings_menu_title,
+            rateus_menu_title, logout_menu_title, home_menu_title;
+
+    /**
+     *ViewModel where all methods of the repository exists
+     * */
     private HealthMedViewModel mhealthmedViewModel;
-    Animation uptodown, downtoup;
+    /**
+     * Will contain app saved data even when stopped, no private user information
+     * */
     SharedPreferences prefs;
-    int access=0;
+    /**
+     * Predefined Android Studio toolbar
+     * */
     private Toolbar toolbar;
 
-
-             @Override
+    /**
+     *This method starts the application while showing activity_main.xml and creating a drawer menu.
+     */
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         prefs = this.getSharedPreferences(
                 "com.secondsave.health_med", MODE_PRIVATE);
+
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
@@ -77,9 +104,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
 
-
         mhealthmedViewModel = ViewModelProviders.of(this).get(HealthMedViewModel.class);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         TextView userName, email;
         View navigationheader = navigationView.getHeaderView(0);
         userName = navigationheader.findViewById(R.id.name_txt);
@@ -87,9 +114,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
         populateExpandableList();
-        String token = prefs.getString("token","");
-        String user = prefs.getString("username","");
-        String name = prefs.getString("name","");
+        String token = prefs.getString("token", "");
+        String user = prefs.getString("username", "");
+        String name = prefs.getString("name", "");
         userName.setText(name);
         email.setText(user);
         if (name.equals("") || user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user, token)) {
@@ -98,18 +125,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
 
-                 Fragment fragment = new HomeMenu();
-                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                 transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
+        Fragment fragment = new HomeMenu();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
 
     }
 
-             @Override
-             protected void onRestoreInstanceState(Bundle savedInstanceState) {
-                 super.onRestoreInstanceState(savedInstanceState);
-             }
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 
-             @Override
+    /**
+     *This method closes menudrawer, or asks to the user if he or she wants to close the app, also destroys the fragment when the backstack is not empty
+     */
+    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -139,10 +169,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-
-
-
-
+    /**
+     *This method fills the menu on the DrawerLayout with the option's name and specifies if an option has a child or not.
+     */
     private void prepareMenuData() {
 
         get_menu_titles();
@@ -194,7 +223,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             childList.put(menuModel, null);
         }
     }
-
+    /**
+     *This method sets the adapter to function with an expandable list and makes the visuals appear with the specified names and child of prepareMenuData()
+     * Also specifies the click action when option touched.
+     */
     //Setting adapter for the expandable list and making the visuals appear, + adding what would happen when selected
     private void populateExpandableList() {
 
@@ -260,6 +292,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    /**
+     *This method assigns an string located on strings.xml to the variables shown.
+     */
     public void get_menu_titles() {
         profile_menu_title = getString(R.string.profile_menu_title);
         reminders_menu_title = getString(R.string.reminder_menu_title);
@@ -272,12 +307,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         home_menu_title = getString(R.string.home_menu_title);
     }
 
-             @SuppressWarnings("StatementWithEmptyBody")
-             @Override
-             public boolean onNavigationItemSelected(MenuItem item) {
-                 // Handle navigation view item clicks here.
-                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                 drawer.closeDrawer(GravityCompat.START);
-                 return true;
-             }
-         }
+    /**
+     *This method closes the drawer menu where an option is selected.
+     */
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+}

@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     HealthMedViewModel mhealthmedViewModel;
-    private String token ;
+    private String token;
     private User u;
 
 
@@ -342,13 +342,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-                boolean result = mhealthmedViewModel.isUserAndPasswordMatch(mEmail,mPassword) ;
-                if(result){
-                    u = mhealthmedViewModel.getUserByUsernameAsync(mEmail);
-                }
-                 return result;
+            boolean result = mhealthmedViewModel.isUserAndPasswordMatch(mEmail, mPassword);
+            if (result) {
+                u = mhealthmedViewModel.getUserByUsernameAsync(mEmail);
+            }
+            return result;
             // TODO: register the new account here.
-       //     return true;
+            //     return true;
         }
 
         @Override
@@ -359,14 +359,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 SharedPreferences sp = getSharedPreferences("com.secondsave.health_med", MODE_PRIVATE);
 
-                sp.edit().putString("token",token).apply();
-                mhealthmedViewModel.updateUserToken(mEmail,token);
+                sp.edit().putString("token", token).apply();
+                mhealthmedViewModel.updateUserToken(mEmail, token);
 
-                if(u!=null) {
+                if (u != null) {
                     PersonalInfo pi = mhealthmedViewModel.getPersonalInfo(u);
                     sp.edit().putString("name", pi.getFirst_name() + " " + pi.getLast_name()).apply();
                     sp.edit().putString("username", mEmail).apply();
-                    Intent i = new Intent(getApplication(),MainActivity.class);
+                    Intent i = new Intent(getApplication(), MainActivity.class);
                     startActivity(i);
                     finish();
                 }

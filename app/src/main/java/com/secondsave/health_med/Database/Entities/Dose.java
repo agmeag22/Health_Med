@@ -14,7 +14,7 @@ import java.util.Date;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "dose")
-public class Dose implements Serializable{
+public class Dose implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id_dose;
     @ForeignKey(entity = User.class,

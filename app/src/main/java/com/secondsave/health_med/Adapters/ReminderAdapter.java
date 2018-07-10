@@ -47,13 +47,13 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
                 holder.med_name.setText(doseList.get(position).getName());
             }
             if (doseList.get(position).getSize() > 0) {
-                holder.dose_size.setText(doseList.get(position).getSize()+"");
+                holder.dose_size.setText(doseList.get(position).getSize() + "");
             }
             if (doseList.get(position).getId_dose_type() >= 0) {
                 holder.dose_type.setText(mArray[doseList.get(position).getId_dose_type()]);
             }
             if (doseList.get(position).getLapse() > 0) {
-                holder.dose_lapse.setText( doseList.get(position).getLapse()+"");
+                holder.dose_lapse.setText(doseList.get(position).getLapse() + "");
             }
             if (doseList.get(position).getStart_date() != null) {
 
@@ -64,52 +64,51 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
 
                 holder.dose_end_date.setText(df.format(doseList.get(position).getEnd_date()));
             }
-            if(doseList.get(position).getId_dose_type()>-1){
-                if(doseList.get(position).getId_dose_type()==0){
+            if (doseList.get(position).getId_dose_type() > -1) {
+                if (doseList.get(position).getId_dose_type() == 0) {
                     holder.layoucard.setBackgroundColor(context.getResources().getColor(R.color.health));
                 }
-                if(doseList.get(position).getId_dose_type()==1){
+                if (doseList.get(position).getId_dose_type() == 1) {
                     holder.layoucard.setBackgroundColor(context.getResources().getColor(R.color.settings));
                 }
-                if(doseList.get(position).getId_dose_type()==2){
+                if (doseList.get(position).getId_dose_type() == 2) {
                     holder.layoucard.setBackgroundColor(context.getResources().getColor(R.color.background));
                 }
-                if(doseList.get(position).getId_dose_type()==3){
+                if (doseList.get(position).getId_dose_type() == 3) {
                     holder.layoucard.setBackgroundColor(context.getResources().getColor(R.color.pharmacies));
                 }
             }
 
 
-        if(doseList.get(position).isReminder_enabled()){
-            holder.aSwitch.setChecked(true);
-        }
-        else{
-            holder.aSwitch.setChecked(false);
-        }
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (holder.aSwitch.isChecked()) {
-                    holder.aSwitch.setChecked(false);
-                    setAlarmStatus(false,doseList.get(position));
-                } else {
-                    holder.aSwitch.setChecked(true);
-                    setAlarmStatus(true,doseList.get(position));
+            if (doseList.get(position).isReminder_enabled()) {
+                holder.aSwitch.setChecked(true);
+            } else {
+                holder.aSwitch.setChecked(false);
+            }
+            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (holder.aSwitch.isChecked()) {
+                        holder.aSwitch.setChecked(false);
+                        setAlarmStatus(false, doseList.get(position));
+                    } else {
+                        holder.aSwitch.setChecked(true);
+                        setAlarmStatus(true, doseList.get(position));
+                    }
                 }
-            }
-        });
+            });
 
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickItemMethod(doseList.get(position));
-            }
-        });
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickItemMethod(doseList.get(position));
+                }
+            });
 
         }
     }
 
-    public abstract void setAlarmStatus(boolean i,Dose dose);
+    public abstract void setAlarmStatus(boolean i, Dose dose);
 
     public abstract void onClickItemMethod(Dose dose);
 
@@ -129,7 +128,8 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
         TextView med_name, dose_size, dose_type, dose_lapse, dose_start_date, dose_end_date;
         Switch aSwitch;
         View view;
-        LinearLayout linearLayout,layoucard;
+        LinearLayout linearLayout, layoucard;
+
         public ViewHolder(View itemView) {
             super(itemView);
             view = itemView;
@@ -140,8 +140,8 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
             dose_start_date = itemView.findViewById(R.id.text_start_date);
             dose_end_date = itemView.findViewById(R.id.text_end_date);
             aSwitch = itemView.findViewById(R.id.switchR);
-            linearLayout=itemView.findViewById(R.id.layoutswitch);
-            layoucard=itemView.findViewById(R.id.layoutcard);
+            linearLayout = itemView.findViewById(R.id.layoutswitch);
+            layoucard = itemView.findViewById(R.id.layoutcard);
         }
     }
 }

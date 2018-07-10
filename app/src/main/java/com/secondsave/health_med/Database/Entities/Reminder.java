@@ -10,8 +10,8 @@ import com.secondsave.health_med.Utils.DateConverter;
 import java.util.Date;
 
 
-@Entity(tableName = "reminder",foreignKeys = {
-        @ForeignKey(entity = Dose.class,parentColumns = "id_dose",childColumns = "id_dose")
+@Entity(tableName = "reminder", foreignKeys = {
+        @ForeignKey(entity = Dose.class, parentColumns = "id_dose", childColumns = "id_dose")
 })
 public class Reminder {
 

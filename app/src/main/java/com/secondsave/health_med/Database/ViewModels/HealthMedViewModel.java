@@ -33,47 +33,51 @@ public class HealthMedViewModel extends AndroidViewModel {
         mRepository.insert(user);
     }
 
-    public boolean isUserAndPasswordMatch(String user, String password){
-        return mRepository.isUserAndPasswordMatch(user,password);
+    public boolean isUserAndPasswordMatch(String user, String password) {
+        return mRepository.isUserAndPasswordMatch(user, password);
     }
 
-    public void updateUserToken(String user, String token){
-        mRepository.updateToken(user,token);
+    public void updateUserToken(String user, String token) {
+        mRepository.updateToken(user, token);
     }
 
-    public boolean isUserAndTokenMatch(String user, String token){
-        return mRepository.isUserAndTokenMatch(user,token);
+    public boolean isUserAndTokenMatch(String user, String token) {
+        return mRepository.isUserAndTokenMatch(user, token);
     }
 
-    public User getUserByUsername(String username){
+    public User getUserByUsername(String username) {
         return mRepository.getUser(username);
     }
-    public User getUserByUsernameAsync(String username){
+
+    public User getUserByUsernameAsync(String username) {
         return mRepository.getUserAsync(username);
     }
 
-    public PersonalInfo getPersonalInfo(User user){
+    public PersonalInfo getPersonalInfo(User user) {
         return mRepository.getUserPersonalInfo(user.getUsername());
     }
-    public PersonalInfo getPersonalInfoAsync(User user){
+
+    public PersonalInfo getPersonalInfoAsync(User user) {
         return mRepository.getUserPersonalInfoAsync(user.getUsername());
     }
 
     public LiveData<List<IMCEntry>> getAllValuesByUsername(String username) {
         return mRepository.getAllValuesByUsername(username);
     }
+
     public int countValuesByUsername(String username) {
         return mRepository.countValuesByUsername(username);
     }
 
-    public void insertPersonaInfo(PersonalInfo personalInfo){
+    public void insertPersonaInfo(PersonalInfo personalInfo) {
         mRepository.insertPersonaInfo(personalInfo);
     }
-    public void updatePersonaInfo(PersonalInfo personalInfo){
+
+    public void updatePersonaInfo(PersonalInfo personalInfo) {
         mRepository.updatePersonaInfo(personalInfo);
     }
 
-    public void insertValues(IMCEntry IMCEntry){
+    public void insertValues(IMCEntry IMCEntry) {
         mRepository.insertValues(IMCEntry);
     }
 
@@ -81,6 +85,7 @@ public class HealthMedViewModel extends AndroidViewModel {
     public LiveData<List<Dose>> getAllDose() {
         return mRepository.getAllDose();
     }
+
     public void insertDose(Dose dose) {
         mRepository.insertDose(dose);
     }

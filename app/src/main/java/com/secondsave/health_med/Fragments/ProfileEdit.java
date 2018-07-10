@@ -41,7 +41,6 @@ public class ProfileEdit extends Fragment {
         changepicture = v.findViewById(R.id.floatingActionButton);
 
 
-
         return v;
     }
 

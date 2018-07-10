@@ -12,10 +12,11 @@ import com.secondsave.health_med.Utils.DateConverter;
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
+
 @Dao
 @Entity(tableName = "personal_info")
 
-public  class PersonalInfo {
+public class PersonalInfo {
     @PrimaryKey(autoGenerate = true)
     private int id_personal_info;
     @ForeignKey(entity = User.class,

@@ -11,20 +11,21 @@ import com.secondsave.health_med.R;
 
 import java.util.List;
 
-public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     View v;
     private List<User> mUsers;
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        v = parent.inflate(parent.getContext(),R.layout.element_user,null);
-        ViewHolder vh= new ViewHolder(v);
+        v = parent.inflate(parent.getContext(), R.layout.element_user, null);
+        ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(mUsers!=null) {
+        if (mUsers != null) {
             holder.username.setText(mUsers.get(position).getUsername());
             holder.password.setText(mUsers.get(position).getPassword());
         }
@@ -42,7 +43,8 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView username,password;
+        TextView username, password;
+
         public ViewHolder(View itemView) {
             super(itemView);
             password = itemView.findViewById(R.id.passwort_txt);

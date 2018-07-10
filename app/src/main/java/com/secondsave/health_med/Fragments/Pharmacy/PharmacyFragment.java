@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.secondsave.health_med.Adapters.PlacesAdapter;
 import com.secondsave.health_med.R;
+
 import java.util.ArrayList;
 
 
@@ -82,7 +83,7 @@ public class PharmacyFragment extends Fragment {
         view_map.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(placesList!=null) {
+                if (placesList != null) {
                     MapFragment fragment = new MapFragment();
                     fragment.updateList(placesList);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -138,73 +139,73 @@ public class PharmacyFragment extends Fragment {
     private void getCurrentPlaceData() {
 //        try {
 //            int locationMode = Settings.Secure.getInt(getActivity().getContentResolver(), Settings.Secure.LOCATION_MODE);
-                Task<PlaceLikelihoodBufferResponse> placeResult = placeDetectionClient.getCurrentPlace(null);
-                placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
-                    @Override
-                    public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
-                        if (isLocationEnabled(getContext())) {
-                            if (task.isSuccessful() && task.getResult() != null) {
-                                PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
-                                placesList = new ArrayList<>();
-                                PlacesAdapter recyclerViewAdapter = new PlacesAdapter(placesList) {
-                                    @Override
-                                    protected void locationOnClick(Place place) {
-                                        Log.d(TAG, "locationOnClick: "+ "geo:"+place.getLatLng().latitude+","+place.getLatLng().longitude);
-                                        Uri gmmIntentUri = Uri.parse("geo:0,0?q="+place.getLatLng().latitude+","+place.getLatLng().longitude);
-                                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                                        Snackbar.make(v,getString(R.string.no_gmaps),Snackbar.LENGTH_SHORT).show();
-                                        mapIntent.setPackage("com.google.android.apps.maps");
-                                        if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                                            startActivity(mapIntent);
-                                        }else{
-                                            Snackbar.make(v,getString(R.string.no_gmaps),Snackbar.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void phoneOnClick(Place place) {
-                                        if(isCallPhonePermitted()) {
-                                            Intent intent = new Intent(Intent.ACTION_CALL);
-                                            Log.d(TAG, "phoneOnClick: "+ place.getPhoneNumber());
-                                            intent.setData(Uri.parse("tel:" + place.getPhoneNumber()));
-                                            startActivity(intent);
-                                        }else{
-                                            requestCallPhonePermission();
-                                        }
-                                    }
-                                };
-                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                                recyclerView.setAdapter(recyclerViewAdapter);
-                                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
-                                    Place place = placeLikelihood.getPlace();
-                                    if (!place.getPlaceTypes().contains(Place.TYPE_PHARMACY)) {
-                                        Log.i(TAG, String.format("Place '%s' has likelihood: %g",
-                                                place.getName(),
-                                                placeLikelihood.getLikelihood()));
-                                        placesList.add(placeLikelihood.getPlace().freeze());
-                                        recyclerViewAdapter.notifyItemInserted(placesList.size() - 1);
-                                    }
-                                }
-                                if (placesList.size() == 0) {
-                                    recyclerView.setVisibility(View.GONE);
-                                    error_view.setVisibility(View.VISIBLE);
+        Task<PlaceLikelihoodBufferResponse> placeResult = placeDetectionClient.getCurrentPlace(null);
+        placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
+                if (isLocationEnabled(getContext())) {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
+                        placesList = new ArrayList<>();
+                        PlacesAdapter recyclerViewAdapter = new PlacesAdapter(placesList) {
+                            @Override
+                            protected void locationOnClick(Place place) {
+                                Log.d(TAG, "locationOnClick: " + "geo:" + place.getLatLng().latitude + "," + place.getLatLng().longitude);
+                                Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + place.getLatLng().latitude + "," + place.getLatLng().longitude);
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                Snackbar.make(v, getString(R.string.no_gmaps), Snackbar.LENGTH_SHORT).show();
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                if (mapIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                    startActivity(mapIntent);
                                 } else {
-                                    recyclerView.setVisibility(View.VISIBLE);
-                                    error_view.setVisibility(View.GONE);
+                                    Snackbar.make(v, getString(R.string.no_gmaps), Snackbar.LENGTH_SHORT).show();
                                 }
-                                likelyPlaces.release();
-                            } else {
-                                recyclerView.setVisibility(View.GONE);
-                                error_view.setVisibility(View.VISIBLE);
-                                message.setText(R.string.enable_high_accuracy);
                             }
-                        }else {
+
+                            @Override
+                            public void phoneOnClick(Place place) {
+                                if (isCallPhonePermitted()) {
+                                    Intent intent = new Intent(Intent.ACTION_CALL);
+                                    Log.d(TAG, "phoneOnClick: " + place.getPhoneNumber());
+                                    intent.setData(Uri.parse("tel:" + place.getPhoneNumber()));
+                                    startActivity(intent);
+                                } else {
+                                    requestCallPhonePermission();
+                                }
+                            }
+                        };
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        recyclerView.setAdapter(recyclerViewAdapter);
+                        for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                            Place place = placeLikelihood.getPlace();
+                            if (!place.getPlaceTypes().contains(Place.TYPE_PHARMACY)) {
+                                Log.i(TAG, String.format("Place '%s' has likelihood: %g",
+                                        place.getName(),
+                                        placeLikelihood.getLikelihood()));
+                                placesList.add(placeLikelihood.getPlace().freeze());
+                                recyclerViewAdapter.notifyItemInserted(placesList.size() - 1);
+                            }
+                        }
+                        if (placesList.size() == 0) {
                             recyclerView.setVisibility(View.GONE);
                             error_view.setVisibility(View.VISIBLE);
-                            message.setText(R.string.enable_location);
+                        } else {
+                            recyclerView.setVisibility(View.VISIBLE);
+                            error_view.setVisibility(View.GONE);
                         }
+                        likelyPlaces.release();
+                    } else {
+                        recyclerView.setVisibility(View.GONE);
+                        error_view.setVisibility(View.VISIBLE);
+                        message.setText(R.string.enable_high_accuracy);
                     }
-                });
+                } else {
+                    recyclerView.setVisibility(View.GONE);
+                    error_view.setVisibility(View.VISIBLE);
+                    message.setText(R.string.enable_location);
+                }
+            }
+        });
 
 
     }
@@ -214,7 +215,7 @@ public class PharmacyFragment extends Fragment {
         int locationMode = 0;
         String locationProviders;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             try {
                 locationMode = Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.LOCATION_MODE);
 
@@ -225,7 +226,7 @@ public class PharmacyFragment extends Fragment {
 
             return locationMode == Settings.Secure.LOCATION_MODE_HIGH_ACCURACY;
 
-        }else{
+        } else {
             locationProviders = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
             return !TextUtils.isEmpty(locationProviders);
         }

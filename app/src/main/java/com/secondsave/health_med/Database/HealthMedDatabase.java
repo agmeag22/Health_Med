@@ -22,9 +22,13 @@ import java.util.Calendar;
 public abstract class HealthMedDatabase extends RoomDatabase {
 
     public abstract UserDao userDao();
+
     public abstract ValuesDao valuesDao();
+
     public abstract PersonalInfoDao personalInfoDao();
+
     public abstract DoseDao doseDao();
+
     public abstract RemindersDao reminderDao();
 
 
@@ -45,10 +49,10 @@ public abstract class HealthMedDatabase extends RoomDatabase {
     }
 
     private static RoomDatabase.Callback sRoomDatabaseCallback =
-            new RoomDatabase.Callback(){
+            new RoomDatabase.Callback() {
 
                 @Override
-                public void onOpen (@NonNull SupportSQLiteDatabase db){
+                public void onOpen(@NonNull SupportSQLiteDatabase db) {
                     super.onOpen(db);
                     new PopulateDbAsync(INSTANCE).execute();
                 }
@@ -68,13 +72,13 @@ public abstract class HealthMedDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
-            User user = new User("electroanime2009@gmail.com","1234","" );
+            User user = new User("electroanime2009@gmail.com", "1234", "");
             mDao.insert(user);
-            PersonalInfo personalInfo = new PersonalInfo("electroanime2009@gmail.com","Allen","Perez", 1, 0, new Date(Calendar.getInstance().getTimeInMillis()));
+            PersonalInfo personalInfo = new PersonalInfo("electroanime2009@gmail.com", "Allen", "Perez", 1, 0, new Date(Calendar.getInstance().getTimeInMillis()));
             personalInfoDao.insert(personalInfo);
             user = new User("meag", "1234", "");
             mDao.insert(user);
-            personalInfo = new PersonalInfo("meag", "Miguel", "Aviles",1, 0, new Date(Calendar.getInstance().getTimeInMillis()));
+            personalInfo = new PersonalInfo("meag", "Miguel", "Aviles", 1, 0, new Date(Calendar.getInstance().getTimeInMillis()));
             personalInfoDao.insert(personalInfo);
             return null;
         }

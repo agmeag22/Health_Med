@@ -31,14 +31,14 @@ public abstract class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.V
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        v = parent.inflate(parent.getContext(),R.layout.item_place_list,null);
-        ViewHolder vh= new ViewHolder(v);
+        v = parent.inflate(parent.getContext(), R.layout.item_place_list, null);
+        ViewHolder vh = new ViewHolder(v);
         return vh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        if(places !=null) {
+        if (places != null) {
             holder.name.setText(places.get(position).getName());
             holder.address.setText(places.get(position).getAddress());
 
@@ -48,15 +48,15 @@ public abstract class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.V
                     locationOnClick(places.get(position));
                 }
             });
-            if(places.get(position).getPhoneNumber()==null || places.get(position).getPhoneNumber().toString().equals("")){
+            if (places.get(position).getPhoneNumber() == null || places.get(position).getPhoneNumber().toString().equals("")) {
                 holder.phone.setVisibility(View.GONE);
-            }else{
+            } else {
                 holder.phone.setVisibility(View.VISIBLE);
             }
             holder.phone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                   phoneOnClick(places.get(position));
+                    phoneOnClick(places.get(position));
                 }
             });
         }
@@ -78,8 +78,9 @@ public abstract class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.V
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView name,address;
-        ImageView location,phone;
+        TextView name, address;
+        ImageView location, phone;
+
         public ViewHolder(View itemView) {
             super(itemView);
             address = itemView.findViewById(R.id.second_text_view);

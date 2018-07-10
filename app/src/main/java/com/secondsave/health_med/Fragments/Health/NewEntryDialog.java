@@ -68,7 +68,7 @@ public class NewEntryDialog extends DialogFragment {
 //                            height.setError(getString(R.string.empty_field));
                         if (weight.getText().toString().equals(""))
                             weight.setError(getString(R.string.empty_field));
-                        if (!date.getText().toString().equals("") &&  !weight.getText().toString().equals("")) {
+                        if (!date.getText().toString().equals("") && !weight.getText().toString().equals("")) {
                             doInBackGround task = new doInBackGround();
                             task.execute();
                         }
@@ -123,7 +123,7 @@ public class NewEntryDialog extends DialogFragment {
                 DatePickerDialog datepicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        date.setText(dayOfMonth + "/" + (month+1) + "/" + year);
+                        date.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                     }
                 }, year, month, day);
                 datepicker.show();
@@ -140,7 +140,7 @@ public class NewEntryDialog extends DialogFragment {
             User u = mhealthmedViewModel.getUserByUsernameAsync(user);
             if (user != "") {
                 PersonalInfo info = mhealthmedViewModel.getPersonalInfoAsync(u);
-                float h=info.getHeight();
+                float h = info.getHeight();
                 Float w, imc;
                 if (metrics_spinner.getSelectedItemPosition() == 0) {
 //                    h = Float.parseFloat(height.getText().toString()) / 100;
@@ -149,7 +149,7 @@ public class NewEntryDialog extends DialogFragment {
                 } else {
 //                    h = Float.parseFloat(height.getText().toString());
                     w = Float.parseFloat(weight.getText().toString());
-                    w = (float)(w * 0.453592);
+                    w = (float) (w * 0.453592);
                     imc = IMC.Calculate(w, h);
 
                 }
@@ -162,9 +162,9 @@ public class NewEntryDialog extends DialogFragment {
                     Date parsed = format.parse(string);
                     Calendar c = Calendar.getInstance();
                     c.setTime(info.getBirth());
-                    int age = getAge(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
-                    int gender = info.getGender()== Gender.MALE?1:0;
-                    int fat =(int) Math.round((1.39 * imc) + (0.16 * age) - (10.34 * gender) - 9);
+                    int age = getAge(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                    int gender = info.getGender() == Gender.MALE ? 1 : 0;
+                    int fat = (int) Math.round((1.39 * imc) + (0.16 * age) - (10.34 * gender) - 9);
                     IMCEntry imcEntry = new IMCEntry(user, imc, fat, w, parsed);
                     mhealthmedViewModel.insertValues(imcEntry);
                     return R.id.sucess;
@@ -173,16 +173,16 @@ public class NewEntryDialog extends DialogFragment {
                     return R.id.error;
                 }
             }
-           return R.id.error;
+            return R.id.error;
         }
 
         @Override
         protected void onPostExecute(Integer integer) {
-            Snackbar.make(v,integer,Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(v, integer, Snackbar.LENGTH_SHORT).show();
         }
     }
 
-    public static int getAge (int _year, int _month, int _day) {
+    public static int getAge(int _year, int _month, int _day) {
 
         GregorianCalendar cal = new GregorianCalendar();
         int y, m, d, a;
@@ -197,7 +197,7 @@ public class NewEntryDialog extends DialogFragment {
                 .get(Calendar.DAY_OF_MONTH)))) {
             --a;
         }
-        if(a < 0)
+        if (a < 0)
             throw new IllegalArgumentException("Age < 0");
         return a;
     }

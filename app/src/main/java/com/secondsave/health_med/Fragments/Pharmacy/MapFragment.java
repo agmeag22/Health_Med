@@ -47,7 +47,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.setMinZoomPreference(11);
         markers = new ArrayList();
-        for(Place place:places) {
+        for (Place place : places) {
             LatLng placeLoc = place.getLatLng();
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(placeLoc)
@@ -63,7 +63,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             builder.include(marker.getPosition());
         }
         LatLngBounds bounds;
-        if(markers.size()>0) {
+        if (markers.size() > 0) {
             bounds = builder.build();
             int padding = 0; // offset from edges of the map in pixels
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
@@ -73,8 +73,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    public void updateList(List<Place> places){
-       this.places = places;
+    public void updateList(List<Place> places) {
+        this.places = places;
     }
 
 }

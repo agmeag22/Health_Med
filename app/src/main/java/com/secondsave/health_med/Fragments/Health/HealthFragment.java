@@ -34,12 +34,6 @@ import com.secondsave.health_med.R;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HealthFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
 public class HealthFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -53,7 +47,7 @@ public class HealthFragment extends Fragment {
     private TextView txtProgress;
     FloatingActionButton fb;
     private ProgressBar progressBar;
-    private float goal,initial,current;
+    private float goal, initial, current;
     private View goalView;
     private float lastweight;
 
@@ -80,39 +74,39 @@ public class HealthFragment extends Fragment {
         progressBar = v.findViewById(R.id.progressBar);
         goal = prefs.getFloat("goal", 0);
         initial = prefs.getFloat("initial", 0);
-        fb=v.findViewById(R.id.add_entry);
+        fb = v.findViewById(R.id.add_entry);
         goalView = v.findViewById(R.id.goal_progress);
         goalView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                if(goal==0 || initial==0){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Set your goal Weight");
-                    final EditText input = new EditText(getContext());
-                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-                    builder.setView(input);
-                    builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            String text = input.getText().toString();
-                            if(!text.equals(""))
-                            prefs.edit().putFloat("goal",Float.parseFloat(text)).commit();
-                            prefs.edit().putFloat("initial",current).commit();
-                            initial=current;
-                            i_weight.setText(initial+" kg");
-                            goal=Float.parseFloat(text);
-                            int value = Math.round(Math.abs(initial -  current)/ Math.abs(goal - initial))*100 ;
-                            progressBar.setProgress(value);
-                            txtProgress.setText(value + " %");
-                            goal_weight.setText(goal+"");
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-                    builder.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Set your goal Weight");
+                final EditText input = new EditText(getContext());
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                builder.setView(input);
+                builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        String text = input.getText().toString();
+                        if (!text.equals(""))
+                            prefs.edit().putFloat("goal", Float.parseFloat(text)).commit();
+                        prefs.edit().putFloat("initial", current).commit();
+                        initial = current;
+                        i_weight.setText(initial + " kg");
+                        goal = Float.parseFloat(text);
+                        int value = Math.round(Math.abs(initial - current) / Math.abs(goal - initial)) * 100;
+                        progressBar.setProgress(value);
+                        txtProgress.setText(value + " %");
+                        goal_weight.setText(goal + "");
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
 //                }
             }
         });
@@ -121,7 +115,7 @@ public class HealthFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 NewEntryDialog dialog = new NewEntryDialog();
-                dialog.show(getChildFragmentManager(),"addIMC");
+                dialog.show(getChildFragmentManager(), "addIMC");
             }
         });
         adapter = new IMCAdapter(null);
@@ -133,24 +127,24 @@ public class HealthFragment extends Fragment {
             @Override
             public void onChanged(@Nullable List<IMCEntry> imcEntries) {
 
-                if(imcEntries.size()>0) {
+                if (imcEntries.size() > 0) {
                     if (imcEntries.size() > 1) {
                         c_weight.setText(imcEntries.get(imcEntries.size() - 1).getWeight() + " kg");
-                        current=imcEntries.get(imcEntries.size() - 1).getWeight();
+                        current = imcEntries.get(imcEntries.size() - 1).getWeight();
                     } else {
                         c_weight.setText(imcEntries.get(imcEntries.size() - 1).getWeight() + " kg");
-                        current=imcEntries.get(imcEntries.size() - 1).getWeight();
+                        current = imcEntries.get(imcEntries.size() - 1).getWeight();
                     }
                     i_weight.setText("-");
 
                 }
-                if (goal !=0 &&  initial!=0) {
+                if (goal != 0 && initial != 0) {
                     lastweight = imcEntries.get(imcEntries.size() - 1).getWeight();
-                    int value = Math.round(Math.abs(((initial -  current))/ Math.abs((goal - initial)))*100) ;
+                    int value = Math.round(Math.abs(((initial - current)) / Math.abs((goal - initial))) * 100);
                     progressBar.setProgress(value);
                     txtProgress.setText(value + " %");
-                    goal_weight.setText(goal+"");
-                    i_weight.setText(initial+ " kg");
+                    goal_weight.setText(goal + "");
+                    i_weight.setText(initial + " kg");
                 }
                 adapter.setList(imcEntries);
                 adapter.notifyDataSetChanged();

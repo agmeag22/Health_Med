@@ -142,7 +142,6 @@ public class SetUpFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
     @Override
     public void onClick(View v) {
 
@@ -174,8 +173,8 @@ public class SetUpFragment extends Fragment implements View.OnClickListener {
                             w = Float.parseFloat(weight.getText().toString());
                             imc = IMC.Calculate(w, h);
                         } else {
-                            h = (float)((Float.parseFloat(height.getText().toString())*2.54)/100);
-                            w = (float)(Float.parseFloat(weight.getText().toString())* 0.453592);
+                            h = (float) ((Float.parseFloat(height.getText().toString()) * 2.54) / 100);
+                            w = (float) (Float.parseFloat(weight.getText().toString()) * 0.453592);
                             imc = IMC.Calculate(w, h);
                         }
                         long timestamp = Calendar.getInstance().getTimeInMillis();
@@ -183,9 +182,9 @@ public class SetUpFragment extends Fragment implements View.OnClickListener {
                         mhealthmedViewModel.updatePersonaInfo(info);
                         Calendar c = Calendar.getInstance();
                         c.setTime(info.getBirth());
-                        int age = NewEntryDialog.getAge(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
-                        int gender = info.getGender()== Gender.MALE?1:0;
-                        int fat =(int) Math.round((1.39 * imc) + (0.16 * age) - (10.34 * gender) - 9);
+                        int age = NewEntryDialog.getAge(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                        int gender = info.getGender() == Gender.MALE ? 1 : 0;
+                        int fat = (int) Math.round((1.39 * imc) + (0.16 * age) - (10.34 * gender) - 9);
                         IMCEntry imcEntry = new IMCEntry(u.getUsername(), imc, fat, w, new Date(timestamp));
                         mhealthmedViewModel.insertValues(imcEntry);
                         Log.d("IMC", "doInBackground: " + imc);

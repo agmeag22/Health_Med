@@ -49,13 +49,12 @@ public class HealthMedRepository {
     }
 
 
-
     public int countValuesByUsername(String username) {
         return valuesDao.countValuesByUsername(username);
     }
 
-    public User getUser(String username){
-        AsyncTask<String,Void,User> task = new AsyncTask<String, Void, User>() {
+    public User getUser(String username) {
+        AsyncTask<String, Void, User> task = new AsyncTask<String, Void, User>() {
             @Override
             protected User doInBackground(String... strings) {
                 return mUserDao.getUserByUsername(strings[0]);
@@ -73,12 +72,12 @@ public class HealthMedRepository {
         return null;
     }
 
-    public User getUserAsync(String username){
+    public User getUserAsync(String username) {
         return mUserDao.getUserByUsername(username);
     }
 
-    public PersonalInfo getUserPersonalInfo(String username){
-        AsyncTask<String,Void,PersonalInfo> task = new AsyncTask<String,Void,PersonalInfo>() {
+    public PersonalInfo getUserPersonalInfo(String username) {
+        AsyncTask<String, Void, PersonalInfo> task = new AsyncTask<String, Void, PersonalInfo>() {
 
             @Override
             protected PersonalInfo doInBackground(String... ints) {
@@ -86,7 +85,7 @@ public class HealthMedRepository {
             }
         };
         try {
-            PersonalInfo result  = task.execute(username).get();
+            PersonalInfo result = task.execute(username).get();
             return result;
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -95,28 +94,29 @@ public class HealthMedRepository {
         }
         return null;
     }
-    public PersonalInfo getUserPersonalInfoAsync(String username){
-                return personalInfoDao.getPersonalInfoByUserId(username);
-    }
-    public boolean isUserAndPasswordMatch(String user, String password){
-        int result = mUserDao.isUserAndPasswordMatch(user,password);
-        return result>0;
+
+    public PersonalInfo getUserPersonalInfoAsync(String username) {
+        return personalInfoDao.getPersonalInfoByUserId(username);
     }
 
-    public boolean isUserAndTokenMatch(final String user, final String token){
+    public boolean isUserAndPasswordMatch(String user, String password) {
+        int result = mUserDao.isUserAndPasswordMatch(user, password);
+        return result > 0;
+    }
 
-        AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>()
-         {
+    public boolean isUserAndTokenMatch(final String user, final String token) {
+
+        AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(Void... voids) {
-                int result = mUserDao.isUserAndTokenMatch(user,token);
-                return result>0;
+                int result = mUserDao.isUserAndTokenMatch(user, token);
+                return result > 0;
             }
         };
 
-        boolean b=false;
+        boolean b = false;
         try {
-             b = task.execute().get();
+            b = task.execute().get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -125,23 +125,23 @@ public class HealthMedRepository {
         return b;
     }
 
-    public void updateToken(String user, String token){
+    public void updateToken(String user, String token) {
         new updateTokenAsync(mUserDao, user, token).execute();
     }
 
-    public static class updateTokenAsync extends AsyncTask<Void,Void,Boolean>{
+    public static class updateTokenAsync extends AsyncTask<Void, Void, Boolean> {
         private UserDao mUserDao;
-        private String user,token;
+        private String user, token;
 
         public updateTokenAsync(UserDao mUserDao, String user, String token) {
-            this.mUserDao=mUserDao;
+            this.mUserDao = mUserDao;
             this.user = user;
             this.token = token;
         }
 
         @Override
         protected Boolean doInBackground(Void... Void) {
-            mUserDao.updateUserToken(user,token);
+            mUserDao.updateUserToken(user, token);
             return true;
         }
     }
@@ -166,16 +166,16 @@ public class HealthMedRepository {
         }
     }
 
-    public void insertValues(IMCEntry IMCEntry){
+    public void insertValues(IMCEntry IMCEntry) {
         valuesDao.insert(IMCEntry);
     }
 
 
-    public void insertPersonaInfo(PersonalInfo personalInfo){
+    public void insertPersonaInfo(PersonalInfo personalInfo) {
         personalInfoDao.insert(personalInfo);
     }
 
-    public void updatePersonaInfo(PersonalInfo personalInfo){
+    public void updatePersonaInfo(PersonalInfo personalInfo) {
         personalInfoDao.update(personalInfo);
     }
 
