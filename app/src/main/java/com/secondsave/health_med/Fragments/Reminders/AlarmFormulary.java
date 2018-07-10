@@ -406,7 +406,8 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
         }
     }
     /**
-     * this method sets the alarm
+     * this method sets the alarm within a specific date, hour,and minute
+     * @param date this date is specified by the user
      * */
     public static void setAlarm(Date date, float n_hours, Dose dose, Context context) {
         Calendar cal = Calendar.getInstance();
