@@ -421,9 +421,11 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
         cal.add(Calendar.MINUTE, mins);
         Log.d("ALARM", "setAlarm: " + df.format(cal.getTime()));
         Intent intent = new Intent(context, AlarmReceiverActivity.class);
-        intent.putExtra("id", dose.getId_dose());
+        String[] mArray = context.getResources().getStringArray(R.array.medication_measurement);
+        String msg = dose.getSize() +mArray[dose.getId_dose_type()]+" " +dose.getName();
+        intent.putExtra("msg",msg );
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
-                1234, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+                dose.getId_dose(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager am =
                 (AlarmManager) context.getSystemService(Activity.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),

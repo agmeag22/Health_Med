@@ -78,9 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      * Will contain app saved data even when stopped, no private user information
      * */
     SharedPreferences prefs;
-    /**
-     * Predefined Android Studio toolbar
-     * */
+    int access=0;
     private Toolbar toolbar;
 
     /**
@@ -90,10 +88,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         prefs = this.getSharedPreferences(
                 "com.secondsave.health_med", MODE_PRIVATE);
-
         toolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
 
@@ -102,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
 
 
         mhealthmedViewModel = ViewModelProviders.of(this).get(HealthMedViewModel.class);
@@ -114,9 +111,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         expandableListView = findViewById(R.id.expandableListView);
         prepareMenuData();
         populateExpandableList();
-        String token = prefs.getString("token", "");
-        String user = prefs.getString("username", "");
-        String name = prefs.getString("name", "");
+        prefs.edit().putString("username", "HealthMED").apply();
+        //prefs.edit().putString("name", "HealthMED").apply();
+        String token = prefs.getString("token","");
+        String user = prefs.getString("username","");
+        String name = prefs.getString("name","");
         userName.setText(name);
         email.setText(user);
         if (name.equals("") || user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user, token)) {
@@ -125,9 +124,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
 
-        Fragment fragment = new HomeMenu();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
+                 Fragment fragment = new HomeMenu();
+                 getSupportActionBar().setTitle("HOME");
+                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                 transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
 
     }
 
