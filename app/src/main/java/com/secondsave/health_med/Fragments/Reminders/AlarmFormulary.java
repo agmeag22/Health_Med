@@ -424,6 +424,7 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
         String[] mArray = context.getResources().getStringArray(R.array.medication_measurement);
         String msg = dose.getSize() +mArray[dose.getId_dose_type()]+" " +dose.getName();
         intent.putExtra("msg",msg );
+        intent.putExtra("end",df.format(dose.getEnd_date()));
         PendingIntent pendingIntent = PendingIntent.getActivity(context,
                 dose.getId_dose(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager am =

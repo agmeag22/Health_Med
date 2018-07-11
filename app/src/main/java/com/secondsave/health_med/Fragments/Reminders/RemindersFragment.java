@@ -78,6 +78,7 @@ public class RemindersFragment extends Fragment {
             @Override
             public void setAlarmStatus(boolean i, Dose dose) {
                 if(i){
+                    cancelAlarm(dose);
                     setAlarm(dose.getStart_date(),dose.getLapse(),dose);
                 }else{
                     cancelAlarm(dose);
@@ -220,6 +221,7 @@ public class RemindersFragment extends Fragment {
         String[] mArray = getContext().getResources().getStringArray(R.array.medication_measurement);
         String msg = dose.getSize() +mArray[dose.getId_dose_type()]+" " +dose.getName();
         intent.putExtra("msg",msg );
+        intent.putExtra("end",df.format(dose.getEnd_date()));
         PendingIntent pendingIntent = PendingIntent.getActivity(getContext(),
                 dose.getId_dose(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
         AlarmManager am =
