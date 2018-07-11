@@ -1,8 +1,13 @@
 package com.secondsave.health_med.Fragments.Reminders;
 
+import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +32,9 @@ import com.secondsave.health_med.Database.Entities.Dose;
 import com.secondsave.health_med.Database.ViewModels.HealthMedViewModel;
 import com.secondsave.health_med.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RemindersFragment extends Fragment {
@@ -61,9 +69,20 @@ public class RemindersFragment extends Fragment {
         recycler = v.findViewById(R.id.recyclerReminders);
         adapter = new ReminderAdapter(null, getContext()) {
             @Override
+            protected void LongClickListener(Dose dose) {
+
+            }
+
+            @Override
             public void setAlarmStatus(boolean i, Dose dose) {
+                if(i){
+                    setAlarm(dose.getStart_date(),dose.getLapse(),dose);
+                }else{
+                    cancelAlarm(dose);
+                }
                 dose.setReminder_enabled(i);
-                doInBackGround updateDoseTask = new doInBackGround(dose);
+
+                updateReminderTask updateDoseTask = new updateReminderTask(dose);
                 updateDoseTask.execute();
             }
 
@@ -114,10 +133,10 @@ public class RemindersFragment extends Fragment {
         return v;
     }
 
-    public class doInBackGround extends AsyncTask<Void, Void, Integer> {
+    public class updateReminderTask extends AsyncTask<Void, Void, Integer> {
         private Dose dose;
 
-        public doInBackGround(Dose dose) {
+        public updateReminderTask(Dose dose) {
             this.dose = dose;
         }
 
@@ -134,9 +153,68 @@ public class RemindersFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Integer integer) {
-            Snackbar.make(getView(), integer, Snackbar.LENGTH_SHORT).show();
+            if(integer==R.string.error) {
+                Snackbar.make(getView(), integer, Snackbar.LENGTH_SHORT).show();
+            }
+        }
+    }
+    public class removeReminderTask extends AsyncTask<Void, Void, Integer> {
+        private Dose dose;
+
+        public removeReminderTask(Dose dose) {
+            this.dose = dose;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            try {
+                mhealthmedViewModel.deleteDose(dose);
+                return R.string.sucess;
+            } catch (Exception e) {
+                Log.e("ERROR", "doInBackground: " + e.getMessage());
+                return R.string.error;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+                Snackbar.make(getView(), integer, Snackbar.LENGTH_SHORT).show();
         }
     }
 
+    public void setAlarm(Date date, float n_hours, Dose dose) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hours = (int) n_hours;
+        int mins = (int) ((n_hours - hours) * 60);
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy -- hh:mm");
+
+        Log.d("ALARM", "setAlarm: " + df.format(cal.getTime()));
+        cal.add(Calendar.HOUR_OF_DAY, hours);
+        cal.add(Calendar.MINUTE, mins);
+        Log.d("ALARM", "setAlarm: " + df.format(cal.getTime()));
+        Intent intent = new Intent(getContext() , AlarmReceiverActivity.class);
+        String[] mArray = getContext().getResources().getStringArray(R.array.medication_measurement);
+        String msg = dose.getSize() +mArray[dose.getId_dose_type()]+" " +dose.getName();
+        intent.putExtra("msg",msg );
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(),
+                dose.getId_dose(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager am =
+                (AlarmManager) getContext().getSystemService(Activity.ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                1000 * 60 * (mins + hours * 60), pendingIntent);
+    }
+
+
+    private void cancelAlarm(Dose dose){
+
+        Snackbar.make(getView(), R.string.alarm_cancelled,Snackbar.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), AlarmReceiverActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(),
+                dose.getId_dose(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager alarmManager = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
+
+    }
 
 }

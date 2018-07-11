@@ -118,11 +118,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String name = prefs.getString("name","");
         userName.setText(name);
         email.setText(user);
-        if (name.equals("") || user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user, token)) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
-            finish();
-        }
+//        if (name.equals("") || user.equals("") || token.equals("") || !mhealthmedViewModel.isUserAndTokenMatch(user, token)) {
+//            Intent i = new Intent(this, LoginActivity.class);
+//            startActivity(i);
+//            finish();
+//        }
 
                  Fragment fragment = new HomeMenu();
                  getSupportActionBar().setTitle("HOME");
@@ -181,11 +181,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             childList.put(menuModel, null);
         }
 
-        menuModel = new MenuModel(profile_menu_title, false, true); //Menu of Java Tutorials
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
+//        menuModel = new MenuModel(profile_menu_title, false, true); //Menu of Java Tutorials
+//        headerList.add(menuModel);
+//        if (!menuModel.hasChildren) {
+//            childList.put(menuModel, null);
+//        }
         menuModel = new MenuModel(reminders_menu_title, false, true); //Menu of Java Tutorials
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
@@ -197,31 +197,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new MenuModel(statitics_menu_title, false, true); //Menu of Java Tutorials
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
+//        menuModel = new MenuModel(statitics_menu_title, false, true); //Menu of Java Tutorials
+//        headerList.add(menuModel);
+//        if (!menuModel.hasChildren) {
+//            childList.put(menuModel, null);
+//        }
         menuModel = new MenuModel(health_menu_title, false, true); //Menu of Java Tutorials
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new MenuModel(settings_menu_title, false, true); //Menu of Java Tutorials
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-        menuModel = new MenuModel(rateus_menu_title, false, true); //Menu of Java Tutorials
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-        menuModel = new MenuModel(logout_menu_title, false, true); //Menu of Java Tutorials
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
+//        menuModel = new MenuModel(settings_menu_title, false, true); //Menu of Java Tutorials
+//        headerList.add(menuModel);
+//        if (!menuModel.hasChildren) {
+//            childList.put(menuModel, null);
+//        }
+//        menuModel = new MenuModel(rateus_menu_title, false, true); //Menu of Java Tutorials
+//        headerList.add(menuModel);
+//        if (!menuModel.hasChildren) {
+//            childList.put(menuModel, null);
+//        }
+//        menuModel = new MenuModel(logout_menu_title, false, true); //Menu of Java Tutorials
+//        headerList.add(menuModel);
+//        if (!menuModel.hasChildren) {
+//            childList.put(menuModel, null);
+//        }
     }
     /**
      *This method sets the adapter to function with an expandable list and makes the visuals appear with the specified names and child of prepareMenuData()

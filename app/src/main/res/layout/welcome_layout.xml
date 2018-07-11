@@ -31,22 +31,22 @@
             android:textSize="30sp"
             android:layout_marginTop="50dp"/>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/l2"
-        android:layout_marginTop="0dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/spaceullustration">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/l2"-->
+        <!--android:layout_marginTop="0dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical"-->
+        <!--android:background="@drawable/spaceullustration">-->
 
-        <Button
-            android:id="@+id/buttonsub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/buttonstyle"
-            android:text="NEXT" />
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/buttonsub"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:background="@drawable/buttonstyle"-->
+            <!--android:text="NEXT" />-->
+    <!--</LinearLayout>-->
 
 
 </LinearLayout>

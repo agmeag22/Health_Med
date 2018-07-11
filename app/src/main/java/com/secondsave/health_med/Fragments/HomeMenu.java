@@ -33,14 +33,14 @@ public class HomeMenu extends Fragment implements View.OnClickListener {
         reminders = v.findViewById(R.id.remindersid);
         pharmacies = v.findViewById(R.id.pharmaciesid);
         health = v.findViewById(R.id.healthid);
-        profile = v.findViewById(R.id.profileid);
-        settings = v.findViewById(R.id.settingsid);
+//        profile = v.findViewById(R.id.profileid);
+//        settings = v.findViewById(R.id.settingsid);
 
         reminders.setOnClickListener(this);
         pharmacies.setOnClickListener(this);
         health.setOnClickListener(this);
-        profile.setOnClickListener(this);
-        settings.setOnClickListener(this);
+//        profile.setOnClickListener(this);
+//        settings.setOnClickListener(this);
         return v;
     }
 
@@ -61,13 +61,13 @@ public class HomeMenu extends Fragment implements View.OnClickListener {
             fragment = new HealthFragment();
             transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
         }
-        if (v == profile) {
-            fragment = new ProfileFragment();
-            transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
-        }
-        if (v == settings) {
-//            fragment=new SettingsFragment();
-//            transaction.addToBackStack(null).replace(R.id.fragment_home_menu,fragment).commit();
-        }
+//        if (v == profile) {
+//            fragment = new ProfileFragment();
+//            transaction.addToBackStack(null).replace(R.id.container, fragment).commit();
+//        }
+//        if (v == settings) {
+////            fragment=new SettingsFragment();
+////            transaction.addToBackStack(null).replace(R.id.fragment_home_menu,fragment).commit();
+//        }
     }
 }

@@ -1,17 +1,15 @@
 package com.secondsave.health_med.Adapters;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.google.android.gms.location.places.Place;
 import com.secondsave.health_med.Database.Entities.Dose;
 import com.secondsave.health_med.R;
 
@@ -53,7 +51,10 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
                 holder.dose_type.setText(mArray[doseList.get(position).getId_dose_type()]);
             }
             if (doseList.get(position).getLapse() > 0) {
-                holder.dose_lapse.setText(doseList.get(position).getLapse() + "");
+                float n_hours = doseList.get(position).getLapse();
+                int hours = (int) n_hours;
+                int mins = (int) ((n_hours - hours) * 60);
+                holder.dose_lapse.setText(hours+"h " +mins+"m");
             }
             if (doseList.get(position).getStart_date() != null) {
 
@@ -78,22 +79,37 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
                     holder.layoucard.setBackgroundColor(context.getResources().getColor(R.color.pharmacies));
                 }
             }
-
-
-            if (doseList.get(position).isReminder_enabled()) {
-                holder.aSwitch.setChecked(true);
-            } else {
-                holder.aSwitch.setChecked(false);
-            }
-            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            holder.aSwitch.setChecked(doseList.get(position).isReminder_enabled());
+            holder.view.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
-                    if (holder.aSwitch.isChecked()) {
-                        holder.aSwitch.setChecked(false);
-                        setAlarmStatus(false, doseList.get(position));
-                    } else {
-                        holder.aSwitch.setChecked(true);
+                public boolean onLongClick(View v) {
+                    LongClickListener(doseList.get(position));
+                    return false;
+                }
+            });
+//            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (holder.aSwitch.isChecked()) {
+//                        holder.aSwitch.setChecked(false);
+//                        setAlarmStatus(false, doseList.get(position));
+//                    } else {
+//                        holder.aSwitch.setChecked(true);
+//                        setAlarmStatus(true, doseList.get(position));
+//                    }
+//                }
+//            });
+
+            holder.aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+//                        holder.aSwitch.setChecked(false);
                         setAlarmStatus(true, doseList.get(position));
+                    } else {
+//                        holder.aSwitch.setChecked(true);
+
+                        setAlarmStatus(false, doseList.get(position));
                     }
                 }
             });
@@ -107,6 +123,8 @@ public abstract class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapt
 
         }
     }
+
+    protected abstract void LongClickListener(Dose dose);
 
     public abstract void setAlarmStatus(boolean i, Dose dose);
 
