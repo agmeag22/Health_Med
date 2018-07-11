@@ -18,31 +18,46 @@ import android.widget.TextView;
 import com.secondsave.health_med.R;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AlarmReceiverActivity extends AppCompatActivity {
     private MediaPlayer mMediaPlayer;
     private String msg;
+    private String date_end;
 
     @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            setContentView(R.layout.alarm);
-            Bundle bundle = getIntent().getExtras();
-            msg = bundle.getString("msg","");
-            TextView texto = findViewById(R.id.alarm_text);
-            texto.setText(msg);
-            Button stopAlarm = (Button) findViewById(R.id.stopAlarm);
-            stopAlarm.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View arg0, MotionEvent arg1) {
-                    mMediaPlayer.stop();
-                    finish();
-                    return false;
-                }
-            });
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.alarm);
+        Bundle bundle = getIntent().getExtras();
+        msg = bundle.getString("msg", "");
+        date_end = bundle.getString("end");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy -- hh:mm");
+        try {
+            Date date = df.parse(date_end);
+            if(date.getTime()> Calendar.getInstance().getTimeInMillis()){
+                finish();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        TextView texto = findViewById(R.id.alarm_text);
+        texto.setText(msg);
+        Button stopAlarm = (Button) findViewById(R.id.stopAlarm);
+        stopAlarm.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                mMediaPlayer.stop();
+                finish();
+                return false;
+            }
+        });
 
-            playSound(this, getAlarmUri());
+        playSound(this, getAlarmUri());
 
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -51,38 +66,38 @@ public class AlarmReceiverActivity extends AppCompatActivity {
                 mMediaPlayer.stop();
                 finish();
             }
-        }, 1000*60*5); //5 minutos para que se quite la alarma si no se presiona aceptar.
-        }
+        }, 1000 * 60 * 5); //5 minutos para que se quite la alarma si no se presiona aceptar.
+    }
 
-        private void playSound(Context context, Uri alert) {
-            mMediaPlayer = new MediaPlayer();
-            try {
-                mMediaPlayer.setDataSource(context, alert);
-                final AudioManager audioManager = (AudioManager) context
-                        .getSystemService(Context.AUDIO_SERVICE);
-                if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
-                    mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
-                    mMediaPlayer.prepare();
-                    mMediaPlayer.start();
-                }
-            } catch (IOException e) {
-                System.out.println("OOPS");
+    private void playSound(Context context, Uri alert) {
+        mMediaPlayer = new MediaPlayer();
+        try {
+            mMediaPlayer.setDataSource(context, alert);
+            final AudioManager audioManager = (AudioManager) context
+                    .getSystemService(Context.AUDIO_SERVICE);
+            if (audioManager.getStreamVolume(AudioManager.STREAM_ALARM) != 0) {
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+                mMediaPlayer.prepare();
+                mMediaPlayer.start();
             }
-        }
-
-        //Get an alarm sound. Try for an alarm. If none set, try notification,
-        //Otherwise, ringtone.
-        private Uri getAlarmUri() {
-            Uri alert = RingtoneManager
-                    .getDefaultUri(RingtoneManager.TYPE_ALARM);
-            if (alert == null) {
-                alert = RingtoneManager
-                        .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-                if (alert == null) {
-                    alert = RingtoneManager
-                            .getDefaultUri(RingtoneManager.TYPE_RINGTONE);
-                }
-            }
-            return alert;
+        } catch (IOException e) {
+            System.out.println("OOPS");
         }
     }
+
+    //Get an alarm sound. Try for an alarm. If none set, try notification,
+    //Otherwise, ringtone.
+    private Uri getAlarmUri() {
+        Uri alert = RingtoneManager
+                .getDefaultUri(RingtoneManager.TYPE_ALARM);
+        if (alert == null) {
+            alert = RingtoneManager
+                    .getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            if (alert == null) {
+                alert = RingtoneManager
+                        .getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+            }
+        }
+        return alert;
+    }
+}
