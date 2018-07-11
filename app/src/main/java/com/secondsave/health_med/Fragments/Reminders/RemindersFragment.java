@@ -7,6 +7,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -70,7 +72,7 @@ public class RemindersFragment extends Fragment {
         adapter = new ReminderAdapter(null, getContext()) {
             @Override
             protected void LongClickListener(Dose dose) {
-
+                    ShowDeleteDialog(dose);
             }
 
             @Override
@@ -133,6 +135,26 @@ public class RemindersFragment extends Fragment {
         return v;
     }
 
+    public void ShowDeleteDialog(final Dose dose){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.dialog_delete_msg)
+                .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // FIRE ZE MISSILES!
+                        removeReminderTask task = new removeReminderTask(dose);
+                        task.execute();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        builder.show();
+
+    }
+
     public class updateReminderTask extends AsyncTask<Void, Void, Integer> {
         private Dose dose;
 
@@ -168,6 +190,7 @@ public class RemindersFragment extends Fragment {
         @Override
         protected Integer doInBackground(Void... voids) {
             try {
+                cancelAlarm(dose);
                 mhealthmedViewModel.deleteDose(dose);
                 return R.string.sucess;
             } catch (Exception e) {

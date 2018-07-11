@@ -130,5 +130,7 @@
     <string name="stop_alarm">Stop</string>
     <string name="alarm_msj">Hey! It\'s time to take your:</string>
     <string name="alarm_cancelled">Alarm Cancelled!</string>
+    <string name="delete">Delete</string>
+    <string name="dialog_delete_msg">Delete this reminder?</string>
 
 </resources>
