@@ -78,6 +78,7 @@ public class RemindersFragment extends Fragment {
             @Override
             public void setAlarmStatus(boolean i, Dose dose) {
                 if(i){
+                    cancelAlarm(dose);
                     setAlarm(dose.getStart_date(),dose.getLapse(),dose);
                 }else{
                     cancelAlarm(dose);
