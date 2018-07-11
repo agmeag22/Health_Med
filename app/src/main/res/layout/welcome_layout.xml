@@ -7,46 +7,48 @@
     tools:context="com.secondsave.health_med.Activities.Welcome"
     android:orientation="vertical"
     android:background="@drawable/background">
+
     <LinearLayout
         android:id="@+id/l1"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
             android:textColor="@color/lightorange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WELCOME"
+            android:text="@string/welcome"
             android:layout_gravity="center"
             android:layout_marginTop="150dp"
             android:textSize="60sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:gravity="center"/>
+
         <TextView
-            android:textColor="@color/lightorangedark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Just a few steps ahead to get control of your life!"
+            android:layout_marginTop="50dp"
+            android:text="Health &amp; Med"
             android:textAlignment="center"
+            android:textColor="@color/lightorangedark"
             android:textSize="30sp"
-            android:layout_marginTop="50dp"/>
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:text="@string/just_a_few_steps_ahead"
+            android:textAlignment="center"
+            android:textColor="@color/lightorangedark"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:padding="20dp"
+            android:layout_margin="20dp"
+            />
     </LinearLayout>
-    <!--<LinearLayout-->
-        <!--android:id="@+id/l2"-->
-        <!--android:layout_marginTop="0dp"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="vertical"-->
-        <!--android:background="@drawable/spaceullustration">-->
-
-        <!--<Button-->
-            <!--android:id="@+id/buttonsub"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:background="@drawable/buttonstyle"-->
-            <!--android:text="NEXT" />-->
-    <!--</LinearLayout>-->
 
 
 </LinearLayout>

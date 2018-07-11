@@ -57,7 +57,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="trimmed" value="true" />
+                                                <entry key="paddingPercent" value="5" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -69,7 +69,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="fontFamily" value="Bauhaus 93" />
-                                                <entry key="text" value="mL" />
+                                                <entry key="text" value="Heath &amp; Med" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -79,9 +79,10 @@
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="assetType" value="TEXT" />
                                       <entry key="imageAsset" value="C:\Users\MiguelAviles\Downloads\medical.png" />
-                                      <entry key="outputName" value="add_button" />
-                                      <entry key="theme" value="HOLO_DARK" />
+                                      <entry key="outputName" value="app_title" />
+                                      <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="2b8753" />
                                     </map>
                                   </option>
@@ -182,6 +183,11 @@
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

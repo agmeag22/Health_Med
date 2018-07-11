@@ -51,14 +51,14 @@
     <string name="friday_letter">V</string>
     <string name="saturday_letter">S</string>
     <string name="timepicker_done">Hecho</string>
-    <string name="enable_high_accuracy">Porfavor habilita la ubicacion en modo altra precision</string>
-    <string name="enable_location">Porfavor habilita la ubicacion</string>
+    <string name="enable_high_accuracy">Por favor habilita la ubicacion en modo altra precision</string>
+    <string name="enable_location">Por favor habilita la ubicación</string>
     <string name="no_gmaps">No tienes instalado google maps</string>
-    <string name="sex">Selecciona tu genero</string>
+    <string name="sex">Selecciona tu género</string>
     <string name="birthday">Cumpleaños</string>
     <string name="weight">Peso</string>
     <string name="height">Altura</string>
-    <string name="first_setup_header_message">Para poder seguir tu progreso, necesitamos la siguiente informacion</string>
+    <string name="first_setup_header_message">Para poder seguir tu progreso, necesitamos la siguiente información</string>
     <string name="error">Error interno</string>
     <string name="sucess">Completado</string>
     <string name="save">Guardar</string>
@@ -96,4 +96,10 @@
     <string name="empty_error">Vacio</string>
     <string name="stop_alarm">Detener</string>
     <string name="alarm_msj">Hola!, es momento que tomes tu:</string>
+    <string name="title_home">Inicio</string>
+    <string name="closebutton">Boton de Cerrado</string>
+    <string name="newUser">No eres un miembro</string>
+    <string name="alarm_cancelled">Alarma Cancelada</string>
+    <string name="delete">Eliminar</string>
+    <string name="dialog_delete_msg">Deseas eliminar este recordatorio</string>
 </resources>

@@ -65,7 +65,7 @@
     <string name="height">Height</string>
     <string name="first_setup_header_message">In order to track your progress, we need to record your inital data</string>
     <string name="error">ROOM ERROR</string>
-    <string name="sucess">Sucess</string>
+    <string name="sucess">Success</string>
     <string name="save">SAVE</string>
     <string name="empty_field">Empty field</string>
 
@@ -132,5 +132,7 @@
     <string name="alarm_cancelled">Alarm Cancelled!</string>
     <string name="delete">Delete</string>
     <string name="dialog_delete_msg">Delete this reminder?</string>
+    <string name="welcome">WELCOME</string>
+    <string name="just_a_few_steps_ahead">Just a few steps ahead...</string>
 
 </resources>
