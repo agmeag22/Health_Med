@@ -20,14 +20,59 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp">
+            <android.support.v7.widget.CardView
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:id="@+id/home"
+                android:layout_width="130dp"
+                android:layout_height="170dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circlebackgroundprofile"
+                        android:src="@drawable/icon_logged"
+                        android:padding="15dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/home_menu_title" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorPrimary"
+                        android:layout_margin="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/check_the_menu_options"
+                        android:padding="5dp"
+                        android:textColor="@android:color/darker_gray" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:id="@+id/remindersid"
                 android:layout_width="130dp"
-                android:layout_height="160dp"
+                android:layout_height="170dp"
                 android:layout_margin="10dp"
                 app:cardCornerRadius="10dp">
 
@@ -49,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:layout_marginTop="10dp"
-                        android:text="Reminders" />
+                        android:text="@string/reminder_menu_title" />
 
                     <View
                         android:layout_width="match_parent"
@@ -61,19 +106,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Check your latest reminders"
+                        android:text="@string/check_your_latest_reminders"
                         android:padding="5dp"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:clipToPadding="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <android.support.v7.widget.CardView
                 android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/pharmaciesid"
                 android:clickable="true"
                 android:layout_width="130dp"
-                android:layout_height="160dp"
+                android:layout_height="170dp"
                 android:layout_margin="10dp"
                 app:cardCornerRadius="10dp">
 
@@ -95,7 +151,7 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:layout_marginTop="10dp"
-                        android:text="Pharmacies" />
+                        android:text="@string/pharmacies_menu_title" />
 
                     <View
                         android:layout_width="match_parent"
@@ -107,28 +163,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Check for near pharmacies"
+                        android:text="@string/check_for_near_pharmacies"
                         android:padding="5dp"
                         android:textColor="@android:color/darker_gray" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:clipToPadding="false"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
             <android.support.v7.widget.CardView
                 android:foreground="?android:attr/selectableItemBackground"
                 android:id="@+id/healthid"
                 android:clickable="true"
                 android:layout_width="130dp"
-                android:layout_height="160dp"
+                android:layout_height="170dp"
                 android:layout_margin="10dp"
                 app:cardCornerRadius="10dp">
 
@@ -150,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:layout_marginTop="10dp"
-                        android:text="Health" />
+                        android:text="@string/health_menu_title" />
 
                     <View
                         android:layout_width="match_parent"
@@ -162,7 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Check your latest health data"
+                        android:text="@string/check_your_latest_health_data"
                         android:padding="5dp"
                         android:textColor="@android:color/darker_gray" />
 
