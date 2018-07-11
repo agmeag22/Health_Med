@@ -24,7 +24,7 @@
     <string name="title_notifications">Notificaciones</string>
     <string name="reminders">Recordatorios</string>
     <string name="dose">Dosis</string>
-    <string name="pharmacy">Farmacia</string>
+    <string name="pharmacy">Farmacias</string>
     <string name="health">Salud</string>
     <string name="profile">Perfil</string>
     <string name="title_logout">Iniciar Sesión</string>
@@ -104,4 +104,9 @@
     <string name="dialog_delete_msg">Deseas eliminar este recordatorio</string>
     <string name="welcome">BIENVENID@</string>
     <string name="just_a_few_steps_ahead">El control esta cerca...</string>
+    <string name="home">Inicio</string>
+    <string name="check_the_menu_options">Menu de opciones</string>
+    <string name="check_your_latest_reminders">Revisa ttus recordatorios</string>
+    <string name="check_your_latest_health_data">Revisa tu progreso</string>
+    <string name="check_for_near_pharmacies">Observa las farmacias mas cercanas</string>
 </resources>

@@ -9,10 +9,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="reminders">Reminders</string>
+
     <string name="dose">Dose</string>
     <string name="pharmacy">Pharmacy</string>
-    <string name="health">Health</string>
     <string name="profile">Profile</string>
     <string name="title_logout">Sign in</string>
 
@@ -134,5 +133,10 @@
     <string name="dialog_delete_msg">Delete this reminder?</string>
     <string name="welcome">WELCOME</string>
     <string name="just_a_few_steps_ahead">Just a few steps ahead...</string>
+    <string name="check_for_near_pharmacies">Check for near pharmacies</string>
+    <string name="check_your_latest_reminders">Check your latest reminders</string>
+    <string name="check_your_latest_health_data">Check your latest health data</string>
+    <string name="check_the_menu_options">Check the menu options</string>
+
 
 </resources>
