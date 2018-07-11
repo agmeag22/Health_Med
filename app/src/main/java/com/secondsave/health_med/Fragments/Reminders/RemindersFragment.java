@@ -218,13 +218,13 @@ public class RemindersFragment extends Fragment {
         cal.add(Calendar.HOUR_OF_DAY, hours);
         cal.add(Calendar.MINUTE, mins);
         Log.d("ALARM", "setAlarm: " + df.format(cal.getTime()));
-        Intent intent = new Intent(getContext() , AlarmReceiverActivity.class);
-        String[] mArray = getContext().getResources().getStringArray(R.array.medication_measurement);
+        Intent intent = new Intent(getActivity() , AlarmReceiverActivity.class);
+        String[] mArray = getActivity().getResources().getStringArray(R.array.medication_measurement);
         String msg = dose.getSize() +mArray[dose.getId_dose_type()]+" " +dose.getName();
         intent.putExtra("msg",msg );
         intent.putExtra("end",df.format(dose.getEnd_date()));
-        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(),
-                dose.getId_dose(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),
+                dose.getId_dose(), intent, 0);
         AlarmManager am =
                 (AlarmManager) getContext().getSystemService(Activity.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
@@ -235,10 +235,15 @@ public class RemindersFragment extends Fragment {
     private void cancelAlarm(Dose dose){
 
         Snackbar.make(getView(), R.string.alarm_cancelled,Snackbar.LENGTH_SHORT).show();
-        Intent intent = new Intent(getContext(), AlarmReceiverActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(),
-                dose.getId_dose(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager alarmManager = (AlarmManager)getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getActivity(), AlarmReceiverActivity.class);
+        String[] mArray = getActivity().getResources().getStringArray(R.array.medication_measurement);
+        String msg = dose.getSize() +mArray[dose.getId_dose_type()]+" " +dose.getName();
+        intent.putExtra("msg",msg );
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy -- hh:mm");
+        intent.putExtra("end",df.format(dose.getEnd_date()));
+        PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),
+                dose.getId_dose(), intent, 0);
+        AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
 
     }

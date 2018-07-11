@@ -385,9 +385,9 @@ public class AlarmFormulary extends Fragment implements View.OnClickListener {
                 healthMedViewModel.insertDose(dose);
                 Calendar now = Calendar.getInstance();
                 if (now.getTimeInMillis() >= from.getTime()) {
-                    setAlarm(now.getTime(), lapse, dose, getContext());
+                    setAlarm(now.getTime(), lapse, dose, getActivity());
                 } else {
-                    setAlarm(from, lapse, dose, getContext());
+                    setAlarm(from, lapse, dose, getActivity());
                 }
                 return R.string.sucess;
             } catch (Exception e) {
