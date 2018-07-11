@@ -102,4 +102,6 @@
     <string name="alarm_cancelled">Alarma Cancelada</string>
     <string name="delete">Eliminar</string>
     <string name="dialog_delete_msg">Deseas eliminar este recordatorio</string>
+    <string name="welcome">BIENVENID@</string>
+    <string name="just_a_few_steps_ahead">El control esta cerca...</string>
 </resources>
