@@ -142,6 +142,7 @@ public class RemindersFragment extends Fragment {
                 .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // FIRE ZE MISSILES!
+                        cancelAlarm(dose);
                         removeReminderTask task = new removeReminderTask(dose);
                         task.execute();
                     }
