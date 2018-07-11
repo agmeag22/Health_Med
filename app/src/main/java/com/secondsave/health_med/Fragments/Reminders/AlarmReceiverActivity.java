@@ -40,7 +40,8 @@ public class AlarmReceiverActivity extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy -- hh:mm");
         try {
             Date date = df.parse(date_end);
-            if(date.getTime()> Calendar.getInstance().getTimeInMillis()){
+            if(date.getTime()< Calendar.getInstance().getTimeInMillis()){
+                mMediaPlayer.stop();
                 finish();
             }
         } catch (ParseException e) {
